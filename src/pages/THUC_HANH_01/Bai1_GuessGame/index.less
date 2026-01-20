@@ -1,53 +1,54 @@
-@cyber-bg: #0a0e1a;
-@cyber-surface: #131a2e;
-@cyber-glass-bg: rgba(255, 255, 255, 0.05);
-@cyber-glass-border: rgba(255, 255, 255, 0.08);
-@cyber-neon-blue: #00d4ff;
-@cyber-neon-purple: #a855f7;
-@cyber-neon-green: #22c55e;
-@cyber-neon-amber: #f59e0b;
-@cyber-neon-red: #ef4444;
-@cyber-win-gold: #fbbf24;
-@cyber-text: #e2e8f0;
-@cyber-text-dim: #64748b;
+/* ============================================================
+ * THUC_HANH_01 - BÀI 1: Trò chơi đoán số
+ * THEME: Modern Elegant Light (SaaS Style)
+ * ============================================================ */
+
+/* --- Variables --- */
+@bg-color: #f8fafc;
+@card-bg: #ffffff;
+@text-main: #0f172a;
+@text-muted: #64748b;
+@border-color: #e2e8f0;
+@primary: #3b82f6;
+@primary-hover: #2563eb;
+@success: #10b981;
+@warning: #f59e0b;
+@danger: #ef4444;
+@radius-lg: 24px;
+@radius-md: 12px;
 
 .gameContainer {
   margin: -24px;
   min-height: calc(100vh - 48px);
-  background: @cyber-bg;
-  background-image:
-    radial-gradient(ellipse at 50% 0%, rgba(0, 212, 255, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 80%, rgba(168, 85, 247, 0.04) 0%, transparent 50%);
+  background: @bg-color;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px;
   font-family: 'Inter', -apple-system, sans-serif;
   position: relative;
-  overflow: hidden;
 }
 
 .gameCard {
   width: 100%;
-  max-width: 520px;
-  background: @cyber-glass-bg;
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  border: 1px solid @cyber-glass-border;
-  border-radius: 20px;
+  max-width: 480px;
+  background: @card-bg;
+  border-radius: @radius-lg;
   padding: 40px 32px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(226, 232, 240, 0.8);
   position: relative;
   z-index: 1;
-  transition: box-shadow 0.4s ease;
+  transition: transform 0.3s ease;
 }
 
 .shake {
-  animation: cyberShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  animation: elegantShake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 .warning {
-  animation: warningPulse 1s ease-in-out infinite;
+  border-color: rgba(239, 68, 68, 0.3);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.05), 0 20px 40px rgba(0, 0, 0, 0.04);
 }
 
 .header {
@@ -56,46 +57,31 @@
 }
 
 .title {
-  font-family: 'Orbitron', monospace;
-  font-size: 26px;
-  font-weight: 700;
-  color: @cyber-text;
-  letter-spacing: 2px;
+  font-size: 24px;
+  font-weight: 800;
+  color: @text-main;
+  letter-spacing: -0.5px;
   margin: 0 0 8px 0 !important;
-  background: linear-gradient(135deg, @cyber-neon-blue, @cyber-neon-purple);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .subtitle {
-  color: @cyber-text-dim;
-  font-size: 14px;
+  color: @text-muted;
+  font-size: 15px;
+  font-weight: 500;
   margin: 0;
 }
 
 .progressSection {
   display: flex;
   justify-content: center;
-  margin-bottom: 28px;
-
-  :global(.ant-progress-text) {
-    color: @cyber-text !important;
-    font-family: 'Orbitron', monospace !important;
-    font-size: 14px !important;
-    font-weight: 600;
-  }
-
-  :global(.ant-progress-circle-trail) {
-    stroke: rgba(255, 255, 255, 0.06) !important;
-  }
+  margin-bottom: 32px;
 }
 
 .inputSection {
   display: flex;
   gap: 12px;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 24px;
 }
 
@@ -103,30 +89,30 @@
   :global(.ant-input-number) {
     width: 200px;
     height: 56px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    transition: all 0.3s ease;
+    background: #f1f5f9;
+    border: 2px solid transparent;
+    border-radius: @radius-md;
+    transition: all 0.2s ease;
 
     &:hover {
-      border-color: rgba(0, 212, 255, 0.3);
+      background: #e2e8f0;
     }
 
     &:focus,
     &.ant-input-number-focused {
-      border-color: @cyber-neon-blue;
-      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15), 0 0 20px rgba(0, 212, 255, 0.1);
+      background: #ffffff;
+      border-color: @primary;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
     }
   }
 
   :global(.ant-input-number-input) {
-    color: @cyber-text;
-    font-family: 'Orbitron', monospace;
-    font-size: 28px;
-    font-weight: 700;
+    color: @text-main;
+    font-size: 24px;
+    font-weight: 800;
     text-align: center;
     height: 52px;
-    letter-spacing: 4px;
+    letter-spacing: 2px;
   }
 
   :global(.ant-input-number-handler-wrap) {
@@ -137,23 +123,31 @@
 .guessButton {
   height: 56px !important;
   padding: 0 28px !important;
-  border-radius: 12px !important;
-  font-weight: 600 !important;
-  font-size: 15px !important;
+  border-radius: @radius-md !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
   border: none !important;
-  background: linear-gradient(135deg, @cyber-neon-blue 0%, @cyber-neon-purple 100%) !important;
-  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.25);
-  transition: all 0.3s ease !important;
-  letter-spacing: 1px;
+  background: @primary !important; /* Modern vibrant blue */
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2) !important;
+  transition: all 0.2s ease !important;
 
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.35) !important;
-    opacity: 0.95;
+    transform: translateY(-2px);
+    background: @primary-hover !important;
+    box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3) !important;
   }
 
   &:active {
     transform: translateY(0);
+  }
+
+  &:disabled {
+    background: @primary !important;
+    opacity: 0.5;
+    box-shadow: none !important;
+    transform: none !important;
+    cursor: not-allowed;
   }
 }
 
@@ -163,45 +157,44 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .feedbackMessage {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
-  padding: 8px 20px;
-  border-radius: 10px;
-  animation: feedbackAppear 0.35s ease-out;
+  padding: 10px 24px;
+  border-radius: 24px;
+  animation: feedbackAppear 0.3s ease-out;
 }
 
 .feedbackLow {
-  color: @cyber-neon-blue;
-  background: rgba(0, 212, 255, 0.08);
-  border: 1px solid rgba(0, 212, 255, 0.15);
+  color: @primary;
+  background: rgba(59, 130, 246, 0.1);
 }
 
 .feedbackHigh {
-  color: @cyber-neon-red;
-  background: rgba(239, 68, 68, 0.08);
-  border: 1px solid rgba(239, 68, 68, 0.15);
+  color: @danger;
+  background: rgba(239, 68, 68, 0.1);
 }
 
 .feedbackCorrect {
-  color: @cyber-win-gold;
-  background: rgba(251, 191, 36, 0.08);
-  border: 1px solid rgba(251, 191, 36, 0.15);
+  color: @success;
+  background: rgba(16, 185, 129, 0.1);
 }
 
 .historySection {
-  margin-top: 8px;
+  margin-top: 12px;
+  text-align: center;
 }
 
 .historyLabel {
-  color: @cyber-text-dim;
-  font-size: 12px;
+  color: @text-muted;
+  font-size: 13px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
   display: block;
 }
 
@@ -215,49 +208,45 @@
 .bubble {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 6px 14px;
+  gap: 6px;
+  padding: 6px 16px;
   border-radius: 20px;
-  font-family: 'Orbitron', monospace;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   animation: bubbleIn 0.3s ease-out;
   transition: transform 0.2s ease;
 
   &:hover {
-    transform: scale(1.08);
+    transform: scale(1.05);
   }
 }
 
 .bubbleLow {
-  color: @cyber-neon-blue;
-  background: rgba(0, 212, 255, 0.1);
-  border: 1px solid rgba(0, 212, 255, 0.2);
+  color: @primary;
+  background: rgba(59, 130, 246, 0.08);
 }
 
 .bubbleHigh {
-  color: @cyber-neon-red;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: @danger;
+  background: rgba(239, 68, 68, 0.08);
 }
 
 .bubbleCorrect {
-  color: @cyber-win-gold;
-  background: rgba(251, 191, 36, 0.1);
-  border: 1px solid rgba(251, 191, 36, 0.2);
+  color: @success;
+  background: rgba(16, 185, 129, 0.08);
 }
 
 .bubbleIcon {
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .recordsSection {
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid @border-color;
   display: flex;
   justify-content: center;
-  gap: 24px;
+  gap: 40px;
 }
 
 .recordItem {
@@ -265,73 +254,74 @@
 }
 
 .recordValue {
-  font-family: 'Orbitron', monospace;
-  font-size: 18px;
-  font-weight: 700;
-  color: @cyber-neon-purple;
+  font-size: 22px;
+  font-weight: 800;
+  color: @text-main;
   display: block;
+  line-height: 1;
 }
 
 .recordLabel {
-  font-size: 11px;
-  color: @cyber-text-dim;
+  font-size: 12px;
+  font-weight: 600;
+  color: @text-muted;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 2px;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
 }
 
+/* --- Result View --- */
 .resultCard {
   text-align: center;
-  padding: 20px 0;
+  padding: 16px 0;
 }
 
 .resultIcon {
-  font-size: 64px;
-  margin-bottom: 20px;
+  font-size: 72px;
+  margin-bottom: 24px;
   display: block;
 }
 
 .resultWonIcon {
-  color: @cyber-win-gold;
-  animation: winPulse 1.5s ease-in-out infinite;
+  color: @success;
+  animation: successPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .resultLostIcon {
-  color: @cyber-neon-red;
+  color: @danger;
 }
 
 .resultTitle {
-  font-family: 'Orbitron', monospace;
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 800;
   margin-bottom: 8px !important;
+  color: @text-main;
 }
 
 .resultWonTitle {
-  background: linear-gradient(135deg, @cyber-win-gold, #f97316);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: @success;
 }
 
 .resultLostTitle {
-  color: @cyber-neon-red;
+  color: @danger;
 }
 
 .resultSubtitle {
-  color: @cyber-text-dim;
-  font-size: 14px;
-  margin-bottom: 28px;
+  color: @text-muted;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 32px;
 }
 
 .resultStats {
   display: flex;
   justify-content: center;
   gap: 32px;
-  margin-bottom: 28px;
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: #f8fafc;
+  border-radius: @radius-md;
+  border: 1px solid @border-color;
 }
 
 .resultStatItem {
@@ -339,85 +329,78 @@
 }
 
 .resultStatValue {
-  font-family: 'Orbitron', monospace;
   font-size: 24px;
-  font-weight: 700;
-  color: @cyber-neon-blue;
+  font-weight: 800;
+  color: @text-main;
   display: block;
+  line-height: 1;
 }
 
 .resultStatLabel {
-  font-size: 11px;
-  color: @cyber-text-dim;
+  font-size: 12px;
+  font-weight: 600;
+  color: @text-muted;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 4px;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
 }
 
 .newRecordBadge {
   display: inline-block;
-  padding: 4px 12px;
-  background: linear-gradient(135deg, @cyber-win-gold, #f97316);
-  color: #0a0e1a;
+  padding: 6px 16px;
+  background: @warning;
+  color: #fff;
   border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 16px;
-  animation: badgePulse 1.2s ease-in-out infinite;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
 }
 
 .replayButton {
-  height: 48px !important;
+  height: 56px !important;
   padding: 0 32px !important;
-  border-radius: 12px !important;
-  font-weight: 600 !important;
-  font-size: 15px !important;
+  border-radius: @radius-md !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
   border: none !important;
-  background: linear-gradient(135deg, @cyber-neon-blue 0%, @cyber-neon-purple 100%) !important;
-  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.25);
-  transition: all 0.3s ease !important;
+  background: @text-main !important;
+  color: #fff !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.2s ease !important;
 
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.35) !important;
+    transform: translateY(-2px);
+    background: #334155 !important;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15) !important;
   }
 }
 
-@keyframes cyberShake {
+/* --- Animations --- */
+@keyframes elegantShake {
   0%, 100% { transform: translateX(0); }
-  10% { transform: translateX(-8px) rotate(-0.5deg); }
-  20% { transform: translateX(8px) rotate(0.5deg); }
-  30% { transform: translateX(-6px) rotate(-0.3deg); }
-  40% { transform: translateX(6px) rotate(0.3deg); }
-  50% { transform: translateX(-4px); }
-  60% { transform: translateX(4px); }
-  70% { transform: translateX(-2px); }
-  80% { transform: translateX(2px); }
-  90% { transform: translateX(-1px); }
-}
-
-@keyframes warningPulse {
-  0%, 100% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); }
-  50% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 40px rgba(239, 68, 68, 0.15), inset 0 0 30px rgba(239, 68, 68, 0.03); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
 }
 
 @keyframes feedbackAppear {
   from {
     opacity: 0;
-    transform: translateY(-8px) scale(0.95);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
 @keyframes bubbleIn {
   from {
     opacity: 0;
-    transform: scale(0.7);
+    transform: scale(0.8);
   }
   to {
     opacity: 1;
@@ -425,12 +408,8 @@
   }
 }
 
-@keyframes winPulse {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.4)); }
-  50% { transform: scale(1.08); filter: drop-shadow(0 0 16px rgba(251, 191, 36, 0.6)); }
-}
-
-@keyframes badgePulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.75; }
+@keyframes successPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
 }

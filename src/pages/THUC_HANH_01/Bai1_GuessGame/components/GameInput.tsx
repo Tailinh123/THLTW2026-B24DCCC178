@@ -43,7 +43,7 @@ const GameInput: React.FC = () => {
           value={value}
           onChange={(v) => setValue(v as number | null)}
           onKeyDown={handleKeyDown}
-          placeholder="?"
+          placeholder="Nhập..."
           size="large"
           controls={false}
         />

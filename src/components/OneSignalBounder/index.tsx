@@ -5,7 +5,17 @@ import { useEffect, useState } from 'react';
 import { useAuth } from 'react-oidc-context';
 import OneSignal from 'react-onesignal';
 
+// Kiểm tra localhost
+const isLocalhost = typeof window !== 'undefined' && (
+	window.location.hostname === 'localhost' ||
+	window.location.hostname === '127.0.0.1' ||
+	window.location.hostname === '0.0.0.0'
+);
+
 const OneSignalBounder = (props: { children: React.ReactNode }) => {
+	// Bypass OneSignal trên localhost (không có AuthProvider)
+	if (isLocalhost) return <>{props.children}</>;
+
 	const [oneSignalId, setOneSignalId] = useState<string | null | undefined>();
 	const auth = useAuth();
 	const iframeSource = AppModules[oneSignalRole].url;

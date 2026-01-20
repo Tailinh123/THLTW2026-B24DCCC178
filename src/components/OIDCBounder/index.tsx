@@ -15,6 +15,13 @@ import { unAuthPaths, unCheckPermissionPaths } from './constant';
 
 let OIDCBounderHandlers: ReturnType<typeof useAuthActions> | null = null;
 
+// Kiểm tra có đang chạy trên localhost không
+const isLocalhost = typeof window !== 'undefined' && (
+	window.location.hostname === 'localhost' ||
+	window.location.hostname === '127.0.0.1' ||
+	window.location.hostname === '0.0.0.0'
+);
+
 const OIDCBounder_: FC = ({ children }) => {
 	const { setInitialState, initialState } = useModel('@@initialState');
 	const auth = useAuth();
@@ -123,7 +130,21 @@ const OIDCBounder_: FC = ({ children }) => {
 	return <>{(auth.isLoading || initialState?.permissionLoading) && !isUnauth ? <LoadingPage /> : children}</>;
 };
 
+// Component bypass cho localhost - không cần AuthProvider
+const LocalhostBypass: FC = ({ children }) => {
+	useEffect(() => {
+		ConfigProvider.config({ theme: { primaryColor } });
+	}, []);
+
+	return <>{children}</>;
+};
+
 export const OIDCBounder: FC & { getActions: () => typeof OIDCBounderHandlers } = (props) => {
+	// Bypass toàn bộ OIDC trên localhost
+	if (isLocalhost) {
+		return <LocalhostBypass {...props} />;
+	}
+
 	return (
 		<AuthProvider
 			{...oidcConfig}

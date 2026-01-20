@@ -24,7 +24,7 @@ const GuessGameContent: React.FC = () => {
       const link = document.createElement('link');
       link.id = id;
       link.rel = 'stylesheet';
-      link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap';
+      link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap';
       document.head.appendChild(link);
     }
   }, []);
@@ -70,21 +70,27 @@ const GuessGameContent: React.FC = () => {
 
             <div className={styles.progressSection}>
               <Progress
-                type="circle"
+                type="dashboard"
                 percent={(attemptsLeft / 10) * 100}
                 strokeColor={getProgressColor()}
-                trailColor="rgba(255,255,255,0.06)"
-                strokeWidth={8}
-                width={110}
+                trailColor="#e2e8f0"
+                strokeWidth={10}
+                gapDegree={60}
+                width={120}
                 format={() => (
                   <span style={{
-                    fontFamily: "'Orbitron', monospace",
-                    fontSize: 16,
-                    fontWeight: 700,
-                    color: getProgressColor(),
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: 28,
+                    fontWeight: 800,
+                    color: '#1e293b',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    lineHeight: 1,
+                    marginTop: -4
                   }}>
                     {attemptsLeft}
-                    <span style={{ fontSize: 10, display: 'block', color: '#64748b', fontFamily: 'Inter', fontWeight: 400 }}>
+                    <span style={{ fontSize: 12, color: '#64748b', fontWeight: 600, marginTop: 4, textTransform: 'uppercase' }}>
                       lượt còn
                     </span>
                   </span>
