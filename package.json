@@ -67,6 +67,7 @@
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "fs-extra": "^11.2.0",
+    "install": "^0.13.0",
     "js-file-download": "^0.4.12",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
