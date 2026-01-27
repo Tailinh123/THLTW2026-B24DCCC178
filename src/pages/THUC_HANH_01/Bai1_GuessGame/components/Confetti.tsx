@@ -31,6 +31,7 @@ const Confetti: React.FC<Props> = ({ onComplete }) => {
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+    
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;

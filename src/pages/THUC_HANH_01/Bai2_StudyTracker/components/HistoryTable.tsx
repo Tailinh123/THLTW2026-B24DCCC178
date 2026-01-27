@@ -10,6 +10,7 @@ interface Props {
   onEditSession: (id: string) => void;
 }
 
+
 const HistoryTable: React.FC<Props> = ({ onEditSession }) => {
   const dispatch = useDispatch();
   const { sessions, categories } = useSelector((state: RootState) => state.study);
