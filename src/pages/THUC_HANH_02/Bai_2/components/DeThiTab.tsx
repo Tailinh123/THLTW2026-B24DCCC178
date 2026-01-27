@@ -1,6 +1,6 @@
 /* ============================================================
- * THUC_HANH_01 — Bài 2: Tab Đề Thi
- * Exam structure matrix + template management + exam generation
+ * THUC_HANH_02 — Bài 2: Tab Đề Thi
+ * Modernized with Steps Component for Exam Generation
  * ============================================================ */
 import React, { useState, useMemo } from 'react';
 import {
@@ -25,27 +25,40 @@ import {
   Statistic,
   Descriptions,
   List,
+  Steps,
+  Result,
 } from 'antd';
 import {
-  PlusOutlined,
   DeleteOutlined,
   ThunderboltOutlined,
   SaveOutlined,
   FileTextOutlined,
   EyeOutlined,
   WarningOutlined,
-  CheckCircleOutlined,
   CopyOutlined,
   LoadingOutlined,
+  SettingOutlined,
+  CheckCircleOutlined,
+  ArrowRightOutlined,
+  ArrowLeftOutlined,
 } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { dtActions } from '../slices';
 import type { MatranCell, MucDoKho, CauTrucDeThi, DeThi, ExamHeaderInfo } from '../types';
-import { MUC_DO_LABEL, MUC_DO_COLOR, ALL_MUC_DO } from '../types';
+import { MUC_DO_LABEL, ALL_MUC_DO } from '../types';
 import { generateExam, calcMatranSummary, checkDuplicate } from '../utils';
 import { formatDate } from '../../common';
 
 const { Text, Title } = Typography;
+const { Step } = Steps;
+
+/* Custom Badge Colors based on difficulty */
+const BADGE_COLORS: Record<MucDoKho, string> = {
+  nhan_biet: 'green',
+  thong_hieu: 'blue',
+  van_dung: 'orange',
+  van_dung_cao: 'red',
+};
 
 /* =============================================================
  * 1. EXAM MATRIX TABLE — Bảng ma trận cấu trúc đề
@@ -98,40 +111,42 @@ const MatrixEditor: React.FC<MatrixEditorProps> = ({ monHocId, matran, onChange 
       title: 'Khối kiến thức',
       dataIndex: 'ten',
       key: 'ten',
-      width: 180,
+      width: 200,
       fixed: 'left' as const,
-      render: (v: string) => <Text strong>{v}</Text>,
+      render: (v: string) => <Text strong style={{ color: '#262626' }}>{v}</Text>,
     },
     ...ALL_MUC_DO.map((muc) => ({
       title: (
-        <Tag color={MUC_DO_COLOR[muc]} style={{ marginRight: 0 }}>
+        <span style={{ color: BADGE_COLORS[muc] }}>
           {MUC_DO_LABEL[muc]}
-        </Tag>
+        </span>
       ),
       key: muc,
-      width: 130,
+      width: 140,
+      align: 'center' as const,
       render: (_: any, row: any) => {
         const available = getAvailable(row.id, muc);
         const val = getVal(row.id, muc);
         const isOver = val > available;
         return (
-          <div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
             <InputNumber
               min={0}
               max={99}
               value={val}
               onChange={(v) => setVal(row.id, muc, v || 0)}
-              size="small"
+              size="middle"
               style={{
                 width: 60,
                 borderColor: isOver ? '#ff4d4f' : undefined,
+                backgroundColor: isOver ? '#fff1f0' : undefined,
               }}
             />
             <Text
               type={isOver ? 'danger' : 'secondary'}
-              style={{ fontSize: 11, marginLeft: 4 }}
+              style={{ fontSize: 12 }}
             >
-              /{available}
+              / {available}
             </Text>
           </div>
         );
@@ -140,10 +155,11 @@ const MatrixEditor: React.FC<MatrixEditorProps> = ({ monHocId, matran, onChange 
     {
       title: 'Tổng',
       key: 'total',
-      width: 70,
+      width: 80,
+      align: 'center' as const,
       render: (_: any, row: any) => {
         const total = ALL_MUC_DO.reduce((s, m) => s + getVal(row.id, m), 0);
-        return <Tag color="blue">{total}</Tag>;
+        return <Tag color="blue" style={{ borderRadius: 10 }}>{total}</Tag>;
       },
     },
   ];
@@ -164,46 +180,45 @@ const MatrixEditor: React.FC<MatrixEditorProps> = ({ monHocId, matran, onChange 
   }
 
   return (
-    <>
+    <div style={{ marginTop: 16 }}>
       <Table
         dataSource={relatedKKTs}
         columns={columns}
         rowKey="id"
-        size="small"
+        size="middle"
         pagination={false}
         bordered
-        scroll={{ x: 700 }}
-        footer={() => (
-          <Row gutter={24}>
-            <Col>
-              <Statistic title="Tổng câu" value={summary.tongCau} />
-            </Col>
-            <Col>
-              <Statistic title="Điểm (ước tính)" value={summary.tongDiem} suffix="đ" precision={1} />
-            </Col>
-            <Col>
-              <Statistic title="Thời gian (ước tính)" value={summary.tongThoiGian} suffix="phút" />
-            </Col>
-          </Row>
-        )}
+        scroll={{ x: 800 }}
       />
-    </>
+      <div style={{ background: '#fafbfc', padding: '16px 24px', border: '1px solid #f0f0f0', borderTop: 'none', borderRadius: '0 0 8px 8px' }}>
+        <Row gutter={48} justify="end">
+          <Col>
+            <Statistic title="Tổng số câu hỏi" value={summary.tongCau} valueStyle={{ color: '#1890ff', fontWeight: 600 }} />
+          </Col>
+          <Col>
+            <Statistic title="Điểm ước tính" value={summary.tongDiem} suffix="đ" precision={1} valueStyle={{ color: '#fa8c16', fontWeight: 600 }} />
+          </Col>
+          <Col>
+            <Statistic title="Thời gian ước tính" value={summary.tongThoiGian} suffix="phút" valueStyle={{ color: '#52c41a', fontWeight: 600 }} />
+          </Col>
+        </Row>
+      </div>
+    </div>
   );
 };
 
 /* =============================================================
- * 2. EXAM STRUCTURE FORM — Form cấu trúc đề thi + Tạo đề
+ * 2. EXAM STRUCTURE STEPS — Quy trình tạo đề thi
  * ============================================================= */
-const ExamStructureForm: React.FC = () => {
+const ExamGeneratorSteps: React.FC = () => {
   const dispatch = useAppDispatch();
   const monHocs = useAppSelector((s) => s.danhMuc.monHocs);
   const khoiKienThucs = useAppSelector((s) => s.danhMuc.khoiKienThucs);
   const cauHois = useAppSelector((s) => s.cauHoi.items);
-  const deThis = useAppSelector((s) => s.deThi.deThis);
 
+  const [currentStep, setCurrentStep] = useState(0);
   const [monHocId, setMonHocId] = useState<string>('');
   const [matran, setMatran] = useState<MatranCell[]>([]);
-  const [tenCauTruc, setTenCauTruc] = useState('');
   const [tenDeThi, setTenDeThi] = useState('');
   const [generating, setGenerating] = useState(false);
   const [headerInfo, setHeaderInfo] = useState<ExamHeaderInfo>({
@@ -212,181 +227,216 @@ const ExamStructureForm: React.FC = () => {
     namHoc: '2025-2026',
     hocKy: 'I',
   });
-  const [headerModalOpen, setHeaderModalOpen] = useState(false);
+  
   const [headerForm] = Form.useForm();
+  
+  const handleNextStep1 = () => {
+    if (!monHocId) {
+      message.warning('Vui lòng chọn môn học để tiếp tục');
+      return;
+    }
+    setCurrentStep(1);
+  };
 
-  const handleSaveTemplate = () => {
-    if (!monHocId) return message.warning('Chọn môn học');
-    if (!tenCauTruc.trim()) return message.warning('Nhập tên cấu trúc');
-    if (matran.length === 0) return message.warning('Ma trận đề trống');
-
-    dispatch(
-      dtActions.addCauTruc({
-        ten: tenCauTruc.trim(),
-        monHocId,
-        matran,
-      }),
-    );
-    message.success('Đã lưu template cấu trúc đề');
+  const handleNextStep2 = () => {
+    if (matran.length === 0) {
+      message.warning('Vui lòng nhập số lượng câu hỏi vào ma trận đề');
+      return;
+    }
+    headerForm.setFieldsValue(headerInfo);
+    setCurrentStep(2);
   };
 
   const handleGenerate = () => {
-    if (!monHocId) return message.warning('Chọn môn học');
-    if (!tenDeThi.trim()) return message.warning('Nhập tên đề thi');
-    if (matran.length === 0) return message.warning('Ma trận đề trống');
+    if (!tenDeThi.trim()) {
+      message.warning('Vui lòng nhập tên đề thi');
+      return;
+    }
 
-    setGenerating(true);
-    setTimeout(() => {
-      const cauTruc = { id: '', ten: tenDeThi, monHocId, matran, createdAt: '' };
-      const result = generateExam(cauTruc, cauHois, khoiKienThucs);
+    headerForm.validateFields().then((v) => {
+      setHeaderInfo(v);
+      setGenerating(true);
+      
+      setTimeout(() => {
+        const cauTruc = { id: '', ten: tenDeThi, monHocId, matran, createdAt: '' };
+        const result = generateExam(cauTruc, cauHois, khoiKienThucs);
 
-      if (!result.success && result.errors) {
-        Modal.error({
-          title: 'Không đủ câu hỏi!',
-          width: 500,
-          content: (
-            <List
-              size="small"
-              dataSource={result.errors}
-              renderItem={(e) => (
-                <List.Item>
-                  <Text type="danger">
-                    <WarningOutlined /> Khối "{e.khoiKienThucTen}" — {MUC_DO_LABEL[e.mucDoKho]}:
-                    cần <strong>{e.required}</strong> câu, có <strong>{e.available}</strong> câu
-                  </Text>
-                </List.Item>
-              )}
+        if (!result.success && result.errors) {
+          Modal.error({
+            title: 'Không đủ câu hỏi trong ngân hàng!',
+            width: 500,
+            content: (
+              <List
+                size="small"
+                dataSource={result.errors}
+                renderItem={(e) => (
+                  <List.Item>
+                    <Text type="danger">
+                      <WarningOutlined style={{ marginRight: 8 }}/> Khối "{e.khoiKienThucTen}" — {MUC_DO_LABEL[e.mucDoKho]}:
+                      cần <strong>{e.required}</strong> câu, có <strong>{e.available}</strong> câu
+                    </Text>
+                  </List.Item>
+                )}
+              />
+            ),
+          });
+          setGenerating(false);
+        } else if (result.success && result.cauHoiIds) {
+          dispatch(
+            dtActions.addDeThi({
+              ten: tenDeThi.trim(),
+              cauTrucId: '',
+              monHocId,
+              cauHoiIds: result.cauHoiIds,
+              tongDiem: result.tongDiem || 0,
+              tongThoiGian: result.tongThoiGian || 0,
+              headerInfo: v,
+            }),
+          );
+          Modal.success({
+            title: 'Tạo đề thi thành công!',
+            content: `Đã tạo đề thi "${tenDeThi}" với ${result.cauHoiIds.length} câu hỏi. Đề thi đã được lưu vào danh sách bên dưới.`,
+            onOk: () => {
+              setCurrentStep(0);
+              setMonHocId('');
+              setMatran([]);
+              setTenDeThi('');
+            }
+          });
+          setGenerating(false);
+        }
+      }, 800);
+    }).catch(() => {
+      message.error('Vui lòng kiểm tra lại thông tin tiêu đề');
+    });
+  };
+
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 0:
+        return (
+          <div style={{ maxWidth: 500, margin: '0 auto', textAlign: 'center' }}>
+            <BookOutlined style={{ fontSize: 48, color: '#1890ff', marginBottom: 24, opacity: 0.8 }} />
+            <Title level={4}>Chọn môn học để tạo đề</Title>
+            <Text type="secondary" style={{ display: 'block', marginBottom: 24 }}>Hệ thống sẽ lấy các khối kiến thức liên kết với môn học này</Text>
+            <Select
+              style={{ width: '100%', textAlign: 'left' }}
+              placeholder="Vui lòng chọn môn học"
+              size="large"
+              value={monHocId || undefined}
+              onChange={(v) => {
+                setMonHocId(v);
+                setMatran([]);
+              }}
+              options={monHocs.map(m => ({ label: m.ten, value: m.id }))}
             />
-          ),
-        });
-      } else if (result.success && result.cauHoiIds) {
-        dispatch(
-          dtActions.addDeThi({
-            ten: tenDeThi.trim(),
-            cauTrucId: '',
-            monHocId,
-            cauHoiIds: result.cauHoiIds,
-            tongDiem: result.tongDiem || 0,
-            tongThoiGian: result.tongThoiGian || 0,
-            headerInfo,
-          }),
+            <Button type="primary" size="large" style={{ marginTop: 32, padding: '0 40px', borderRadius: 8 }} onClick={handleNextStep1}>
+              Tiếp tục <ArrowRightOutlined />
+            </Button>
+          </div>
         );
-        message.success(`Đã tạo đề thi "${tenDeThi}" với ${result.cauHoiIds.length} câu hỏi!`);
-        setTenDeThi('');
-      }
-      setGenerating(false);
-    }, 500);
+      case 1:
+        return (
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+              <div>
+                <Title level={5} style={{ margin: 0 }}>Cấu hình Ma trận Đề thi</Title>
+                <Text type="secondary">Nhập số lượng câu hỏi tương ứng cho từng mức độ và khối kiến thức</Text>
+              </div>
+              <Button icon={<SaveOutlined />} onClick={() => {
+                if(matran.length > 0) {
+                  dispatch(dtActions.addCauTruc({ ten: `Template ${monHocs.find(m=>m.id===monHocId)?.ten} ${new Date().getTime()}`, monHocId, matran }));
+                  message.success('Đã lưu cấu trúc thành template');
+                } else message.warning('Ma trận trống');
+              }}>Lưu Template</Button>
+            </div>
+            
+            <MatrixEditor monHocId={monHocId} matran={matran} onChange={setMatran} />
+            
+            <div style={{ marginTop: 24, display: 'flex', justifyContent: 'center', gap: 16 }}>
+              <Button size="large" onClick={() => setCurrentStep(0)} icon={<ArrowLeftOutlined />} style={{ borderRadius: 8 }}>
+                Quay lại
+              </Button>
+              <Button type="primary" size="large" onClick={handleNextStep2} style={{ padding: '0 40px', borderRadius: 8 }}>
+                Tiếp tục cấu hình <ArrowRightOutlined />
+              </Button>
+            </div>
+          </div>
+        );
+      case 2:
+        const summary = calcMatranSummary(matran, cauHois, monHocId);
+        return (
+          <Row gutter={32}>
+            <Col xs={24} md={12}>
+              <Card title={<><SettingOutlined /> Thông tin tiêu đề</>} size="small" bordered style={{ background: '#fafbfc' }}>
+                <Form form={headerForm} layout="vertical" initialValues={headerInfo}>
+                  <Form.Item label="Tên đề thi" required>
+                    <Input placeholder="VD: Đề thi Giữa kỳ 1..." size="large" value={tenDeThi} onChange={e => setTenDeThi(e.target.value)} />
+                  </Form.Item>
+                  <Form.Item name="truong" label="Tên trường" rules={[{ required: true }]}>
+                    <Input />
+                  </Form.Item>
+                  <Form.Item name="khoa" label="Khoa" rules={[{ required: true }]}>
+                    <Input />
+                  </Form.Item>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Form.Item name="namHoc" label="Năm học" rules={[{ required: true }]}>
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item name="hocKy" label="Học kỳ" rules={[{ required: true }]}>
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Form>
+              </Card>
+            </Col>
+            <Col xs={24} md={12}>
+              <Card title={<><FileTextOutlined /> Tổng quan cấu trúc</>} size="small" bordered style={{ height: '100%' }}>
+                <Result
+                  icon={<ThunderboltOutlined style={{ color: '#1890ff' }}/>}
+                  title="Sẵn sàng tạo đề thi ngẫu nhiên"
+                  subTitle={
+                    <div style={{ marginTop: 16, textAlign: 'left' }}>
+                      <Descriptions column={1} bordered size="small">
+                        <Descriptions.Item label="Môn học"><strong>{monHocs.find(m=>m.id===monHocId)?.ten}</strong></Descriptions.Item>
+                        <Descriptions.Item label="Tổng số câu"><strong>{summary.tongCau} câu</strong></Descriptions.Item>
+                        <Descriptions.Item label="Ước tính điểm"><strong>{summary.tongDiem} đ</strong></Descriptions.Item>
+                        <Descriptions.Item label="Thời gian"><strong>{summary.tongThoiGian} phút</strong></Descriptions.Item>
+                      </Descriptions>
+                    </div>
+                  }
+                  extra={[
+                    <Button key="back" onClick={() => setCurrentStep(1)} style={{ borderRadius: 6 }}>
+                      Sửa ma trận
+                    </Button>,
+                    <Button key="generate" type="primary" size="large" onClick={handleGenerate} loading={generating} style={{ borderRadius: 6 }}>
+                      {generating ? 'Đang tạo đề...' : 'Tạo Đề Thi Ngay'}
+                    </Button>,
+                  ]}
+                />
+              </Card>
+            </Col>
+          </Row>
+        );
+      default: return null;
+    }
   };
 
   return (
-    <Card
-      title={<><ThunderboltOutlined /> Cấu trúc đề thi & Tạo đề</>}
-      size="small"
-    >
-      <Row gutter={[16, 12]}>
-        <Col xs={24} md={8}>
-          <Text strong>Môn học *</Text>
-          <Select
-            style={{ width: '100%', marginTop: 4 }}
-            placeholder="Chọn môn học"
-            value={monHocId || undefined}
-            onChange={(v) => {
-              setMonHocId(v);
-              setMatran([]);
-            }}
-          >
-            {monHocs.map((m) => (
-              <Select.Option key={m.id} value={m.id}>{m.ten}</Select.Option>
-            ))}
-          </Select>
-        </Col>
-        <Col xs={24} md={8}>
-          <Text strong>Tên cấu trúc (template)</Text>
-          <Input
-            style={{ marginTop: 4 }}
-            placeholder="VD: Cấu trúc đề giữa kỳ..."
-            value={tenCauTruc}
-            onChange={(e) => setTenCauTruc(e.target.value)}
-          />
-        </Col>
-        <Col xs={24} md={8}>
-          <Text strong>Tên đề thi *</Text>
-          <Input
-            style={{ marginTop: 4 }}
-            placeholder="VD: Đề thi giữa kỳ 01..."
-            value={tenDeThi}
-            onChange={(e) => setTenDeThi(e.target.value)}
-          />
-        </Col>
-      </Row>
-
-      <Divider>Ma trận đề thi</Divider>
-      <MatrixEditor monHocId={monHocId} matran={matran} onChange={setMatran} />
-
-      <Divider />
-      <Row gutter={12}>
-        <Col>
-          <Button icon={<SaveOutlined />} onClick={handleSaveTemplate}>
-            Lưu Template
-          </Button>
-        </Col>
-        <Col>
-          <Button onClick={() => {
-            headerForm.setFieldsValue(headerInfo);
-            setHeaderModalOpen(true);
-          }}>
-            📝 Thông tin đề thi
-          </Button>
-        </Col>
-        <Col>
-          <Button
-            type="primary"
-            icon={generating ? <LoadingOutlined /> : <ThunderboltOutlined />}
-            onClick={handleGenerate}
-            loading={generating}
-          >
-            Tạo đề thi
-          </Button>
-        </Col>
-      </Row>
-
-      {/* Header Info Modal */}
-      <Modal
-        title="Thông tin tiêu đề đề thi"
-        visible={headerModalOpen}
-        onOk={() => {
-          headerForm.validateFields().then((v) => {
-            setHeaderInfo(v);
-            setHeaderModalOpen(false);
-            message.success('Đã cập nhật thông tin');
-          });
-        }}
-        onCancel={() => setHeaderModalOpen(false)}
-        okText="Lưu"
-        cancelText="Hủy"
-      >
-        <Form form={headerForm} layout="vertical">
-          <Form.Item name="truong" label="Tên trường" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="khoa" label="Khoa" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item name="namHoc" label="Năm học" rules={[{ required: true }]}>
-                <Input placeholder="2025-2026" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="hocKy" label="Học kỳ" rules={[{ required: true }]}>
-                <Input placeholder="I, II" />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
-      </Modal>
-    </Card>
+    <div className="exam-steps-wrapper">
+      <Steps current={currentStep} style={{ maxWidth: 800, margin: '0 auto' }}>
+        <Step title="Môn học" description="Chọn môn học" />
+        <Step title="Cấu trúc ma trận" description="Nhập số lượng câu" />
+        <Step title="Tạo đề" description="Hoàn thiện tiêu đề" />
+      </Steps>
+      <div className="step-content">
+        {renderStepContent()}
+      </div>
+    </div>
   );
 };
 
@@ -407,43 +457,44 @@ const TemplateManager: React.FC<TemplateManagerProps> = () => {
 
   return (
     <Card
-      title={<><FileTextOutlined /> Template cấu trúc đã lưu ({cauTrucs.length})</>}
-      size="small"
-      style={{ marginTop: 16 }}
+      bordered={false}
+      title={<><SaveOutlined style={{ color: '#52c41a', marginRight: 8 }}/> Các mẫu ma trận đã lưu ({cauTrucs.length})</>}
+      style={{ marginBottom: 24 }}
     >
       <Table
         dataSource={cauTrucs}
         rowKey="id"
-        size="small"
-        pagination={{ pageSize: 5, size: 'small' }}
+        size="middle"
+        pagination={{ pageSize: 5, showSizeChanger: false }}
         columns={[
-          { title: 'Tên', dataIndex: 'ten', key: 'ten' },
+          { title: 'Tên mẫu cấu trúc', dataIndex: 'ten', key: 'ten', render: (t) => <strong>{t}</strong> },
           {
             title: 'Môn học',
             dataIndex: 'monHocId',
             key: 'mh',
-            render: (id: string) => <Tag color="blue">{monHocMap.get(id) || '—'}</Tag>,
+            render: (id: string) => <Tag color="blue" style={{ borderRadius: 4 }}>{monHocMap.get(id) || '—'}</Tag>,
           },
           {
-            title: 'Số ô ma trận',
+            title: 'Chi tiết',
             key: 'cells',
-            width: 100,
-            render: (_: any, r: CauTrucDeThi) => r.matran.length,
+            width: 150,
+            render: (_: any, r: CauTrucDeThi) => <span style={{ color: '#595959' }}>{r.matran.length} ô ma trận</span>,
           },
           {
             title: 'Ngày tạo',
             dataIndex: 'createdAt',
             key: 'date',
-            width: 150,
+            width: 180,
             render: (v: string) => <Text type="secondary">{formatDate(v)}</Text>,
           },
           {
             title: '',
             key: 'actions',
-            width: 60,
+            width: 80,
+            align: 'center' as const,
             render: (_: any, r: CauTrucDeThi) => (
-              <Popconfirm title="Xóa template?" onConfirm={() => dispatch(dtActions.deleteCauTruc(r.id))}>
-                <Button size="small" icon={<DeleteOutlined />} danger />
+              <Popconfirm title="Bạn có chắc muốn xóa template này?" onConfirm={() => dispatch(dtActions.deleteCauTruc(r.id))} okText="Xóa" cancelText="Hủy">
+                <Button type="text" danger icon={<DeleteOutlined />} />
               </Popconfirm>
             ),
           },
@@ -464,7 +515,6 @@ const ExamList: React.FC<ExamListProps> = ({ onPreview }) => {
   const dispatch = useAppDispatch();
   const deThis = useAppSelector((s) => s.deThi.deThis);
   const monHocs = useAppSelector((s) => s.danhMuc.monHocs);
-  const cauHois = useAppSelector((s) => s.cauHoi.items);
   const monHocMap = useMemo(() => new Map(monHocs.map((m) => [m.id, m.ten])), [monHocs]);
 
   const [dupModalOpen, setDupModalOpen] = useState(false);
@@ -475,8 +525,8 @@ const ExamList: React.FC<ExamListProps> = ({ onPreview }) => {
   const handleCheckDuplicate = () => {
     const examA = deThis.find((d) => d.id === dupA);
     const examB = deThis.find((d) => d.id === dupB);
-    if (!examA || !examB) return message.warning('Chọn 2 đề thi');
-    if (dupA === dupB) return message.warning('Chọn 2 đề thi khác nhau');
+    if (!examA || !examB) return message.warning('Vui lòng chọn 2 đề thi');
+    if (dupA === dupB) return message.warning('Vui lòng chọn 2 đề thi khác nhau');
     const result = checkDuplicate(examA, examB);
     setDupResult(result);
   };
@@ -484,75 +534,84 @@ const ExamList: React.FC<ExamListProps> = ({ onPreview }) => {
   return (
     <>
       <Card
-        title={<><FileTextOutlined /> Đề thi đã tạo ({deThis.length})</>}
-        size="small"
-        style={{ marginTop: 16 }}
+        bordered={false}
+        title={<><FileTextOutlined style={{ color: '#1890ff', marginRight: 8 }}/> Danh sách đề thi ({deThis.length})</>}
         extra={
           deThis.length >= 2 && (
-            <Button icon={<CopyOutlined />} onClick={() => setDupModalOpen(true)}>
-              Kiểm tra trùng lặp
+            <Button icon={<CopyOutlined />} onClick={() => setDupModalOpen(true)} style={{ borderRadius: 6 }}>
+              Công cụ kiểm tra trùng lặp
             </Button>
           )
         }
       >
         {deThis.length === 0 ? (
-          <Empty description="Chưa có đề thi nào" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          <Empty description="Chưa có đề thi nào được tạo" image={Empty.PRESENTED_IMAGE_SIMPLE} style={{ margin: '40px 0' }}/>
         ) : (
           <Table
             dataSource={deThis}
             rowKey="id"
-            size="small"
-            pagination={{ pageSize: 5, size: 'small' }}
+            size="middle"
+            pagination={{ pageSize: 8, showSizeChanger: false }}
             columns={[
-              { title: 'Tên đề', dataIndex: 'ten', key: 'ten' },
+              { title: 'Tên đề thi', dataIndex: 'ten', key: 'ten', render: (t) => <strong style={{ color: '#262626' }}>{t}</strong> },
               {
                 title: 'Môn học',
                 dataIndex: 'monHocId',
                 key: 'mh',
-                render: (id: string) => <Tag color="blue">{monHocMap.get(id) || '—'}</Tag>,
+                render: (id: string) => <Tag color="blue" style={{ borderRadius: 4 }}>{monHocMap.get(id) || '—'}</Tag>,
               },
               {
-                title: 'Số câu',
+                title: 'Tổng số câu',
                 key: 'count',
-                width: 75,
-                render: (_: any, r: DeThi) => <Tag>{r.cauHoiIds.length}</Tag>,
+                width: 120,
+                align: 'center' as const,
+                render: (_: any, r: DeThi) => <Tag style={{ borderRadius: 10, padding: '0 8px' }}>{r.cauHoiIds.length} câu</Tag>,
               },
               {
                 title: 'Tổng điểm',
                 dataIndex: 'tongDiem',
                 key: 'diem',
-                width: 85,
-                render: (v: number) => <Text strong>{v}đ</Text>,
+                width: 100,
+                align: 'center' as const,
+                render: (v: number) => <strong style={{ color: '#fa8c16' }}>{v}đ</strong>,
               },
               {
                 title: 'Thời gian',
                 dataIndex: 'tongThoiGian',
                 key: 'time',
-                width: 85,
-                render: (v: number) => `${v} phút`,
+                width: 120,
+                render: (v: number) => <span>{v} phút</span>,
               },
               {
                 title: 'Ngày tạo',
                 dataIndex: 'createdAt',
                 key: 'date',
-                width: 140,
-                render: (v: string) => <Text type="secondary" style={{ fontSize: 12 }}>{formatDate(v)}</Text>,
+                width: 150,
+                render: (v: string) => <Text type="secondary" style={{ fontSize: 13 }}>{formatDate(v)}</Text>,
               },
               {
                 title: 'Thao tác',
                 key: 'actions',
-                width: 100,
+                width: 120,
+                align: 'center' as const,
                 render: (_: any, r: DeThi) => (
-                  <Space>
-                    <Button size="small" icon={<EyeOutlined />} onClick={() => onPreview(r)} />
+                  <Space size="small">
+                    <Tooltip title="Xem chi tiết đề thi">
+                      <Button type="text" style={{ color: '#1890ff' }} icon={<EyeOutlined />} onClick={() => onPreview(r)} />
+                    </Tooltip>
                     <Popconfirm
-                      title="Xóa đề thi?"
+                      title="Xóa đề thi này?"
                       onConfirm={() => {
                         dispatch(dtActions.deleteDeThi(r.id));
-                        message.success('Đã xóa');
+                        message.success('Đã xóa đề thi');
                       }}
+                      okText="Xóa"
+                      cancelText="Hủy"
+                      placement="topRight"
                     >
-                      <Button size="small" icon={<DeleteOutlined />} danger />
+                      <Tooltip title="Xóa đề thi">
+                        <Button type="text" danger icon={<DeleteOutlined />} />
+                      </Tooltip>
                     </Popconfirm>
                   </Space>
                 ),
@@ -564,71 +623,76 @@ const ExamList: React.FC<ExamListProps> = ({ onPreview }) => {
 
       {/* Duplicate Checker Modal */}
       <Modal
-        title="Kiểm tra trùng lặp giữa 2 đề thi"
+        title={<div style={{ fontSize: 16, fontWeight: 600 }}>Kiểm tra trùng lặp giữa 2 đề thi</div>}
         visible={dupModalOpen}
         onCancel={() => {
           setDupModalOpen(false);
           setDupResult(null);
         }}
         footer={null}
-        width={600}
+        width={650}
+        centered
       >
-        <Row gutter={12} style={{ marginBottom: 16 }}>
-          <Col span={10}>
-            <Select
-              style={{ width: '100%' }}
-              placeholder="Đề thi A"
-              value={dupA || undefined}
-              onChange={setDupA}
-            >
-              {deThis.map((d) => (
-                <Select.Option key={d.id} value={d.id}>{d.ten}</Select.Option>
-              ))}
-            </Select>
-          </Col>
-          <Col span={10}>
-            <Select
-              style={{ width: '100%' }}
-              placeholder="Đề thi B"
-              value={dupB || undefined}
-              onChange={setDupB}
-            >
-              {deThis.map((d) => (
-                <Select.Option key={d.id} value={d.id}>{d.ten}</Select.Option>
-              ))}
-            </Select>
-          </Col>
-          <Col span={4}>
-            <Button type="primary" onClick={handleCheckDuplicate} block>
-              So sánh
-            </Button>
-          </Col>
-        </Row>
+        <div style={{ padding: '8px 0' }}>
+          <Row gutter={16} style={{ marginBottom: 20 }}>
+            <Col span={10}>
+              <Text strong style={{ display: 'block', marginBottom: 8 }}>Đề thi thứ nhất</Text>
+              <Select
+                style={{ width: '100%' }}
+                placeholder="Chọn đề A"
+                size="large"
+                value={dupA || undefined}
+                onChange={setDupA}
+                options={deThis.map(d => ({ label: d.ten, value: d.id }))}
+              />
+            </Col>
+            <Col span={10}>
+              <Text strong style={{ display: 'block', marginBottom: 8 }}>Đề thi thứ hai</Text>
+              <Select
+                style={{ width: '100%' }}
+                placeholder="Chọn đề B"
+                size="large"
+                value={dupB || undefined}
+                onChange={setDupB}
+                options={deThis.map(d => ({ label: d.ten, value: d.id }))}
+              />
+            </Col>
+            <Col span={4}>
+              <div style={{ height: '100%', display: 'flex', alignItems: 'flex-end' }}>
+                <Button type="primary" onClick={handleCheckDuplicate} size="large" block style={{ borderRadius: 8 }}>
+                  Kiểm tra
+                </Button>
+              </div>
+            </Col>
+          </Row>
 
-        {dupResult && (
-          <div>
-            <Alert
-              type={dupResult.percentA > 30 ? 'error' : dupResult.percentA > 0 ? 'warning' : 'success'}
-              message={
-                dupResult.commonIds.length === 0
-                  ? '✅ Không có câu hỏi trùng lặp!'
-                  : `⚠️ Có ${dupResult.commonIds.length} câu hỏi trùng lặp`
-              }
-              showIcon
-            />
-            {dupResult.commonIds.length > 0 && (
-              <Descriptions column={1} size="small" style={{ marginTop: 12 }} bordered>
-                <Descriptions.Item label="Câu trùng">{dupResult.commonIds.length}</Descriptions.Item>
-                <Descriptions.Item label="% so với Đề A">
-                  <Tag color={dupResult.percentA > 30 ? 'red' : 'green'}>{dupResult.percentA}%</Tag>
-                </Descriptions.Item>
-                <Descriptions.Item label="% so với Đề B">
-                  <Tag color={dupResult.percentB > 30 ? 'red' : 'green'}>{dupResult.percentB}%</Tag>
-                </Descriptions.Item>
-              </Descriptions>
-            )}
-          </div>
-        )}
+          {dupResult && (
+            <div style={{ marginTop: 24, padding: 20, background: '#fafbfc', borderRadius: 8, border: '1px solid #f0f0f0' }}>
+              <Alert
+                type={dupResult.percentA > 30 ? 'error' : dupResult.percentA > 0 ? 'warning' : 'success'}
+                message={
+                  dupResult.commonIds.length === 0
+                    ? '✅ An toàn! Không có câu hỏi nào bị trùng lặp.'
+                    : `⚠️ Phát hiện ${dupResult.commonIds.length} câu hỏi trùng lặp.`
+                }
+                showIcon
+                style={{ marginBottom: 16, fontSize: 15 }}
+              />
+              {dupResult.commonIds.length > 0 && (
+                <Descriptions column={2} size="middle" bordered style={{ background: '#fff' }}>
+                  <Descriptions.Item label="Số câu trùng"><strong>{dupResult.commonIds.length} câu</strong></Descriptions.Item>
+                  <Descriptions.Item label="Trạng thái">{dupResult.percentA > 30 ? <Tag color="red">Trùng lặp cao</Tag> : <Tag color="warning">Chấp nhận được</Tag>}</Descriptions.Item>
+                  <Descriptions.Item label="% so với Đề A">
+                    <span style={{ color: dupResult.percentA > 30 ? '#cf1322' : '#389e0d', fontWeight: 600 }}>{dupResult.percentA}%</span>
+                  </Descriptions.Item>
+                  <Descriptions.Item label="% so với Đề B">
+                    <span style={{ color: dupResult.percentB > 30 ? '#cf1322' : '#389e0d', fontWeight: 600 }}>{dupResult.percentB}%</span>
+                  </Descriptions.Item>
+                </Descriptions>
+              )}
+            </div>
+          )}
+        </div>
       </Modal>
     </>
   );
@@ -637,9 +701,10 @@ const ExamList: React.FC<ExamListProps> = ({ onPreview }) => {
 /* =============================================================
  * MAIN EXPORT — Tab Đề Thi
  * ============================================================= */
+import { BookOutlined } from '@ant-design/icons';
 const DeThiTab: React.FC<{ onPreview: (exam: DeThi) => void }> = ({ onPreview }) => (
   <div>
-    <ExamStructureForm />
+    <ExamGeneratorSteps />
     <TemplateManager onLoadTemplate={() => {}} />
     <ExamList onPreview={onPreview} />
   </div>

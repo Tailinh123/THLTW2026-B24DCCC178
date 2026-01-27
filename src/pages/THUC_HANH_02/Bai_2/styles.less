@@ -1,117 +1,202 @@
 /* ============================================================
- * THUC_HANH_01 — Bài 2: Admin Styles
- * Professional blue theme for exam management
+ * THUC_HANH_02 — Bài 2: Admin Styles
+ * Premium SaaS Dashboard Theme (Highly polished, Vercel/Stripe style)
  * ============================================================ */
 
 .exam-root {
-  --admin-primary: #1890ff;
-  --admin-bg: #f0f2f5;
+  --admin-primary: #000000;
+  --admin-primary-hover: #333333;
+  --admin-accent: #0070f3; /* Vercel Blue */
+  --admin-accent-hover: #0051b3;
+  
+  --admin-bg: #fafafa;
   --admin-surface: #ffffff;
-  --admin-border: #e8e8e8;
-  --admin-text: rgba(0, 0, 0, 0.85);
-  --admin-text-secondary: rgba(0, 0, 0, 0.45);
+  --admin-border: #eaeaea;
+  
+  --admin-text: #111111;
+  --admin-text-secondary: #666666;
+  --admin-text-tertiary: #888888;
+  
+  --admin-radius: 12px;
+  --admin-radius-sm: 8px;
+  --admin-shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
+  --admin-shadow: 0 8px 30px rgba(0,0,0,0.04);
+  --admin-shadow-hover: 0 14px 40px rgba(0,0,0,0.08);
 
   min-height: calc(100vh - 120px);
-  background: var(--admin-bg);
-  padding: 20px;
-  border-radius: 8px;
+  background-color: var(--admin-bg);
+  padding: 32px 40px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* Decorative Background Glow */
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1000px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0, 112, 243, 0.05) 0%, rgba(255,255,255,0) 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 
 /* ===== Header ===== */
 .exam-header-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  padding: 16px 24px;
-  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
-  border-radius: 10px;
-  color: #fff;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  text-align: left;
 }
 
 .exam-header-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #fff;
-  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--admin-text);
+  letter-spacing: -1px;
+  margin: 0 0 8px 0;
 }
 
 .exam-header-subtitle {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+  color: var(--admin-text-secondary);
+  font-weight: 400;
   margin: 0;
+  max-width: 600px;
 }
 
 /* ===== Tab Customization ===== */
 .exam-tabs {
+  position: relative;
+  z-index: 1;
+  
   .ant-tabs-nav {
-    margin-bottom: 16px;
-
+    margin-bottom: 24px;
     &::before {
-      border-color: var(--admin-border);
+      display: none;
     }
+  }
+
+  .ant-tabs-nav-list {
+    background: var(--admin-surface);
+    padding: 6px;
+    border-radius: 12px;
+    border: 1px solid var(--admin-border);
+    box-shadow: var(--admin-shadow-sm);
   }
 
   .ant-tabs-tab {
-    padding: 10px 16px;
+    padding: 8px 20px;
+    margin: 0 !important;
     font-weight: 500;
     font-size: 14px;
-    transition: all 0.3s;
+    border-radius: 8px !important;
+    transition: all 0.2s;
+    background: transparent !important;
+    border: none !important;
+    color: var(--admin-text-secondary);
 
     &:hover {
-      color: var(--admin-primary);
+      color: var(--admin-text);
     }
 
-    &.ant-tabs-tab-active .ant-tabs-tab-btn {
-      color: var(--admin-primary);
-      font-weight: 600;
+    &.ant-tabs-tab-active {
+      background: var(--admin-text) !important;
+      color: #fff !important;
+      
+      .ant-tabs-tab-btn {
+        color: #fff !important;
+        font-weight: 600;
+      }
+      
+      .anticon {
+        color: #fff !important;
+      }
     }
-  }
-
-  .ant-tabs-ink-bar {
-    background: var(--admin-primary);
-    height: 3px;
-    border-radius: 2px;
   }
 }
 
 /* ===== Cards ===== */
 .exam-root .ant-card {
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
   border: 1px solid var(--admin-border);
-  transition: box-shadow 0.3s;
+  background: var(--admin-surface);
+  transition: box-shadow 0.3s, transform 0.3s;
 
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--admin-shadow-hover);
   }
 
   .ant-card-head {
-    border-bottom: 1px solid #f0f0f0;
-    padding: 0 16px;
-    min-height: 44px;
+    border-bottom: 1px solid var(--admin-border);
+    padding: 0 24px;
+    min-height: 56px;
   }
 
   .ant-card-head-title {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
-    padding: 10px 0;
+    color: var(--admin-text);
+    padding: 16px 0;
+  }
+  
+  .ant-card-body {
+    padding: 24px;
+  }
+}
+
+/* ===== Buttons ===== */
+.exam-root .ant-btn-primary {
+  background: var(--admin-primary);
+  border-color: var(--admin-primary);
+  box-shadow: 0 4px 14px 0 rgba(0,0,0,0.1);
+  border-radius: 6px;
+  font-weight: 500;
+  
+  &:hover, &:focus {
+    background: var(--admin-primary-hover);
+    border-color: var(--admin-primary-hover);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
   }
 }
 
 /* ===== Tables ===== */
+.exam-root .ant-table-wrapper {
+  background: transparent;
+}
+
+.exam-root .ant-table {
+  background: transparent;
+}
+
 .exam-root .ant-table-thead > tr > th {
-  background: #fafafa;
+  background: transparent;
   font-weight: 600;
   font-size: 13px;
-  color: var(--admin-text-secondary);
+  color: var(--admin-text-tertiary);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--admin-border);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .exam-root .ant-table-tbody > tr {
-  transition: background 0.2s;
+  > td {
+    padding: 16px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--admin-border);
+  }
 
   &:hover > td {
-    background: #e6f7ff !important;
+    background: #f9fafb !important;
   }
 }
 
@@ -119,35 +204,60 @@
 .exam-root .ant-form-item-label > label {
   font-weight: 500;
   color: var(--admin-text);
+  font-size: 14px;
 }
 
 .exam-root .ant-select-selector,
 .exam-root .ant-input,
 .exam-root .ant-input-number {
   border-radius: 6px !important;
+  border-color: var(--admin-border);
+  box-shadow: var(--admin-shadow-sm);
+  
+  &:focus, &:focus-within {
+    border-color: var(--admin-text) !important;
+    box-shadow: 0 0 0 1px var(--admin-text) !important;
+  }
 }
 
-/* ===== Matrix Table ===== */
-.exam-root .ant-table-bordered {
-  .ant-table-thead > tr > th {
-    text-align: center;
-  }
+/* ===== Step Component ===== */
+.exam-steps-wrapper {
+  background: var(--admin-surface);
+  padding: 40px;
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+  margin-bottom: 32px;
+  border: 1px solid var(--admin-border);
+}
 
-  .ant-table-tbody > tr > td {
-    text-align: center;
-    vertical-align: middle;
+.exam-root .ant-steps-item-process .ant-steps-item-icon {
+  background: var(--admin-primary);
+  border-color: var(--admin-primary);
+}
+
+.exam-root .ant-steps-item-finish .ant-steps-item-icon {
+  border-color: var(--admin-primary);
+  .ant-steps-icon {
+    color: var(--admin-primary);
   }
+}
+
+.step-content {
+  margin-top: 40px;
+  min-height: 250px;
 }
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
   .exam-root {
-    padding: 12px;
+    padding: 20px;
   }
-
-  .exam-header-bar {
-    flex-direction: column;
-    text-align: center;
-    gap: 8px;
+  
+  .exam-header-title {
+    font-size: 24px;
+  }
+  
+  .exam-steps-wrapper {
+    padding: 24px;
   }
 }

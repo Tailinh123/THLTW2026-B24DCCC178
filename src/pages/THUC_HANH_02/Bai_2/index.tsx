@@ -1,5 +1,5 @@
 /* ============================================================
- * THUC_HANH_01 — Bài 2: Entry Point
+ * THUC_HANH_02 — Bài 2: Entry Point
  * Exam Management page with Redux Provider and Tabs navigation
  * ============================================================ */
 import React, { useState } from 'react';
@@ -35,7 +35,7 @@ const Bai2Content: React.FC = () => {
         <div>
           <h2 className="exam-header-title">📝 Quản lý Ngân hàng Câu hỏi & Đề thi</h2>
           <p className="exam-header-subtitle">
-            Hệ thống quản lý câu hỏi tự luận và tạo đề thi tự động
+            Hệ thống quản lý câu hỏi tự luận, xây dựng ma trận và tạo đề thi tự động.
           </p>
         </div>
       </div>
@@ -46,28 +46,36 @@ const Bai2Content: React.FC = () => {
           tab={<span><AppstoreOutlined /> Danh mục</span>}
           key="danhmuc"
         >
-          <DanhMucTab />
+          <div style={{ padding: '8px 0' }}>
+            <DanhMucTab />
+          </div>
         </TabPane>
 
         <TabPane
           tab={<span><QuestionCircleOutlined /> Câu hỏi</span>}
           key="cauhoi"
         >
-          <CauHoiTab />
+          <div style={{ padding: '8px 0' }}>
+            <CauHoiTab />
+          </div>
         </TabPane>
 
         <TabPane
           tab={<span><FileTextOutlined /> Đề thi</span>}
           key="dethi"
         >
-          <DeThiTab onPreview={handlePreview} />
+          <div style={{ padding: '8px 0' }}>
+            <DeThiTab onPreview={handlePreview} />
+          </div>
         </TabPane>
 
         <TabPane
           tab={<span><DatabaseOutlined /> Dữ liệu</span>}
           key="data"
         >
-          <DataManager />
+          <div style={{ padding: '8px 0' }}>
+            <DataManager />
+          </div>
         </TabPane>
       </Tabs>
 
@@ -78,11 +86,6 @@ const Bai2Content: React.FC = () => {
         onClose={() => setPreviewVisible(false)}
       />
 
-      <div style={{ textAlign: 'center', marginTop: 24 }}>
-        <Text type="secondary" style={{ fontSize: 11 }}>
-          THUC_HANH_01 • Bài 2 — Quản lý Ngân hàng Câu hỏi & Đề thi
-        </Text>
-      </div>
     </div>
   );
 };
