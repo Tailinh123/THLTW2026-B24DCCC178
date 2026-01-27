@@ -9,6 +9,7 @@ import { deleteSession } from '../../store/studySlice';
 interface Props {
   onEditSession: (id: string) => void;
 }
+// thang 1 
 
 const HistoryTable: React.FC<Props> = ({ onEditSession }) => {
   const dispatch = useDispatch();
