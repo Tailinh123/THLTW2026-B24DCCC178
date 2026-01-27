@@ -66,15 +66,27 @@ export const GameBoard: React.FC = () => {
 
   return (
     <Card className="game-card game-board-card" bodyStyle={{ padding: 24 }}>
-      <div style={{ textAlign: 'center', marginBottom: 16 }}>
-        <Title level={3} style={{ color: '#faad14', margin: 0 }}>
-          🎮 OẲN TÙ TÌ
+      <div style={{ textAlign: 'center', marginBottom: 20 }}>
+        <Title
+          level={3}
+          style={{
+            margin: 0,
+            background: 'linear-gradient(135deg, #818cf8, #a78bfa)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontWeight: 800,
+            letterSpacing: 1,
+          }}
+        >
+          ✊ OẲN TÙ TÌ ✋
         </Title>
-        <Text style={{ color: 'rgba(255,255,255,0.5)' }}>Chọn Kéo, Búa hoặc Bao!</Text>
+        <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: 13, marginTop: 4, display: 'block' }}>
+          Chọn Kéo, Búa hoặc Bao để bắt đầu!
+        </Text>
       </div>
 
       {!isPlaying ? (
-        <div style={{ textAlign: 'center', padding: '30px 0' }}>
+        <div style={{ textAlign: 'center', padding: '36px 0' }}>
           <Button
             type="primary"
             size="large"
@@ -90,11 +102,12 @@ export const GameBoard: React.FC = () => {
           <HandSelector />
           <ResultDisplay />
           {currentSession?.mode === 'free' && (
-            <div style={{ textAlign: 'center', marginTop: 16 }}>
+            <div style={{ textAlign: 'center', marginTop: 20 }}>
               <Button
                 icon={<PauseCircleOutlined />}
                 onClick={() => dispatch(gameActions.endFreeSession())}
                 className="game-btn-secondary"
+                size="middle"
               >
                 Kết thúc phiên
               </Button>

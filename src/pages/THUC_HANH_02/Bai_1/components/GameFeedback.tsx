@@ -45,24 +45,41 @@ export const ResultDisplay: React.FC = () => {
   const resultClass =
     r === 'win' ? 'result-win' : r === 'lose' ? 'result-lose' : 'result-draw';
 
+  const tagColors: Record<string, string> = {
+    win: '#34d399',
+    lose: '#f87171',
+    draw: '#fbbf24',
+  };
+
   return (
     <div className={`result-display ${resultClass}`}>
       <div className="result-hands">
         <div className="result-hand result-hand-player">
           <div className="result-emoji">{CHOICE_EMOJI[lastRound.playerChoice]}</div>
-          <Text style={{ color: '#fff', fontSize: 12 }}>{CHOICE_LABEL[lastRound.playerChoice]}</Text>
+          <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: 500 }}>
+            {CHOICE_LABEL[lastRound.playerChoice]}
+          </Text>
         </div>
         <div className="result-badge">
           <Tag
-            color={RESULT_COLOR[r]}
-            style={{ fontSize: 16, padding: '4px 16px', fontWeight: 700, borderRadius: 20 }}
+            color={tagColors[r]}
+            style={{
+              fontSize: 15,
+              padding: '5px 20px',
+              fontWeight: 700,
+              borderRadius: 24,
+              border: 'none',
+              letterSpacing: 1,
+            }}
           >
             {RESULT_LABEL[r].toUpperCase()}
           </Tag>
         </div>
         <div className="result-hand result-hand-computer">
           <div className="result-emoji">{CHOICE_EMOJI[lastRound.computerChoice]}</div>
-          <Text style={{ color: '#fff', fontSize: 12 }}>{CHOICE_LABEL[lastRound.computerChoice]}</Text>
+          <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: 500 }}>
+            {CHOICE_LABEL[lastRound.computerChoice]}
+          </Text>
         </div>
       </div>
     </div>
@@ -79,6 +96,8 @@ export const SessionFinishedModal: React.FC = () => {
   const isWin = session.winner === 'player';
   const isDraw = session.winner === 'draw';
 
+  const headerColor = isWin ? '#34d399' : isDraw ? '#fbbf24' : '#f87171';
+
   return (
     <Modal
       visible={visible}
@@ -87,20 +106,39 @@ export const SessionFinishedModal: React.FC = () => {
       centered
       bodyStyle={{
         textAlign: 'center',
-        padding: '40px 24px',
-        background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-        borderRadius: 12,
+        padding: '44px 28px',
+        background: 'linear-gradient(145deg, #1a1333 0%, #0d1b2a 100%)',
+        borderRadius: 16,
+        border: `1px solid ${headerColor}22`,
       }}
-      width={400}
+      width={420}
     >
       <div className={`finish-modal ${isWin ? 'finish-win' : isDraw ? 'finish-draw' : 'finish-lose'}`}>
-        <div style={{ fontSize: 60, marginBottom: 16 }}>
+        <div style={{ fontSize: 64, marginBottom: 16 }}>
           {isWin ? '🎉' : isDraw ? '🤝' : '😢'}
         </div>
-        <Title level={3} style={{ color: '#fff', margin: 0 }}>
+        <Title
+          level={3}
+          style={{
+            margin: 0,
+            background: `linear-gradient(135deg, ${headerColor}, ${headerColor}aa)`,
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontWeight: 800,
+          }}
+        >
           {isWin ? 'BẠN THẮNG!' : isDraw ? 'HÒA!' : 'MÁY THẮNG!'}
         </Title>
-        <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 16, display: 'block', margin: '8px 0 24px' }}>
+        <Text
+          style={{
+            color: 'rgba(255,255,255,0.5)',
+            fontSize: 18,
+            display: 'block',
+            margin: '10px 0 28px',
+            fontWeight: 600,
+            fontVariantNumeric: 'tabular-nums',
+          }}
+        >
           {session.playerScore} — {session.computerScore}
         </Text>
         <Button
@@ -109,6 +147,7 @@ export const SessionFinishedModal: React.FC = () => {
           icon={<ReloadOutlined />}
           onClick={() => dispatch(gameActions.resetSession())}
           className="game-btn"
+          style={{ borderRadius: 12 }}
         >
           Chơi lại
         </Button>

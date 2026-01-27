@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, Radio, Typography } from 'antd';
-import { ThunderboltOutlined } from '@ant-design/icons';
+import { ThunderboltOutlined, UserOutlined, RobotOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { gameActions } from '../slices';
 import type { GameMode } from '../types';
@@ -17,8 +17,19 @@ export const ModeSelector: React.FC = () => {
   return (
     <Card size="small" className="game-card game-mode-card">
       <div style={{ textAlign: 'center' }}>
-        <Text strong style={{ fontSize: 14, color: '#d4a017', display: 'block', marginBottom: 12 }}>
-          <ThunderboltOutlined /> CHẾ ĐỘ CHƠI
+        <Text
+          strong
+          style={{
+            fontSize: 13,
+            color: 'rgba(129, 140, 248, 0.9)',
+            display: 'block',
+            marginBottom: 14,
+            letterSpacing: 1.5,
+            textTransform: 'uppercase',
+          }}
+        >
+          <ThunderboltOutlined className="card-title-icon" />
+          Chế độ chơi
         </Text>
         <Radio.Group
           value={selectedMode}
@@ -39,7 +50,6 @@ export const ModeSelector: React.FC = () => {
 };
 
 
-
 export const ScoreBoard: React.FC = () => {
   const session = useAppSelector((s) => s.game.currentSession);
   if (!session) return null;
@@ -50,22 +60,42 @@ export const ScoreBoard: React.FC = () => {
   return (
     <Card size="small" className="game-card game-score-card">
       <div style={{ textAlign: 'center' }}>
-        <span style={{ display: 'inline-block', marginBottom: 8, fontSize: 12, color: '#faad14', background: 'rgba(250,173,20,0.1)', padding: '2px 12px', borderRadius: 10, border: '1px solid rgba(250,173,20,0.3)' }}>
-          {modeLabel}
-        </span>
+        <span className="score-mode-pill">{modeLabel}</span>
         <div className="score-display">
           <div className="score-side score-player">
-            <Text className="score-label">BẠN</Text>
+            <Text className="score-label">
+              <UserOutlined style={{ marginRight: 4 }} />
+              Bạn
+            </Text>
             <div className="score-number">{session.playerScore}</div>
           </div>
           <div className="score-vs">
-            <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: 16, fontWeight: 700 }}>VS</Text>
-            <Text style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, display: 'block' }}>
+            <Text
+              style={{
+                color: 'rgba(255, 255, 255, 0.3)',
+                fontSize: 18,
+                fontWeight: 800,
+                letterSpacing: 2,
+              }}
+            >
+              VS
+            </Text>
+            <Text
+              style={{
+                color: 'rgba(255, 255, 255, 0.22)',
+                fontSize: 11,
+                display: 'block',
+                marginTop: 2,
+              }}
+            >
               Lượt {roundNum}
             </Text>
           </div>
           <div className="score-side score-computer">
-            <Text className="score-label">MÁY</Text>
+            <Text className="score-label">
+              <RobotOutlined style={{ marginRight: 4 }} />
+              Máy
+            </Text>
             <div className="score-number">{session.computerScore}</div>
           </div>
         </div>

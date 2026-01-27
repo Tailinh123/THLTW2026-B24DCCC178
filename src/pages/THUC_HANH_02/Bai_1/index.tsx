@@ -1,37 +1,32 @@
 
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Row, Col, Typography } from 'antd';
 import store from '../store';
 import { ModeSelector, ScoreBoard, GameBoard, GameStatsPanel, GameHistory } from './components';
 import './styles.less';
 
-const { Text } = Typography;
-
 const Bai1Content: React.FC = () => {
   return (
     <div className="game-root">
-      <Row gutter={[20, 20]}>
+      <div className="game-layout">
         {}
-        <Col xs={24} lg={16}>
-          <ModeSelector />
-          <ScoreBoard />
-          <GameBoard />
-        </Col>
-
-        {}
-        <Col xs={24} lg={8}>
-          <GameStatsPanel />
-          <div style={{ marginTop: 16 }}>
-            <GameHistory />
+        <div className="game-main-col">
+          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+            <div style={{ flex: '1 1 40%', minWidth: 250 }}>
+              <ModeSelector />
+            </div>
+            <div style={{ flex: '1 1 50%', minWidth: 300 }}>
+              <ScoreBoard />
+            </div>
           </div>
-        </Col>
-      </Row>
+          <GameBoard />
+        </div>
 
-      <div style={{ textAlign: 'center', marginTop: 24 }}>
-        <Text style={{ color: 'rgba(255,255,255,0.2)', fontSize: 11 }}>
-          THUC_HANH_01 • Bài 1 — Game Oẳn Tù Tì
-        </Text>
+        {}
+        <div className="game-side-col">
+          <GameStatsPanel />
+          <GameHistory />
+        </div>
       </div>
     </div>
   );

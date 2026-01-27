@@ -18,24 +18,34 @@ import {
   Empty,
   Typography,
   Tooltip,
+  Segmented,
+  Badge,
 } from 'antd';
 import {
   PlusOutlined,
   EditOutlined,
   DeleteOutlined,
   SearchOutlined,
-  FilterOutlined,
   ClearOutlined,
   QuestionCircleOutlined,
+  FilterOutlined,
 } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { chActions } from '../slices';
 import type { CauHoi, MucDoKho } from '../types';
-import { MUC_DO_LABEL, MUC_DO_COLOR, ALL_MUC_DO } from '../types';
+import { MUC_DO_LABEL, ALL_MUC_DO } from '../types';
 import { formatDate } from '../../common';
 
 const { TextArea } = Input;
 const { Text } = Typography;
+
+
+const BADGE_COLORS: Record<MucDoKho, string> = {
+  nhan_biet: 'green',
+  thong_hieu: 'blue',
+  van_dung: 'orange',
+  van_dung_cao: 'red',
+};
 
 
 interface FilterBarProps {
@@ -59,58 +69,64 @@ const FilterBar: React.FC<FilterBarProps> = ({ onReset }) => {
     dispatch(chActions.setFilter({ ...filter, ...partial }));
   };
 
+  const segmentedOptions = [
+    { label: 'Tất cả', value: 'ALL' },
+    ...ALL_MUC_DO.map(m => ({ label: MUC_DO_LABEL[m], value: m }))
+  ];
+
   return (
-    <Card size="small" style={{ marginBottom: 16 }}>
-      <Row gutter={[12, 12]} align="middle">
-        <Col xs={24} sm={12} md={6}>
+    <Card 
+      size="small" 
+      style={{ marginBottom: 24 }} 
+      bordered={false}
+      bodyStyle={{ padding: '16px 20px' }}
+      title={<><FilterOutlined style={{ marginRight: 8, color: '#1890ff' }}/> Bộ lọc tìm kiếm</>}
+    >
+      <Row gutter={[16, 16]} align="middle">
+        <Col xs={24} md={7}>
           <Select
             style={{ width: '100%' }}
-            placeholder="📖 Lọc môn học"
+            placeholder="Lọc theo môn học"
             value={filter.monHocId}
             onChange={(v) => updateFilter({ monHocId: v, khoiKienThucId: undefined })}
             allowClear
-          >
-            {monHocs.map((m) => (
-              <Select.Option key={m.id} value={m.id}>{m.ten}</Select.Option>
-            ))}
-          </Select>
+            size="large"
+            options={monHocs.map(m => ({ label: m.ten, value: m.id }))}
+          />
         </Col>
-        <Col xs={24} sm={12} md={6}>
+        <Col xs={24} md={7}>
           <Select
             style={{ width: '100%' }}
-            placeholder="📚 Lọc khối kiến thức"
+            placeholder="Lọc theo khối kiến thức"
             value={filter.khoiKienThucId}
             onChange={(v) => updateFilter({ khoiKienThucId: v })}
             allowClear
-          >
-            {filteredKKTs.map((k) => (
-              <Select.Option key={k.id} value={k.id}>{k.ten}</Select.Option>
-            ))}
-          </Select>
+            size="large"
+            disabled={!filter.monHocId && monHocs.length > 0}
+            options={filteredKKTs.map(k => ({ label: k.ten, value: k.id }))}
+          />
         </Col>
-        <Col xs={24} sm={12} md={4}>
-          <Select
-            style={{ width: '100%' }}
-            placeholder="⭐ Mức độ"
-            value={filter.mucDoKho}
-            onChange={(v) => updateFilter({ mucDoKho: v })}
-            allowClear
-          >
-            {ALL_MUC_DO.map((m) => (
-              <Select.Option key={m} value={m}>{MUC_DO_LABEL[m]}</Select.Option>
-            ))}
-          </Select>
-        </Col>
-        <Col xs={24} sm={12} md={6}>
+        <Col xs={24} md={10}>
           <Input
-            placeholder="🔍 Tìm nội dung..."
-            prefix={<SearchOutlined />}
+            placeholder="Tìm kiếm nội dung câu hỏi hoặc đáp án..."
+            prefix={<SearchOutlined style={{ color: '#bfbfbf' }}/>}
             value={filter.keyword}
             onChange={(e) => updateFilter({ keyword: e.target.value })}
             allowClear
+            size="large"
           />
         </Col>
-        <Col xs={24} sm={24} md={2}>
+        <Col xs={24} md={20}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <Text type="secondary" strong style={{ fontSize: 13 }}>Mức độ khó:</Text>
+            <Segmented
+              options={segmentedOptions}
+              value={filter.mucDoKho || 'ALL'}
+              onChange={(val) => updateFilter({ mucDoKho: val === 'ALL' ? undefined : val as MucDoKho })}
+            />
+          </div>
+        </Col>
+        <Col xs={24} md={4}>
           <Button
             icon={<ClearOutlined />}
             onClick={() => {
@@ -118,8 +134,10 @@ const FilterBar: React.FC<FilterBarProps> = ({ onReset }) => {
               onReset();
             }}
             block
+            size="large"
+            type="dashed"
           >
-            Reset
+            Xóa bộ lọc
           </Button>
         </Col>
       </Row>
@@ -172,7 +190,7 @@ const QuestionFormModal: React.FC<QuestionFormProps> = ({ visible, editing, onCl
         message.success('Đã cập nhật câu hỏi');
       } else {
         dispatch(chActions.addCauHoi(data));
-        message.success('Đã thêm câu hỏi');
+        message.success('Đã thêm câu hỏi mới');
       }
       onClose();
     });
@@ -180,78 +198,76 @@ const QuestionFormModal: React.FC<QuestionFormProps> = ({ visible, editing, onCl
 
   return (
     <Modal
-      title={editing ? 'Sửa câu hỏi' : 'Thêm câu hỏi mới'}
+      title={<div style={{ fontSize: 18, fontWeight: 600 }}>{editing ? 'Sửa thông tin câu hỏi' : 'Tạo câu hỏi mới'}</div>}
       visible={visible}
       onOk={handleSave}
       onCancel={onClose}
-      okText="Lưu"
-      cancelText="Hủy"
-      width={700}
+      okText="Lưu câu hỏi"
+      cancelText="Hủy bỏ"
+      width={750}
+      wrapClassName="exam-admin-modal"
       destroyOnClose
+      centered
+      okButtonProps={{ size: 'large', style: { borderRadius: 6 } }}
+      cancelButtonProps={{ size: 'large', style: { borderRadius: 6 } }}
     >
-      <Form form={form} layout="vertical" initialValues={{ diem: 1, thoiGianPhut: 5 }}>
-        <Form.Item
-          name="noiDung"
-          label="Nội dung câu hỏi"
-          rules={[{ required: true, message: 'Nhập nội dung câu hỏi' }]}
-        >
-          <TextArea rows={4} placeholder="Nhập nội dung câu hỏi tự luận..." />
-        </Form.Item>
-
-        <Form.Item
-          name="dapAn"
-          label="Đáp án mẫu"
-          rules={[{ required: true, message: 'Nhập đáp án' }]}
-        >
-          <TextArea rows={3} placeholder="Đáp án mẫu cho câu hỏi..." />
-        </Form.Item>
-
-        <Row gutter={16}>
+      <Form form={form} layout="vertical" initialValues={{ diem: 1, thoiGianPhut: 5 }} style={{ marginTop: 24 }}>
+        <Row gutter={20}>
           <Col span={12}>
             <Form.Item
               name="monHocId"
               label="Môn học"
-              rules={[{ required: true, message: 'Chọn môn học' }]}
+              rules={[{ required: true, message: 'Vui lòng chọn môn học' }]}
             >
               <Select
                 placeholder="Chọn môn học"
+                size="large"
                 onChange={(v) => {
                   setSelectedMonHoc(v);
                   form.setFieldsValue({ khoiKienThucId: undefined });
                 }}
-              >
-                {monHocs.map((m) => (
-                  <Select.Option key={m.id} value={m.id}>{m.ten}</Select.Option>
-                ))}
-              </Select>
+                options={monHocs.map(m => ({ label: m.ten, value: m.id }))}
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
               name="khoiKienThucId"
               label="Khối kiến thức"
-              rules={[{ required: true, message: 'Chọn khối kiến thức' }]}
+              rules={[{ required: true, message: 'Vui lòng chọn khối kiến thức' }]}
             >
-              <Select placeholder="Chọn khối kiến thức">
-                {filteredKKTs.map((k) => (
-                  <Select.Option key={k.id} value={k.id}>{k.ten}</Select.Option>
-                ))}
-              </Select>
+              <Select placeholder="Chọn khối kiến thức" size="large" options={filteredKKTs.map(k => ({ label: k.ten, value: k.id }))} disabled={!selectedMonHoc}/>
             </Form.Item>
           </Col>
         </Row>
 
-        <Row gutter={16}>
+        <Form.Item
+          name="noiDung"
+          label="Nội dung câu hỏi"
+          rules={[{ required: true, message: 'Vui lòng nhập nội dung câu hỏi' }]}
+        >
+          <TextArea rows={4} placeholder="Nhập chi tiết nội dung câu hỏi tự luận..." style={{ borderRadius: 8 }}/>
+        </Form.Item>
+
+        <Form.Item
+          name="dapAn"
+          label="Đáp án mẫu / Hướng dẫn chấm"
+          rules={[{ required: true, message: 'Vui lòng nhập đáp án' }]}
+        >
+          <TextArea rows={3} placeholder="Mô tả đáp án mẫu hoặc các ý chính cần có..." style={{ borderRadius: 8 }}/>
+        </Form.Item>
+
+        <Row gutter={20}>
           <Col span={8}>
             <Form.Item
               name="mucDoKho"
               label="Mức độ khó"
               rules={[{ required: true, message: 'Chọn mức độ' }]}
             >
-              <Select placeholder="Chọn mức độ">
+              <Select placeholder="Chọn mức độ" size="large">
                 {ALL_MUC_DO.map((m) => (
                   <Select.Option key={m} value={m}>
-                    <Tag color={MUC_DO_COLOR[m]} style={{ marginRight: 0 }}>{MUC_DO_LABEL[m]}</Tag>
+                    <Badge status={BADGE_COLORS[m] as any} text={MUC_DO_LABEL[m]} />
                   </Select.Option>
                 ))}
               </Select>
@@ -260,10 +276,10 @@ const QuestionFormModal: React.FC<QuestionFormProps> = ({ visible, editing, onCl
           <Col span={8}>
             <Form.Item
               name="diem"
-              label="Điểm"
+              label="Điểm mặc định"
               rules={[{ required: true, message: 'Nhập điểm' }]}
             >
-              <InputNumber min={0.25} max={10} step={0.25} style={{ width: '100%' }} />
+              <InputNumber min={0.25} max={10} step={0.25} size="large" style={{ width: '100%' }} />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -272,20 +288,7 @@ const QuestionFormModal: React.FC<QuestionFormProps> = ({ visible, editing, onCl
               label="Thời gian (phút)"
               rules={[{ required: true, message: 'Nhập thời gian' }]}
             >
-              <InputNumber min={1} max={120} style={{ width: '100%' }} />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item name="chuong" label="Chương">
-              <Input placeholder="VD: Chương 1, Chương 2..." />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item name="baiHoc" label="Bài học">
-              <Input placeholder="VD: Bài 1, Bài 2..." />
+              <InputNumber min={1} max={120} size="large" style={{ width: '100%' }} />
             </Form.Item>
           </Col>
         </Row>
@@ -333,15 +336,15 @@ const CauHoiTab: React.FC = () => {
   };
 
   const columns = [
-    { title: '#', key: 'stt', width: 45, render: (_: any, __: any, i: number) => i + 1 },
+    { title: '#', key: 'stt', width: 50, render: (_: any, __: any, i: number) => <span style={{ color: '#8c8c8c' }}>{i + 1}</span> },
     {
-      title: 'Nội dung',
+      title: 'Nội dung câu hỏi',
       dataIndex: 'noiDung',
       key: 'noiDung',
       ellipsis: true,
       render: (v: string) => (
-        <Tooltip title={v}>
-          <Text>{v.length > 80 ? v.slice(0, 80) + '...' : v}</Text>
+        <Tooltip title={v} placement="topLeft">
+          <Text style={{ color: '#262626' }}>{v.length > 70 ? v.slice(0, 70) + '...' : v}</Text>
         </Tooltip>
       ),
     },
@@ -349,51 +352,60 @@ const CauHoiTab: React.FC = () => {
       title: 'Môn học',
       dataIndex: 'monHocId',
       key: 'monHocId',
-      width: 130,
-      render: (id: string) => <Tag color="blue">{monHocMap.get(id) || '—'}</Tag>,
+      width: 140,
+      render: (id: string) => <Tag color="blue" style={{ borderRadius: 4 }}>{monHocMap.get(id) || '—'}</Tag>,
     },
     {
-      title: 'Khối KT',
+      title: 'Khối kiến thức',
       dataIndex: 'khoiKienThucId',
       key: 'khoiKienThucId',
-      width: 120,
-      render: (id: string) => <Tag color="geekblue">{kktMap.get(id) || '—'}</Tag>,
+      width: 140,
+      render: (id: string) => <Tag color="cyan" style={{ borderRadius: 4 }}>{kktMap.get(id) || '—'}</Tag>,
     },
     {
       title: 'Mức độ',
       dataIndex: 'mucDoKho',
       key: 'mucDoKho',
-      width: 120,
-      render: (v: MucDoKho) => <Tag color={MUC_DO_COLOR[v]}>{MUC_DO_LABEL[v]}</Tag>,
+      width: 130,
+      render: (v: MucDoKho) => (
+        <Badge 
+          status={BADGE_COLORS[v] as any} 
+          text={<span style={{ fontWeight: 500 }}>{MUC_DO_LABEL[v]}</span>} 
+        />
+      ),
     },
     {
       title: 'Điểm',
       dataIndex: 'diem',
       key: 'diem',
-      width: 65,
+      width: 80,
+      align: 'center' as const,
       sorter: (a: CauHoi, b: CauHoi) => a.diem - b.diem,
-    },
-    {
-      title: 'Phút',
-      dataIndex: 'thoiGianPhut',
-      key: 'thoiGianPhut',
-      width: 60,
+      render: (v: number) => <strong>{v}đ</strong>
     },
     {
       title: 'Thao tác',
       key: 'actions',
       width: 100,
+      align: 'center' as const,
       render: (_: any, r: CauHoi) => (
-        <Space>
-          <Button size="small" icon={<EditOutlined />} onClick={() => openEdit(r)} />
+        <Space size="small">
+          <Tooltip title="Chỉnh sửa">
+            <Button type="text" style={{ color: '#1890ff' }} icon={<EditOutlined />} onClick={() => openEdit(r)} />
+          </Tooltip>
           <Popconfirm
             title="Xóa câu hỏi này?"
             onConfirm={() => {
               dispatch(chActions.deleteCauHoi(r.id));
-              message.success('Đã xóa');
+              message.success('Đã xóa câu hỏi');
             }}
+            placement="topRight"
+            okText="Xóa"
+            cancelText="Hủy"
           >
-            <Button size="small" icon={<DeleteOutlined />} danger />
+            <Tooltip title="Xóa">
+              <Button type="text" danger icon={<DeleteOutlined />} />
+            </Tooltip>
           </Popconfirm>
         </Space>
       ),
@@ -405,28 +417,30 @@ const CauHoiTab: React.FC = () => {
       <FilterBar onReset={() => {}} />
 
       <Card
+        bordered={false}
         title={
-          <>
-            <QuestionCircleOutlined /> Câu hỏi tự luận ({filtered.length}/{cauHois.length})
-          </>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <QuestionCircleOutlined style={{ color: '#fa8c16', marginRight: 8, fontSize: 18 }} /> 
+            <span style={{ fontSize: 16 }}>Ngân hàng câu hỏi tự luận</span>
+            <Tag style={{ marginLeft: 12, borderRadius: 12 }} color="orange">{filtered.length} câu</Tag>
+          </div>
         }
         extra={
-          <Button type="primary" icon={<PlusOutlined />} onClick={openAdd}>
-            Thêm câu hỏi
+          <Button type="primary" icon={<PlusOutlined />} onClick={openAdd} style={{ borderRadius: 6, background: '#fa8c16', borderColor: '#fa8c16' }}>
+            Thêm câu hỏi mới
           </Button>
         }
-        size="small"
       >
         <Table
           dataSource={filtered}
           columns={columns}
           rowKey="id"
-          size="small"
-          pagination={{ pageSize: 8, size: 'small', showTotal: (t) => `Tổng: ${t}` }}
+          size="middle"
+          pagination={{ pageSize: 8, showTotal: (total) => `Tổng số: ${total} câu hỏi`, showSizeChanger: false }}
           locale={{
             emptyText: (
               <Empty
-                description={cauHois.length === 0 ? 'Chưa có câu hỏi nào' : 'Không tìm thấy kết quả'}
+                description={cauHois.length === 0 ? 'Ngân hàng chưa có câu hỏi nào' : 'Không tìm thấy câu hỏi phù hợp với bộ lọc'}
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
               />
             ),

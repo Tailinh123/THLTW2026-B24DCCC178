@@ -19,60 +19,110 @@ export const GameHistory: React.FC = () => {
       title: '#',
       dataIndex: 'index',
       key: 'index',
-      width: 50,
-      render: (_: any, __: any, idx: number) => idx + 1,
+      width: 45,
+      render: (_: any, __: any, idx: number) => (
+        <Text style={{ color: 'rgba(255,255,255,0.35)', fontSize: 12 }}>{idx + 1}</Text>
+      ),
     },
     {
       title: 'Chế độ',
       dataIndex: 'mode',
       key: 'mode',
       width: 100,
-      render: (m: GameMode) => <Tag>{MODE_LABEL[m]}</Tag>,
+      render: (m: GameMode) => (
+        <Tag
+          style={{
+            background: 'rgba(99, 102, 241, 0.12)',
+            border: '1px solid rgba(99, 102, 241, 0.2)',
+            color: '#818cf8',
+            borderRadius: 6,
+            fontSize: 11,
+            fontWeight: 600,
+          }}
+        >
+          {MODE_LABEL[m]}
+        </Tag>
+      ),
     },
     {
       title: 'Kết quả',
       dataIndex: 'winner',
       key: 'winner',
-      width: 100,
+      width: 90,
       render: (w: string) => {
-        const color = w === 'player' ? 'green' : w === 'computer' ? 'red' : 'gold';
-        const text = w === 'player' ? 'Thắng' : w === 'computer' ? 'Thua' : 'Hòa';
-        return <Tag color={color}>{text}</Tag>;
+        const cfg: Record<string, { bg: string; border: string; color: string; text: string }> = {
+          player: {
+            bg: 'rgba(52, 211, 153, 0.12)',
+            border: 'rgba(52, 211, 153, 0.25)',
+            color: '#34d399',
+            text: 'Thắng',
+          },
+          computer: {
+            bg: 'rgba(248, 113, 113, 0.12)',
+            border: 'rgba(248, 113, 113, 0.25)',
+            color: '#f87171',
+            text: 'Thua',
+          },
+          draw: {
+            bg: 'rgba(251, 191, 36, 0.12)',
+            border: 'rgba(251, 191, 36, 0.25)',
+            color: '#fbbf24',
+            text: 'Hòa',
+          },
+        };
+        const c = cfg[w] || cfg.draw;
+        return (
+          <Tag
+            style={{
+              background: c.bg,
+              border: `1px solid ${c.border}`,
+              color: c.color,
+              borderRadius: 6,
+              fontSize: 11,
+              fontWeight: 700,
+            }}
+          >
+            {c.text}
+          </Tag>
+        );
       },
     },
     {
       title: 'Tỉ số',
       key: 'score',
-      width: 80,
+      width: 70,
       render: (_: any, r: any) => (
-        <Text style={{ color: '#fff' }}>
-          {r.playerScore} - {r.computerScore}
+        <Text style={{ color: 'rgba(255,255,255,0.75)', fontVariantNumeric: 'tabular-nums', fontWeight: 600, fontSize: 13 }}>
+          {r.playerScore} – {r.computerScore}
         </Text>
       ),
     },
     {
-      title: 'Số lượt',
+      title: 'Lượt',
       dataIndex: 'rounds',
       key: 'rounds',
-      width: 80,
-      render: (rounds: any[]) => rounds.length,
+      width: 55,
+      render: (rounds: any[]) => (
+        <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12 }}>{rounds.length}</Text>
+      ),
     },
     {
       title: 'Thời gian',
       dataIndex: 'startedAt',
       key: 'startedAt',
       render: (v: string) => (
-        <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12 }}>{formatDate(v)}</Text>
+        <Text style={{ color: 'rgba(255,255,255,0.35)', fontSize: 11 }}>{formatDate(v)}</Text>
       ),
     },
   ];
 
   return (
     <Card
-      className="game-card"
+      className="game-card game-history-card"
       title={
-        <span style={{ color: '#faad14' }}>
-          <HistoryOutlined /> Lịch sử ({history.length})
+        <span style={{ color: '#818cf8' }}>
+          <HistoryOutlined className="card-title-icon" />
+          Lịch sử ({history.length})
         </span>
       }
       extra={
@@ -86,7 +136,13 @@ export const GameHistory: React.FC = () => {
             okText="Xóa"
             cancelText="Hủy"
           >
-            <Button size="small" icon={<DeleteOutlined />} danger type="text">
+            <Button
+              size="small"
+              icon={<DeleteOutlined />}
+              danger
+              type="text"
+              style={{ color: '#f87171', fontSize: 12 }}
+            >
               Xóa
             </Button>
           </Popconfirm>
@@ -101,7 +157,7 @@ export const GameHistory: React.FC = () => {
           columns={columns}
           rowKey="id"
           size="small"
-          pagination={{ pageSize: 5, size: 'small' }}
+          pagination={{ pageSize: 4, size: 'small' }}
           className="game-table"
         />
       )}
