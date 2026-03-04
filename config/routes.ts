@@ -32,14 +32,30 @@ export default [
     component: './TodoList',
   },
 
-  // ===== QUẢN LÝ SẢN PHẨM =====
+  // ===== THUC_HANH_01 =====
   {
-  path: '/product-management',
-  name: 'QuanLySanPham',
-  icon: 'ShoppingOutlined',
-  component: './ProductManagement',
-  layout: false,
-},
+    name: 'THUC_HANH_01',
+    icon: 'BookOutlined',
+    routes: [
+      {
+        path: '/thuc-hanh-01/bai-1',
+        name: 'Bài 1',
+        component: './THUC_HANH_01/Bai_1',
+      },
+      {
+        path: '/thuc-hanh-01/bai-2',
+        name: 'Bài 2',
+        component: './THUC_HANH_01/Bai_2',
+      },
+    ],
+  },
+
+  {
+    path: '/product-management',
+    name: 'QuanLySanPham',
+    icon: 'ShoppingOutlined',
+    component: './ProductManagement',
+  },
 
   {
     component: './exception/404',
