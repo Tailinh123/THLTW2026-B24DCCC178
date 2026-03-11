@@ -8,6 +8,8 @@ import ExamManager from "./components/ExamManager";
 
 import { KnowledgeBlock, Subject, Question, Exam } from "./types";
 
+const { TabPane } = Tabs;
+
 const QuestionBankPage = () => {
 
   const [blocks, setBlocks] = useState<KnowledgeBlock[]>([]);
@@ -18,57 +20,41 @@ const QuestionBankPage = () => {
   return (
     <Card title="Hệ thống ngân hàng câu hỏi">
 
-      <Tabs
-        items={[
-          {
-            key: "1",
-            label: "Khối kiến thức",
-            children: (
-              <KnowledgeBlockManager
-                blocks={blocks}
-                setBlocks={setBlocks}
-              />
-            ),
-          },
+      <Tabs defaultActiveKey="1">
 
-          {
-            key: "2",
-            label: "Môn học",
-            children: (
-              <SubjectManager
-                subjects={subjects}
-                setSubjects={setSubjects}
-              />
-            ),
-          },
+        <TabPane tab="Khối kiến thức" key="1">
+          <KnowledgeBlockManager
+            blocks={blocks}
+            setBlocks={setBlocks}
+          />
+        </TabPane>
 
-          {
-            key: "3",
-            label: "Câu hỏi",
-            children: (
-              <QuestionManager
-                questions={questions}
-                setQuestions={setQuestions}
-                subjects={subjects}
-                blocks={blocks}
-              />
-            ),
-          },
+        <TabPane tab="Môn học" key="2">
+          <SubjectManager
+            subjects={subjects}
+            setSubjects={setSubjects}
+          />
+        </TabPane>
 
-          {
-            key: "4",
-            label: "Đề thi",
-            children: (
-              <ExamManager
-                questions={questions}
-                subjects={subjects}
-                exams={exams}
-                setExams={setExams}
-              />
-            ),
-          },
-        ]}
-      />
+        <TabPane tab="Câu hỏi" key="3">
+          <QuestionManager
+            questions={questions}
+            setQuestions={setQuestions}
+            subjects={subjects}
+            blocks={blocks}
+          />
+        </TabPane>
+
+        <TabPane tab="Đề thi" key="4">
+          <ExamManager
+            questions={questions}
+            subjects={subjects}
+            exams={exams}
+            setExams={setExams}
+          />
+        </TabPane>
+
+      </Tabs>
 
     </Card>
   );
