@@ -24,11 +24,10 @@ export const initialStateConfig = {
 
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
- * // Tobe removed
- * */
+ */
 export async function getInitialState(): Promise<IInitialState> {
 	return {
-		permissionLoading: true,
+		permissionLoading: false, // Start as false to allow content to render
 	};
 }
 

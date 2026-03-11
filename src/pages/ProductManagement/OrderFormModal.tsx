@@ -1,8 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Form, Input, Modal, Select, Divider, InputNumber, Space, Row, Col } from 'antd';
-import { Option } from 'antd/es/select';
+import { useEffect, useMemo, useState } from 'react';
+import { Form, Input, Modal, Select, Divider, InputNumber, Space, Row, Col, message } from 'antd';
 import { Product, Order, OrderProduct } from './types';
-import { message } from 'antd';
 
 interface Props {
   open: boolean;
@@ -38,7 +36,7 @@ const OrderFormModal = ({ open, onCancel, onCreate, products }: Props) => {
     selectedProducts.forEach((productId: number) => {
       const quantity = values[`qty_${productId}`] || 0;
       const product = productMap[productId];
-      if (product) {
+      if (product && quantity > 0) {
         total += quantity * product.price;
       }
     });
@@ -78,7 +76,7 @@ const OrderFormModal = ({ open, onCancel, onCreate, products }: Props) => {
     const id = 'DH' + Date.now();
     const createdAt = new Date().toISOString().slice(0, 10);
     
-    const newOrder = {
+    const newOrder: Order = {
       id,
       customerName,
       phone,
@@ -87,7 +85,7 @@ const OrderFormModal = ({ open, onCancel, onCreate, products }: Props) => {
       totalAmount: total,
       status: 'Chờ xử lý',
       createdAt
-    };
+    } as Order;
 
     onCreate(newOrder);
     message.success('Tạo đơn hàng thành công');
@@ -102,7 +100,7 @@ const OrderFormModal = ({ open, onCancel, onCreate, products }: Props) => {
   return (
     <Modal 
       title="Tạo đơn hàng mới" 
-      open={open} 
+      visible={open} 
       onCancel={onCancel} 
       onOk={() => form.submit()} 
       destroyOnClose
@@ -159,11 +157,21 @@ const OrderFormModal = ({ open, onCancel, onCreate, products }: Props) => {
             placeholder="Chọn các sản phẩm cần đặt"
             optionLabelProp="label"
           >
-            {products.map((p) => (
-              <Option key={p.id} value={p.id} label={p.name}>
-                {p.name} - Giá: {p.price.toLocaleString()} - Có sẵn: {p.quantity}
-              </Option>
-            ))}
+            {products.map((p) => {
+              const available = p.quantity > 0;
+              const displayText = `${p.name} - Giá: ${p.price.toLocaleString()} VND - Có sẵn: ${p.quantity}`;
+              return (
+                <Select.Option 
+                  key={p.id} 
+                  value={p.id} 
+                  label={displayText}
+                  disabled={!available}
+                >
+                  {displayText}
+                  {!available && ' (Hết hàng)'}
+                </Select.Option>
+              );
+            })}
           </Select>
         </Form.Item>
 

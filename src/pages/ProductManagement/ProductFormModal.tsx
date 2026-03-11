@@ -1,4 +1,4 @@
-import { Modal, Form, Input, InputNumber, Select, message } from 'antd';
+import { Modal, Form, Input, InputNumber, Select, Row, Col } from 'antd';
 import { Product } from './types';
 
 interface Props {
@@ -15,13 +15,7 @@ const ProductFormModal = ({ open, onCancel, onSave, initialValues }: Props) => {
   const isEditMode = !!initialValues;
 
   const onFinish = (values: any) => {
-    if (isEditMode && initialValues && initialValues.id) {
-      onSave({ ...initialValues, ...values });
-      message.success('Cập nhật sản phẩm thành công');
-    } else {
-      onSave(values);
-      message.success('Thêm sản phẩm thành công');
-    }
+    onSave({ ...initialValues, ...values });
     form.resetFields();
   };
 
@@ -41,7 +35,7 @@ const ProductFormModal = ({ open, onCancel, onSave, initialValues }: Props) => {
   return (
     <Modal
       title={isEditMode ? 'Chỉnh sửa sản phẩm' : 'Thêm sản phẩm mới'}
-      open={open}
+      visible={open}
       onCancel={() => {
         form.resetFields();
         onCancel();
@@ -87,51 +81,53 @@ const ProductFormModal = ({ open, onCancel, onSave, initialValues }: Props) => {
           </Select>
         </Form.Item>
 
-        <Form.Item
-          label="Giá (VND)"
-          name="price"
-          rules={[
-            { required: true, message: 'Vui lòng nhập giá sản phẩm' },
-            {
-              type: 'number',
-              min: 1,
-              message: 'Giá sản phẩm phải lớn hơn 0',
-            },
-          ]}
-        >
-          <InputNumber
-            style={{ width: '100%' }}
-            min={1}
-            placeholder="Nhập giá sản phẩm"
-            formatter={(value) => {
-              if (!value) return '';
-              return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            }}
-            parser={(value) => {
-              const val = value?.replace(/,/g, '') || '';
-              return parseInt(val) || 0;
-            }}
-          />
-        </Form.Item>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              label="Giá (VND)"
+              name="price"
+              rules={[
+                { required: true, message: 'Vui lòng nhập giá sản phẩm' },
+                {
+                  type: 'number',
+                  min: 1,
+                  message: 'Giá sản phẩm phải lớn hơn 0',
+                },
+              ]}
+            >
+              <InputNumber
+                style={{ width: '100%' }}
+                min={1}
+                placeholder="Nhập giá sản phẩm"
+                formatter={(value) => {
+                  if (!value) return '';
+                  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }}
+              />
+            </Form.Item>
+          </Col>
 
-        <Form.Item
-          label="Số lượng tồn kho"
-          name="quantity"
-          rules={[
-            { required: true, message: 'Vui lòng nhập số lượng' },
-            {
-              type: 'number',
-              min: 0,
-              message: 'Số lượng không được âm',
-            },
-          ]}
-        >
-          <InputNumber
-            style={{ width: '100%' }}
-            min={0}
-            placeholder="Nhập số lượng tồn kho"
-          />
-        </Form.Item>
+          <Col span={12}>
+            <Form.Item
+              label="Số lượng tồn kho"
+              name="quantity"
+              rules={[
+                { required: true, message: 'Vui lòng nhập số lượng' },
+                {
+                  type: 'number',
+                  min: 0,
+                  message: 'Số lượng không được âm',
+                },
+              ]}
+            >
+              <InputNumber
+                style={{ width: '100%' }}
+                min={0}
+                placeholder="Nhập số lượng tồn kho"
+              />
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
     </Modal>
   );

@@ -180,8 +180,8 @@ const ProductManagement = () => {
   };
 
   return (
-    <div>
-      <h2>Quản lý đơn hàng & sản phẩm</h2>
+    <div style={{ padding: '0 20px' }}>
+      <h1 style={{ marginBottom: 24 }}>Quản lý Đơn hàng & Sản phẩm</h1>
 
       <Tabs defaultActiveKey="dashboard">
         <Tabs.TabPane tab="Tổng quan" key="dashboard">
@@ -189,7 +189,7 @@ const ProductManagement = () => {
         </Tabs.TabPane>
 
         <Tabs.TabPane tab="Quản lý Sản phẩm" key="products">
-          <Row style={{ marginBottom: 12 }} gutter={12} align="middle">
+          <Row style={{ marginBottom: 16 }} gutter={12} align="middle">
             <Col>
               <Input.Search
                 placeholder="Tìm kiếm theo tên"
@@ -259,7 +259,7 @@ const ProductManagement = () => {
                   setEditingProduct(null);
                 }}
               >
-                Thêm sản phẩm
+                + Thêm sản phẩm
               </Button>
             </Col>
           </Row>
@@ -282,7 +282,7 @@ const ProductManagement = () => {
         </Tabs.TabPane>
 
         <Tabs.TabPane tab="Quản lý Đơn hàng" key="orders">
-          <Row style={{ marginBottom: 12 }} gutter={12} align="middle">
+          <Row style={{ marginBottom: 16 }} gutter={12} align="middle">
             <Col>
               <Input.Search
                 placeholder="Tìm kiếm theo tên khách hoặc mã đơn"
@@ -329,7 +329,7 @@ const ProductManagement = () => {
                 type="primary"
                 onClick={() => setOrderModalOpen(true)}
               >
-                Tạo đơn hàng
+                + Tạo đơn hàng
               </Button>
             </Col>
           </Row>

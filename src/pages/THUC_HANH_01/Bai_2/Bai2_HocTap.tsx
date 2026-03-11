@@ -157,7 +157,7 @@ export default function Bai2_HocTap() {
 
               <input
                 type="number"
-                placeholder="Thời lượng (phút)"
+                placeholder="Thời gian (phút)"
                 value={form.duration}
                 onChange={(e) =>
                   setForm({ ...form, duration: Number(e.target.value) })
@@ -245,7 +245,7 @@ const styles: any = {
     flex: 1,
     padding: 8,
     borderRadius: 8,
-    background: "#6366f1",
+    background: "#ff0000",
     color: "#fff",
     cursor: "pointer",
   },
@@ -254,7 +254,7 @@ const styles: any = {
   input: { padding: 8, borderRadius: 8, border: "1px solid #ddd" },
   primaryBtn: {
     padding: "8px 14px",
-    background: "#6366f1",
+    background: "#bb0707",
     color: "#fff",
     borderRadius: 8,
     border: "none",

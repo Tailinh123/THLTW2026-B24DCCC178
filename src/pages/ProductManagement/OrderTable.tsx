@@ -1,4 +1,4 @@
-import { Table, Button, Select, Tag } from 'antd';
+import { Table, Button, Select } from 'antd';
 import { Order } from './types';
 
 interface Props {
@@ -8,21 +8,6 @@ interface Props {
 }
 
 const { Option } = Select;
-
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case 'Chờ xử lý':
-      return 'orange';
-    case 'Đang giao':
-      return 'blue';
-    case 'Hoàn thành':
-      return 'green';
-    case 'Đã hủy':
-      return 'red';
-    default:
-      return 'default';
-  }
-};
 
 const OrderTable = ({ orders, onChangeStatus, onView }: Props) => {
   const columns = [
