@@ -1,7 +1,4 @@
-/* ============================================================
- * THUC_HANH_02 — Bài 1: Entry Point
- * Game Oẳn Tù Tì page with Redux Provider
- * ============================================================ */
+
 import React from 'react';
 import { Provider } from 'react-redux';
 import store from '../store';
