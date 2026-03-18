@@ -56,9 +56,7 @@ export default [
     ],
   },
 
-  // =========================
-  // ===== THUC_HANH_02 =====
-  // =========================
+
   {
     path: '/thuc-hanh-02',
     name: 'THUC_HANH_02',
@@ -77,7 +75,21 @@ export default [
     ],
   },
 
-  // ===== PRODUCT MANAGEMENT =====
+
+  {
+    path: '/thuc-hanh-03',
+    name: 'THUC_HANH_03',
+    icon: 'FileOutlined',
+    routes: [
+      {
+        path: '/thuc-hanh-03/bai-1',
+        name: 'Bài 1',
+        component: './THUC_HANH_03/Bai_1',
+      },
+    ],
+  },
+
+
   {
     path: '/product-management',
     name: 'Quản lý Sản phẩm & Đơn hàng',
