@@ -13,13 +13,11 @@ import 'dayjs/locale/vi';
 import { MOCK_APPOINTMENTS, MOCK_REVIEWS } from './types';
 import type { Appointment, AppointmentStatus, Employee, Review } from './types';
 
-// Pages
+
 import DashboardPage from './pages/DashboardPage';
 import AppointmentsPage from './pages/AppointmentsPage';
 import EmployeesPage from './pages/EmployeesPage';
 import ServicesPage from './pages/ServicesPage';
-
-// Components
 import AppointmentForm from './components/AppointmentForm';
 import EmployeeDrawer from './components/EmployeeDrawer';
 
@@ -40,7 +38,7 @@ const PAGE_TITLE: Record<PageKey, string> = {
 const uid = () => Math.random().toString(36).slice(2, 9);
 
 const THUC_HANH_03_Bai1: React.FC = () => {
-  // ── State ──────────────────────────────────────────────────────────────────
+  
   const [appointments, setAppointments] = useState<Appointment[]>(MOCK_APPOINTMENTS);
   const [reviews, setReviews] = useState<Review[]>(MOCK_REVIEWS);
   const [page, setPage] = useState<PageKey>('dashboard');
@@ -49,7 +47,7 @@ const THUC_HANH_03_Bai1: React.FC = () => {
   const [drawerEmp, setDrawerEmp] = useState<Employee | null>(null);
   const [notif, ctx] = notification.useNotification();
 
-  // ── Handlers ───────────────────────────────────────────────────────────────
+ 
   const handleCreate = (data: Omit<Appointment, 'id' | 'createdAt'>) => {
     setAppointments(p => [{ ...data, id: `a_${uid()}`, createdAt: new Date().toISOString() }, ...p]);
     setModalOpen(false);
@@ -83,12 +81,12 @@ const THUC_HANH_03_Bai1: React.FC = () => {
 
   const pendingCount = appointments.filter(a => a.status === 'pending').length;
 
-  // ── Render ─────────────────────────────────────────────────────────────────
+ 
   return (
     <Layout style={{ minHeight: '100vh' }}>
       {ctx}
 
-      {/* Sidebar */}
+     
       <Sider
         width={220}
         style={{ background: '#1a1a2e', position: 'sticky', top: 0, height: '100vh', overflow: 'auto' }}
@@ -142,7 +140,7 @@ const THUC_HANH_03_Bai1: React.FC = () => {
           )}
         </Header>
 
-        {/* Content — mỗi page là 1 component riêng */}
+        
         <Content style={{ margin: 24 }}>
           {page === 'dashboard' && (
             <DashboardPage
@@ -171,7 +169,7 @@ const THUC_HANH_03_Bai1: React.FC = () => {
         </Content>
       </Layout>
 
-      {/* Modal đặt / sửa lịch */}
+      
       <Modal
         title={editingAppt ? 'Chỉnh sửa lịch hẹn' : 'Đặt lịch hẹn mới'}
         open={modalOpen}
@@ -188,7 +186,7 @@ const THUC_HANH_03_Bai1: React.FC = () => {
         </div>
       </Modal>
 
-      {/* Drawer chi tiết nhân viên */}
+      
       <EmployeeDrawer
         employee={drawerEmp}
         appointments={appointments}
