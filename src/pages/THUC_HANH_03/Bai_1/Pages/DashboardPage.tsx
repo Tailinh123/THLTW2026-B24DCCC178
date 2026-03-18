@@ -1,18 +1,28 @@
+
 import React, { useMemo } from 'react';
-import { Row, Col, Card, Statistic, Space, Avatar, Typography, Progress } from 'antd';
+import { Row, Col, Card, Typography, Space, Avatar, Progress } from 'antd';
+import { CalendarOutlined, ClockCircleOutlined, CheckCircleOutlined, DollarOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import type { Appointment, Employee } from '../types';
-import { MOCK_EMPLOYEES, MOCK_SERVICES, formatCurrency } from '../types';
+import { MOCK_SERVICES, formatCurrency } from '../types';
 import SimpleBarChart from '../components/SimpleBarChart';
 
 const { Text } = Typography;
 
 interface Props {
   appointments: Appointment[];
+  employees: Employee[];
   onEmployeeClick: (emp: Employee) => void;
 }
 
-const DashboardPage: React.FC<Props> = ({ appointments, onEmployeeClick }) => {
+const KPI_ICONS = [
+  <CalendarOutlined style={{ fontSize: 20, color: '#6366f1' }} />,
+  <ClockCircleOutlined style={{ fontSize: 20, color: '#f59e0b' }} />,
+  <CheckCircleOutlined style={{ fontSize: 20, color: '#10b981' }} />,
+  <DollarOutlined style={{ fontSize: 20, color: '#3b82f6' }} />,
+];
+
+const DashboardPage: React.FC<Props> = ({ appointments, employees, onEmployeeClick }) => {
   const today = dayjs().format('YYYY-MM-DD');
   const thisMonth = dayjs().format('YYYY-MM');
 
@@ -35,7 +45,7 @@ const DashboardPage: React.FC<Props> = ({ appointments, onEmployeeClick }) => {
     [appointments, thisMonth]);
 
   const kpiCards = [
-    { label: 'Lịch hẹn hôm nay', value: appointments.filter(a => a.date === today).length, color: '#6c63ff' },
+    { label: 'Lịch hẹn hôm nay', value: appointments.filter(a => a.date === today).length, color: '#6366f1' },
     { label: 'Chờ xác nhận', value: appointments.filter(a => a.status === 'pending').length, color: '#f59e0b' },
     { label: 'Hoàn thành tháng', value: appointments.filter(a => a.status === 'completed' && a.date.startsWith(thisMonth)).length, color: '#10b981' },
     { label: 'Doanh thu tháng', value: formatCurrency(monthRevenue), color: '#3b82f6', isText: true },
@@ -47,12 +57,23 @@ const DashboardPage: React.FC<Props> = ({ appointments, onEmployeeClick }) => {
       <Row gutter={[16, 16]} style={{ marginBottom: 20 }}>
         {kpiCards.map((item, i) => (
           <Col xs={24} sm={12} lg={6} key={i}>
-            <Card style={{ borderRadius: 12, border: 'none', boxShadow: '0 2px 12px rgba(0,0,0,0.07)' }}>
-              <Text type="secondary" style={{ fontSize: 12 }}>{item.label}</Text>
-              {item.isText
-                ? <div style={{ fontSize: 18, fontWeight: 700, color: item.color, marginTop: 8 }}>{item.value}</div>
-                : <Statistic value={item.value as number} valueStyle={{ color: item.color, fontWeight: 700 }} />
-              }
+            <Card className="bb-kpi-card">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                <div style={{
+                  width: 48, height: 48, borderRadius: 12,
+                  background: `${item.color}10`, display: 'flex',
+                  alignItems: 'center', justifyContent: 'center'
+                }}>
+                  {KPI_ICONS[i]}
+                </div>
+                <div>
+                  <Text className="bb-kpi-label">{item.label}</Text>
+                  {item.isText
+                    ? <div className="bb-kpi-value" style={{ color: item.color, fontSize: 20 }}>{item.value}</div>
+                    : <div className="bb-kpi-value" style={{ color: item.color }}>{item.value}</div>
+                  }
+                </div>
+              </div>
             </Card>
           </Col>
         ))}
@@ -61,46 +82,40 @@ const DashboardPage: React.FC<Props> = ({ appointments, onEmployeeClick }) => {
       <Row gutter={[16, 16]}>
         {}
         <Col xs={24} lg={15}>
-          <Card
-            title="Lịch hẹn 7 ngày gần nhất"
-            style={{ borderRadius: 12, border: 'none', boxShadow: '0 2px 12px rgba(0,0,0,0.07)' }}
-          >
+          <Card className="bb-card" title="Lịch hẹn 7 ngày gần nhất">
             <SimpleBarChart data={chartData} />
           </Card>
         </Col>
 
         {}
         <Col xs={24} lg={9}>
-          <Card
-            title="Nhân viên"
-            style={{ borderRadius: 12, border: 'none', boxShadow: '0 2px 12px rgba(0,0,0,0.07)', height: '100%' }}
-          >
-            <Space direction="vertical" style={{ width: '100%' }} size={12}>
-              {MOCK_EMPLOYEES.map(emp => {
+          <Card className="bb-card" title="Nhân viên" style={{ height: '100%' }}>
+            <Space direction="vertical" style={{ width: '100%' }} size={4}>
+              {employees.map(emp => {
                 const cnt = appointments.filter(a => a.employeeId === emp.id && a.status === 'completed').length;
                 const rev = appointments
                   .filter(a => a.employeeId === emp.id && a.status === 'completed')
                   .reduce((s, a) => s + (MOCK_SERVICES.find(sv => sv.id === a.serviceId)?.price ?? 0), 0);
                 return (
-                  <div key={emp.id} style={{ cursor: 'pointer' }} onClick={() => onEmployeeClick(emp)}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                  <div key={emp.id} className="bb-emp-row" onClick={() => onEmployeeClick(emp)}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
                       <Space>
-                        <Avatar src={emp.avatar} size={26} />
+                        <Avatar src={emp.avatar} size={32} />
                         <div>
-                          <Text style={{ fontSize: 13, fontWeight: 500 }}>{emp.name}</Text>
-                          <br />
-                          <Text type="secondary" style={{ fontSize: 11 }}>{cnt} lịch hoàn thành</Text>
+                          <Text style={{ fontSize: 14, fontWeight: 600, color: '#0f172a', display: 'block' }}>{emp.name}</Text>
+                          <Text style={{ fontSize: 12, color: '#64748b' }}>{cnt} lịch hoàn thành</Text>
                         </div>
                       </Space>
-                      <Text style={{ fontSize: 12, color: '#6c63ff', fontWeight: 600 }}>
+                      <Text style={{ fontSize: 13, color: '#6366f1', fontWeight: 700 }}>
                         {(rev / 1000).toFixed(0)}k
                       </Text>
                     </div>
                     <Progress
+                      className="bb-progress"
                       percent={Math.min(100, cnt * 10)}
                       showInfo={false}
-                      strokeColor="#6c63ff"
-                      trailColor="#ede9fe"
+                      strokeColor="#6366f1"
+                      trailColor="#eef2ff"
                       size="small"
                     />
                   </div>

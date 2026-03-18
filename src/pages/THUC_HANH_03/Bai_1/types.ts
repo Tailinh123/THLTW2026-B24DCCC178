@@ -69,7 +69,7 @@ export const MOCK_SERVICES: Service[] = [
 export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 'e1', name: 'Nguyễn Thị Lan',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Lan',
+    avatar: '/avatars/lan.png',
     specialization: 'Chuyên gia tóc', serviceIds: ['s1', 's2'],
     maxClientsPerDay: 8, phone: '0901234567',
     bio: '5 năm kinh nghiệm tạo kiểu tóc.',
@@ -83,7 +83,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   },
   {
     id: 'e2', name: 'Trần Văn Minh',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Minh',
+    avatar: '/avatars/minh.png',
     specialization: 'Kỹ thuật viên tóc nam', serviceIds: ['s1'],
     maxClientsPerDay: 10, phone: '0912345678',
     bio: 'Chuyên cắt tóc nam, undercut, fade.',
@@ -96,7 +96,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   },
   {
     id: 'e3', name: 'Lê Thị Hoa',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Hoa',
+    avatar: '/avatars/hoa.png',
     specialization: 'Chuyên gia spa', serviceIds: ['s3'],
     maxClientsPerDay: 6, phone: '0923456789',
     bio: 'Chuyên viên spa chứng chỉ quốc tế.',
@@ -109,7 +109,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
   },
   {
     id: 'e4', name: 'Phạm Thị Thu',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Thu',
+    avatar: '/avatars/thu.png',
     specialization: 'Kỹ thuật viên nail', serviceIds: ['s4'],
     maxClientsPerDay: 8, phone: '0934567890',
     bio: 'Chuyên nail art, gel và acrylic.',
