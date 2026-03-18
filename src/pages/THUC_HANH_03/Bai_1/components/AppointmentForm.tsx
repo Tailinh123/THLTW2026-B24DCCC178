@@ -1,23 +1,27 @@
+/* ============================================================
+ * AppointmentForm — Form đặt/sửa lịch hẹn
+ * ============================================================ */
 import React, { useState, useEffect } from 'react';
 import { Form, Select, DatePicker, Button, Input, Space, Typography, Alert, Tag, Avatar } from 'antd';
 import dayjs, { type Dayjs } from 'dayjs';
 import {
-  MOCK_SERVICES, MOCK_EMPLOYEES,
+  MOCK_SERVICES,
   calcEndTime, generateTimeSlots, hasConflict,
 } from '../types';
-import type { Appointment } from '../types';
+import type { Appointment, Employee } from '../types';
 
 const { Text } = Typography;
 
 interface Props {
   appointments: Appointment[];
+  employees: Employee[];
   onSuccess: (data: Omit<Appointment, 'id' | 'createdAt'>) => void;
   initialValues?: Appointment;
   submitLabel?: string;
 }
 
 const AppointmentForm: React.FC<Props> = ({
-  appointments, onSuccess, initialValues, submitLabel = 'Đặt lịch',
+  appointments, employees, onSuccess, initialValues, submitLabel = 'Đặt lịch',
 }) => {
   const [form] = Form.useForm();
   const [svcId, setSvcId] = useState<string | undefined>(initialValues?.serviceId);
@@ -28,30 +32,30 @@ const AppointmentForm: React.FC<Props> = ({
 
   const svc = MOCK_SERVICES.find(s => s.id === svcId);
 
-  // Nhân viên phù hợp: có dịch vụ + làm việc ngày đó
-  const eligibleEmps = MOCK_EMPLOYEES.filter(e =>
+  /* Nhân viên phù hợp: có dịch vụ + làm việc ngày đó */
+  const eligibleEmps = employees.filter(e =>
     (!svcId || e.serviceIds.includes(svcId)) &&
     (!date || e.schedule.some(s => s.day === date.day()))
   );
 
-  // Tạo time slots trống
+  /* Tạo time slots trống */
   useEffect(() => {
     if (!date || !empId || !svc) { setSlots([]); return; }
-    const emp = MOCK_EMPLOYEES.find(e => e.id === empId);
+    const emp = employees.find(e => e.id === empId);
     const shift = emp?.schedule.find(s => s.day === date.day());
     if (!shift) { setSlots([]); return; }
     const ds = date.format('YYYY-MM-DD');
     const all = generateTimeSlots(shift.startTime, shift.endTime, svc.durationMinutes);
     setSlots(all.filter(s => !hasConflict(appointments, empId, ds, s, svc.durationMinutes, initialValues?.id)));
-  }, [date, empId, svc, appointments, initialValues?.id]);
+  }, [date, empId, svc, appointments, employees, initialValues?.id]);
 
   const handleSubmit = () => {
     form.validateFields().then(values => {
       const service = MOCK_SERVICES.find(s => s.id === values.serviceId)!;
-      const emp = MOCK_EMPLOYEES.find(e => e.id === values.employeeId)!;
+      const emp = employees.find(e => e.id === values.employeeId)!;
       const ds = (values.date as Dayjs).format('YYYY-MM-DD');
 
-      // Kiểm tra giới hạn khách/ngày
+      /* Kiểm tra giới hạn khách/ngày */
       const daily = appointments.filter(a =>
         a.employeeId === values.employeeId && a.date === ds &&
         a.status !== 'cancelled' && a.id !== initialValues?.id
@@ -86,7 +90,7 @@ const AppointmentForm: React.FC<Props> = ({
     >
       {error && (
         <Alert type="error" message={error} showIcon closable
-          onClose={() => setError(null)} style={{ marginBottom: 16 }} />
+          onClose={() => setError(null)} style={{ marginBottom: 16, borderRadius: 10 }} />
       )}
 
       <Form.Item name="serviceId" label="Dịch vụ" rules={[{ required: true, message: 'Chọn dịch vụ' }]}>
@@ -95,7 +99,7 @@ const AppointmentForm: React.FC<Props> = ({
           onChange={v => { setSvcId(v); setEmpId(undefined); form.setFieldsValue({ employeeId: undefined, startTime: undefined }); }}
           options={MOCK_SERVICES.filter(s => s.isActive).map(s => ({
             value: s.id,
-            label: <Space><Tag color={s.color} style={{ margin: 0 }}>{s.name}</Tag><Text type="secondary" style={{ fontSize: 12 }}>{s.durationMinutes}p · {(s.price/1000).toFixed(0)}k</Text></Space>,
+            label: <Space><Tag color={s.color} style={{ margin: 0, borderRadius: 12 }}>{s.name}</Tag><Text style={{ fontSize: 12, color: '#64748b' }}>{s.durationMinutes}p · {(s.price/1000).toFixed(0)}k</Text></Space>,
           }))}
         />
       </Form.Item>
@@ -115,9 +119,9 @@ const AppointmentForm: React.FC<Props> = ({
           onChange={v => { setEmpId(v); form.setFieldValue('startTime', undefined); }}
           options={eligibleEmps.map(e => ({
             value: e.id,
-            label: <Space><Avatar src={e.avatar} size={20} /><span>{e.name}</span><Text type="secondary" style={{ fontSize: 11 }}>({e.specialization})</Text></Space>,
+            label: <Space><Avatar src={e.avatar} size={22} /><span>{e.name}</span><Text style={{ fontSize: 11, color: '#94a3b8' }}>({e.specialization})</Text></Space>,
           }))}
-          notFoundContent={<Text type="secondary">Không có nhân viên phù hợp</Text>}
+          notFoundContent={<Text style={{ color: '#94a3b8' }}>Không có nhân viên phù hợp</Text>}
         />
       </Form.Item>
 
@@ -127,24 +131,27 @@ const AppointmentForm: React.FC<Props> = ({
           placeholder={!empId ? 'Chọn nhân viên trước' : slots.length === 0 ? 'Hết giờ trống' : 'Chọn giờ'}
           options={slots.map(s => ({
             value: s,
-            label: <Space><Text>{s}</Text>{svc && <Text type="secondary" style={{ fontSize: 11 }}>→ {calcEndTime(s, svc.durationMinutes)}</Text>}</Space>,
+            label: <Space><Text style={{ fontWeight: 600 }}>{s}</Text>{svc && <Text style={{ fontSize: 12, color: '#94a3b8' }}>→ {calcEndTime(s, svc.durationMinutes)}</Text>}</Space>,
           }))}
         />
       </Form.Item>
 
       <Form.Item name="customerName" label="Tên khách hàng" rules={[{ required: true, message: 'Nhập tên' }]}>
-        <Input />
+        <Input placeholder="Nhập họ tên khách hàng" />
       </Form.Item>
 
       <Form.Item name="customerPhone" label="Số điện thoại" rules={[{ required: true, message: 'Nhập SĐT' }]}>
-        <Input />
+        <Input placeholder="Nhập số điện thoại" />
       </Form.Item>
 
       <Form.Item name="notes" label="Ghi chú">
-        <Input.TextArea rows={2} />
+        <Input.TextArea rows={2} placeholder="Ghi chú thêm nếu có..." />
       </Form.Item>
 
-      <Button type="primary" block size="large" onClick={handleSubmit}>
+      <Button
+        type="primary" block size="large" onClick={handleSubmit}
+        style={{ borderRadius: 10, height: 48, fontWeight: 700, fontSize: 16, background: '#6366f1', border: 'none', boxShadow: '0 4px 12px rgba(99,102,241,0.2)' }}
+      >
         {submitLabel}
       </Button>
     </Form>

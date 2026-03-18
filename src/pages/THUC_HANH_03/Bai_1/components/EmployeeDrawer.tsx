@@ -1,7 +1,10 @@
+/* ============================================================
+ * EmployeeDrawer — Panel chi tiết nhân viên
+ * ============================================================ */
 import React from 'react';
 import {
   Drawer, Tabs, Avatar, Typography, Space,
-  Tag, Row, Col, Statistic, Descriptions, Progress,
+  Tag, Row, Col, Descriptions, Progress,
 } from 'antd';
 import type { Employee, Appointment, Review, DayOfWeek } from '../types';
 import { MOCK_SERVICES, DAY_NAMES, formatCurrency } from '../types';
@@ -40,14 +43,15 @@ const EmployeeDrawer: React.FC<Props> = ({
     <Drawer
       title={
         <Space>
-          <Avatar src={employee.avatar} size={30} />
-          <span>{employee.name}</span>
+          <Avatar src={employee.avatar} size={32} />
+          <span style={{ fontWeight: 700, fontSize: 16 }}>{employee.name}</span>
         </Space>
       }
       placement="right"
-      width={480}
-      open={!!employee}
+      width={500}
+      visible={!!employee}
       onClose={onClose}
+      className="bb-drawer"
     >
       <Tabs
         items={[
@@ -55,28 +59,28 @@ const EmployeeDrawer: React.FC<Props> = ({
             key: 'info',
             label: 'Thông tin',
             children: (
-              <Space direction="vertical" style={{ width: '100%' }} size={16}>
+              <Space direction="vertical" style={{ width: '100%' }} size={20}>
                 {/* Avatar + tên */}
-                <div style={{ textAlign: 'center' }}>
-                  <Avatar src={employee.avatar} size={76} />
-                  <Title level={4} style={{ margin: '10px 0 4px' }}>{employee.name}</Title>
-                  <Tag color="purple">{employee.specialization}</Tag>
+                <div style={{ textAlign: 'center', padding: '8px 0' }}>
+                  <Avatar src={employee.avatar} size={80} className="bb-emp-avatar" />
+                  <Title level={4} style={{ margin: '12px 0 4px', fontWeight: 700 }}>{employee.name}</Title>
+                  <Tag color="purple" className="bb-emp-tag">{employee.specialization}</Tag>
                 </div>
 
-                {/* Stats */}
+                {/* Stats Grid */}
                 <Row gutter={16}>
-                  <Col span={8}>
-                    <Statistic title="Tổng lịch" value={empAppts.length} />
+                  <Col span={8} style={{ textAlign: 'center' }}>
+                    <div className="bb-emp-stat-label">Tổng lịch</div>
+                    <div className="bb-emp-stat-value" style={{ color: '#0f172a' }}>{empAppts.length}</div>
                   </Col>
-                  <Col span={8}>
-                    <Statistic title="Rating TB" value={avgRating} />
+                  <Col span={8} style={{ textAlign: 'center' }}>
+                    <div className="bb-emp-stat-label">Rating TB</div>
+                    <div className="bb-emp-stat-value" style={{ color: '#f59e0b' }}>{avgRating}</div>
                   </Col>
-                  <Col span={8}>
-                    <div>
-                      <div style={{ fontSize: 12, color: '#8c8c8c' }}>Doanh thu</div>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: '#6c63ff' }}>
-                        {formatCurrency(revenue)}
-                      </div>
+                  <Col span={8} style={{ textAlign: 'center' }}>
+                    <div className="bb-emp-stat-label">Doanh thu</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: '#6366f1' }}>
+                      {formatCurrency(revenue)}
                     </div>
                   </Col>
                 </Row>
@@ -90,36 +94,29 @@ const EmployeeDrawer: React.FC<Props> = ({
 
                 {/* Progress hôm nay */}
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                    <Text style={{ fontSize: 13 }}>Khách hôm nay</Text>
-                    <Text style={{ fontSize: 13, color: '#6c63ff', fontWeight: 600 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                    <Text style={{ fontSize: 14, fontWeight: 600 }}>Khách hôm nay</Text>
+                    <Text style={{ fontSize: 14, color: '#6366f1', fontWeight: 700 }}>
                       {todayCount} / {employee.maxClientsPerDay}
                     </Text>
                   </div>
                   <Progress
+                    className="bb-progress"
                     percent={Math.min(100, Math.round((todayCount / employee.maxClientsPerDay) * 100))}
-                    strokeColor="#6c63ff" trailColor="#ede9fe" size="small"
+                    strokeColor="#6366f1" trailColor="#eef2ff" size="small"
                   />
                 </div>
 
                 {/* Lịch làm việc */}
                 <div>
-                  <Text strong style={{ display: 'block', marginBottom: 8 }}>
-                    📅 Lịch làm việc
+                  <Text strong style={{ display: 'block', marginBottom: 10, fontSize: 15 }}>
+                    Lịch làm việc
                   </Text>
-                  <Space direction="vertical" style={{ width: '100%' }} size={4}>
+                  <Space direction="vertical" style={{ width: '100%' }} size={6}>
                     {employee.schedule.map(s => (
-                      <div
-                        key={s.day}
-                        style={{
-                          display: 'flex', justifyContent: 'space-between',
-                          padding: '5px 10px', background: '#f9f5ff', borderRadius: 7,
-                        }}
-                      >
-                        <Text style={{ fontSize: 13 }}>{DAY_NAMES[s.day as DayOfWeek]}</Text>
-                        <Text style={{ fontSize: 13, color: '#6c63ff', fontWeight: 500 }}>
-                          {s.startTime} – {s.endTime}
-                        </Text>
+                      <div key={s.day} className="bb-schedule-row">
+                        <span className="bb-schedule-day">{DAY_NAMES[s.day as DayOfWeek]}</span>
+                        <span className="bb-schedule-time">{s.startTime} – {s.endTime}</span>
                       </div>
                     ))}
                   </Space>
