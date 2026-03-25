@@ -1,3 +1,6 @@
+/* ============================================================
+ * QuyetDinhPage — Quản lý Quyết định tốt nghiệp (CRUD)
+ * ============================================================ */
 import React, { useState } from 'react';
 import { Table, Button, Card, Popconfirm, Space, Tag, Modal, Form, Input, DatePicker } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -51,13 +54,13 @@ const QuyetDinhPage: React.FC<Props> = ({ data, onAdd, onEdit, onDelete }) => {
       title: 'Số quyết định',
       dataIndex: 'soQuyetDinh',
       sorter: (a: QuyetDinhTotNghiep, b: QuyetDinhTotNghiep) => a.soQuyetDinh.localeCompare(b.soQuyetDinh),
-      render: (text: string) => <Tag color="processing">{text}</Tag>,
+      render: (text: string) => <span className="vb-tag-qd">{text}</span>,
     },
     {
       title: 'Ngày ban hành',
       dataIndex: 'ngayBanHanh',
       sorter: (a: QuyetDinhTotNghiep, b: QuyetDinhTotNghiep) => a.ngayBanHanh.localeCompare(b.ngayBanHanh),
-      render: (date: string) => moment(date).format('DD/MM/YYYY'),
+      render: (date: string) => <span style={{ fontWeight: 500 }}>{moment(date).format('DD/MM/YYYY')}</span>,
     },
     {
       title: 'Trích yếu',
@@ -68,16 +71,19 @@ const QuyetDinhPage: React.FC<Props> = ({ data, onAdd, onEdit, onDelete }) => {
       title: 'Lượt tra cứu',
       dataIndex: 'luotTraCuu',
       sorter: (a: QuyetDinhTotNghiep, b: QuyetDinhTotNghiep) => a.luotTraCuu - b.luotTraCuu,
-      render: (count: number) => <Tag color={count > 0 ? 'green' : 'default'}>{count}</Tag>,
+      render: (count: number) => (
+        <Tag className="vb-tag-count" color={count > 0 ? 'green' : 'default'}>{count}</Tag>
+      ),
     },
     {
       title: 'Thao tác',
       key: 'action',
+      width: 100,
       render: (_: any, record: QuyetDinhTotNghiep) => (
-        <Space>
-          <Button type="link" icon={<EditOutlined />} onClick={() => openEdit(record)} />
-          <Popconfirm title="Xác nhận xóa quyết định này?" onConfirm={() => onDelete(record.id)}>
-            <Button type="link" danger icon={<DeleteOutlined />} />
+        <Space size={4}>
+          <Button type="text" className="vb-action-btn vb-action-edit" icon={<EditOutlined />} onClick={() => openEdit(record)} />
+          <Popconfirm title="Xác nhận xóa quyết định này?" onConfirm={() => onDelete(record.id)} okText="Xóa" cancelText="Hủy">
+            <Button type="text" className="vb-action-btn vb-action-delete" icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>
       ),
@@ -87,14 +93,13 @@ const QuyetDinhPage: React.FC<Props> = ({ data, onAdd, onEdit, onDelete }) => {
   return (
     <>
       <Card
-        title={<span style={{ fontWeight: 600 }}>Danh sách quyết định tốt nghiệp</span>}
+        className="vb-card"
+        title="Danh sách quyết định tốt nghiệp"
         extra={
-          <Button type="primary" icon={<PlusOutlined />} onClick={openAdd}
-            style={{ background: '#9B1B30', borderColor: '#9B1B30' }}>
+          <Button type="primary" className="vb-btn-primary" icon={<PlusOutlined />} onClick={openAdd}>
             Thêm quyết định
           </Button>
         }
-        style={{ borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}
       >
         <Table
           dataSource={data}
@@ -111,10 +116,11 @@ const QuyetDinhPage: React.FC<Props> = ({ data, onAdd, onEdit, onDelete }) => {
         onCancel={() => setModalOpen(false)}
         okText={editing ? 'Cập nhật' : 'Thêm mới'}
         cancelText="Hủy"
-        okButtonProps={{ style: { background: '#9B1B30', borderColor: '#9B1B30' } }}
+        wrapClassName="vb-modal"
+        centered
         destroyOnClose
       >
-        <Form form={form} layout="vertical" style={{ marginTop: 16 }}>
+        <Form form={form} layout="vertical">
           <Form.Item name="soQuyetDinh" label="Số quyết định" rules={[{ required: true, message: 'Vui lòng nhập số QĐ' }]}>
             <Input placeholder="VD: QĐ-001/2024" />
           </Form.Item>

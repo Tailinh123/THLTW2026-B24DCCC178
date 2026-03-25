@@ -1,3 +1,8 @@
+/* ============================================================
+ * THUC_HANH_04 — Quản lý Văn bằng Tốt nghiệp
+ * Main Entry: Layout + Sidebar + Content Routing
+ * Tech: React · TypeScript · Ant Design · UmiJS
+ * ============================================================ */
 import React, { useState } from 'react';
 import { Layout, Menu, Typography, notification } from 'antd';
 import {
@@ -13,6 +18,7 @@ import QuyetDinhPage from './components/QuyetDinhPage';
 import CauHinhBieuMauPage from './components/CauHinhBieuMauPage';
 import VanBangPage from './components/VanBangPage';
 import TraCuuPage from './components/TraCuuPage';
+import './styles.less';
 
 const { Sider, Header, Content } = Layout;
 const { Text } = Typography;
@@ -33,6 +39,7 @@ const THUC_HANH_04: React.FC = () => {
   const [vanBangs, setVanBangs] = useState<VanBang[]>(MOCK_VAN_BANG);
   const [notif, ctx] = notification.useNotification();
 
+  /* --- Sổ văn bằng CRUD --- */
   const handleAddSoVanBang = (data: Omit<SoVanBang, 'id'>) => {
     setSoVanBangs(prev => [...prev, { ...data, id: genId() }]);
     notif.success({ message: 'Thêm sổ văn bằng thành công!' });
@@ -46,6 +53,7 @@ const THUC_HANH_04: React.FC = () => {
     notif.success({ message: 'Xóa sổ văn bằng thành công!' });
   };
 
+  /* --- Quyết định CRUD --- */
   const handleAddQuyetDinh = (data: Omit<QuyetDinhTotNghiep, 'id' | 'luotTraCuu'>) => {
     setQuyetDinhs(prev => [...prev, { ...data, id: genId(), luotTraCuu: 0 }]);
     notif.success({ message: 'Thêm quyết định thành công!' });
@@ -59,6 +67,7 @@ const THUC_HANH_04: React.FC = () => {
     notif.success({ message: 'Xóa quyết định thành công!' });
   };
 
+  /* --- Cấu hình CRUD --- */
   const handleAddCauHinh = (data: Omit<CauHinhTruong, 'id'>) => {
     setCauHinhs(prev => [...prev, { ...data, id: genId() }]);
     notif.success({ message: 'Thêm trường thông tin thành công!' });
@@ -72,6 +81,7 @@ const THUC_HANH_04: React.FC = () => {
     notif.success({ message: 'Xóa trường thông tin thành công!' });
   };
 
+  /* --- Văn bằng CRUD --- */
   const handleAddVanBang = (data: Omit<VanBang, 'id' | 'soVaoSo'>) => {
     const so = soVanBangs.find(s => s.id === data.soVanBangId);
     const nextSo = so ? so.soHienTai + 1 : 1;
@@ -88,6 +98,7 @@ const THUC_HANH_04: React.FC = () => {
     notif.success({ message: 'Xóa văn bằng thành công!' });
   };
 
+  /* --- Tra cứu handler --- */
   const handleTraCuu = (quyetDinhIds: string[]) => {
     setQuyetDinhs(prev => prev.map(q =>
       quyetDinhIds.includes(q.id) ? { ...q, luotTraCuu: q.luotTraCuu + 1 } : q
@@ -95,29 +106,20 @@ const THUC_HANH_04: React.FC = () => {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout className="vb-root">
       {ctx}
-      <Sider
-        width={240}
-        style={{ background: '#1a0a12', position: 'sticky', top: 0, height: '100vh', overflow: 'auto' }}
-      >
-        <div style={{
-          padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.08)',
-          display: 'flex', alignItems: 'center', gap: 12,
-        }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: 10,
-            background: 'linear-gradient(135deg, #9B1B30, #D4456A)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 18, color: '#fff',
-          }}>
-            🎓
+
+      {/* ===== Sidebar ===== */}
+      <Sider width={240} className="vb-sidebar" style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'auto' }}>
+        <div className="vb-sidebar-brand">
+          <div className="vb-sidebar-logo">VB</div>
+          <div>
+            <div className="vb-sidebar-title">Văn bằng TN</div>
+            <div className="vb-sidebar-subtitle">DIPLOMA SYSTEM</div>
           </div>
-          <Text style={{ color: '#fff', fontWeight: 700, fontSize: 16 }}>Văn bằng TN</Text>
         </div>
         <Menu
-          theme="dark" mode="inline" selectedKeys={[page]}
-          style={{ background: 'transparent', border: 'none', marginTop: 8 }}
+          mode="inline" selectedKeys={[page]}
           onClick={({ key }) => setPage(key as PageKey)}
           items={[
             { key: 'so-van-bang', icon: <BookOutlined />, label: 'Sổ văn bằng' },
@@ -128,18 +130,14 @@ const THUC_HANH_04: React.FC = () => {
           ]}
         />
       </Sider>
+
+      {/* ===== Main ===== */}
       <Layout>
-        <Header style={{
-          background: '#fff', padding: '0 28px',
-          display: 'flex', alignItems: 'center',
-          boxShadow: '0 1px 4px rgba(0,0,0,0.06)', height: 56,
-          position: 'sticky', top: 0, zIndex: 10,
-        }}>
-          <Text style={{ fontWeight: 700, fontSize: 18, color: '#9B1B30' }}>
-            {PAGE_TITLE[page]}
-          </Text>
+        <Header className="vb-header">
+          <Text className="vb-header-title">{PAGE_TITLE[page]}</Text>
+          <div className="vb-breadcrumb">Trang chủ / <span>{PAGE_TITLE[page]}</span></div>
         </Header>
-        <Content style={{ margin: 24, minHeight: 360 }}>
+        <Content className="vb-content">
           {page === 'so-van-bang' && <SoVanBangPage data={soVanBangs} onAdd={handleAddSoVanBang} onEdit={handleEditSoVanBang} onDelete={handleDeleteSoVanBang} />}
           {page === 'quyet-dinh' && <QuyetDinhPage data={quyetDinhs} onAdd={handleAddQuyetDinh} onEdit={handleEditQuyetDinh} onDelete={handleDeleteQuyetDinh} />}
           {page === 'cau-hinh' && <CauHinhBieuMauPage data={cauHinhs} onAdd={handleAddCauHinh} onEdit={handleEditCauHinh} onDelete={handleDeleteCauHinh} />}

@@ -1,5 +1,8 @@
+/* ============================================================
+ * SoVanBangPage — Quản lý Sổ văn bằng (CRUD)
+ * ============================================================ */
 import React, { useState } from 'react';
-import { Table, Button, Card, Popconfirm, Space, Tag, Modal, Form, InputNumber } from 'antd';
+import { Table, Button, Card, Popconfirm, Space, Modal, Form, InputNumber } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import type { SoVanBang } from '../types';
 
@@ -45,22 +48,24 @@ const SoVanBangPage: React.FC<Props> = ({ data, onAdd, onEdit, onDelete }) => {
       dataIndex: 'nam',
       sorter: (a: SoVanBang, b: SoVanBang) => a.nam - b.nam,
       render: (nam: number) => (
-        <Tag color="#9B1B30" style={{ fontWeight: 600, fontSize: 14, padding: '2px 12px' }}>{nam}</Tag>
+        <span className="vb-tag-year">{nam}</span>
       ),
     },
     {
       title: 'Số vào sổ hiện tại',
       dataIndex: 'soHienTai',
       sorter: (a: SoVanBang, b: SoVanBang) => a.soHienTai - b.soHienTai,
+      render: (val: number) => <span style={{ fontWeight: 600 }}>{val}</span>,
     },
     {
       title: 'Thao tác',
       key: 'action',
+      width: 100,
       render: (_: any, record: SoVanBang) => (
-        <Space>
-          <Button type="link" icon={<EditOutlined />} onClick={() => openEdit(record)} />
-          <Popconfirm title="Xác nhận xóa sổ này?" onConfirm={() => onDelete(record.id)}>
-            <Button type="link" danger icon={<DeleteOutlined />} />
+        <Space size={4}>
+          <Button type="text" className="vb-action-btn vb-action-edit" icon={<EditOutlined />} onClick={() => openEdit(record)} />
+          <Popconfirm title="Xác nhận xóa sổ này?" onConfirm={() => onDelete(record.id)} okText="Xóa" cancelText="Hủy">
+            <Button type="text" className="vb-action-btn vb-action-delete" icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>
       ),
@@ -70,14 +75,13 @@ const SoVanBangPage: React.FC<Props> = ({ data, onAdd, onEdit, onDelete }) => {
   return (
     <>
       <Card
-        title={<span style={{ fontWeight: 600 }}>Danh sách sổ văn bằng</span>}
+        className="vb-card"
+        title="Danh sách sổ văn bằng"
         extra={
-          <Button type="primary" icon={<PlusOutlined />} onClick={openAdd}
-            style={{ background: '#9B1B30', borderColor: '#9B1B30' }}>
+          <Button type="primary" className="vb-btn-primary" icon={<PlusOutlined />} onClick={openAdd}>
             Thêm sổ
           </Button>
         }
-        style={{ borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}
       >
         <Table
           dataSource={data}
@@ -94,10 +98,11 @@ const SoVanBangPage: React.FC<Props> = ({ data, onAdd, onEdit, onDelete }) => {
         onCancel={() => setModalOpen(false)}
         okText={editing ? 'Cập nhật' : 'Thêm mới'}
         cancelText="Hủy"
-        okButtonProps={{ style: { background: '#9B1B30', borderColor: '#9B1B30' } }}
+        wrapClassName="vb-modal"
+        centered
         destroyOnClose
       >
-        <Form form={form} layout="vertical" style={{ marginTop: 16 }}>
+        <Form form={form} layout="vertical">
           <Form.Item name="nam" label="Năm" rules={[{ required: true, message: 'Vui lòng nhập năm' }]}>
             <InputNumber style={{ width: '100%' }} min={2000} max={2099} />
           </Form.Item>
