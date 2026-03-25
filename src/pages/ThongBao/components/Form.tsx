@@ -128,7 +128,7 @@ const FormThongBao = (props: any) => {
 							{notiType === NotificationType.EMAIL && (
 								<Col span={12}>
 									<Form.Item name='idTagEmail' label='Nhãn dán' rules={[...rules.required]}>
-										{/* <SelectTag />  Tùy chỉnh trong từng phân hệ */}
+										{}
 									</Form.Item>
 								</Col>
 							)}
@@ -200,24 +200,8 @@ const FormThongBao = (props: any) => {
 						</Col>
 					) : null}
 
-					{/* Tùy chỉnh cho từng phân hệ */}
-					{/* {receiverType !== EReceiverType.All ? (
-						<Col span={24}>
-							<Form.Item name='danhSachDoiTuong' label={LoaiDoiTuongThongBao[receiverType]} rules={[...rules.required]}>
-								{receiverType === EReceiverType.Khoa ? (
-									<SelectDonVi multiple fieldValue='_id' />
-								) : receiverType === EReceiverType.KhoaSinhVien ? (
-									<SelectKhoaSinhVien multiple />
-								) : receiverType === EReceiverType.LopHanhChinh ? (
-									<SelectLopHanhChinhDebounce multiple />
-								) : receiverType === EReceiverType.LopHocPhan ? (
-									<SelectLopHocPhanDebounce multiple />
-								) : receiverType === EReceiverType.Nganh ? (
-									<SelectNganhCoSo multiple />
-								) : null}
-							</Form.Item>
-						</Col>
-					) : null} */}
+					{}
+					{}
 
 					{roles?.length ? (
 						<>

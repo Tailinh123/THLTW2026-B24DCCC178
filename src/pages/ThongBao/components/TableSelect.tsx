@@ -112,9 +112,9 @@ const TableSelectUser = (props: {
 					dataIndex: 'trangThaiHoc',
 					align: 'center',
 					width: 120,
-					// filterType: 'select',
-					// filterData: Object.values(ETrangThaiHocSv),
-					// render: (val, rec) => <Tag color={colorTrangThaiHocSv[val as ETrangThaiHocSv]}>{val}</Tag>,
+					
+					
+					
 					onCell,
 			  }
 			: {
@@ -122,9 +122,9 @@ const TableSelectUser = (props: {
 					dataIndex: 'trangThai',
 					align: 'center',
 					width: 120,
-					// filterType: 'select',
-					// filterData: Object.values(ETrangThaiNhanSu),
-					// render: (val, rec) => <Tag color={MapColorETrangThaiNhanSu[val as ETrangThaiNhanSu]}>{val}</Tag>,
+					
+					
+					
 					onCell,
 			  },
 	];

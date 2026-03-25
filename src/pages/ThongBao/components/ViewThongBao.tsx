@@ -36,7 +36,7 @@ const ViewThongBao = (props: { record?: ThongBao.IRecord; afterViewDetail?: () =
 		} else {
 			const baseUrl = urlMap[sourceModule as EModuleKey];
 			if (baseUrl && record?.metadata?.pathWeb) {
-				const pathWeb = record.metadata.pathWeb.replace(/^\/+/, ''); // Loại bỏ dấu '/' ở đầu chuỗi pathWeb nếu có
+				const pathWeb = record.metadata.pathWeb.replace(/^\/+/, ''); 
 				window.open(baseUrl + pathWeb, '_blank');
 			}
 		}

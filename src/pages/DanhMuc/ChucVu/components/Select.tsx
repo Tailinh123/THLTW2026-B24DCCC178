@@ -4,9 +4,7 @@ import { useEffect } from 'react';
 import { useModel } from 'umi';
 import FormChucVu from './Form';
 
-/**
- * Secect Chức vụ để cho vào FormItem
- */
+
 const SelectChucVu = (props: {
   value?: string | null;
   onChange?: (val: string | null) => void;

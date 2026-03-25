@@ -57,7 +57,7 @@ export interface Review {
   reply?: { content: string; createdAt: string };
 }
 
-// ── Mock Data ──────────────────────────────────────────────────────────────────
+
 
 export const MOCK_SERVICES: Service[] = [
   { id: 's1', name: 'Cắt tóc nam', description: 'Cắt tạo kiểu nam hiện đại', price: 80000, durationMinutes: 30, category: 'Tóc', color: 'blue', isActive: true },
@@ -135,7 +135,7 @@ export const MOCK_REVIEWS: Review[] = [
   { id: 'r2', appointmentId: 'a2', employeeId: 'e3', customerName: 'Trần Thị Bình', rating: 4, comment: 'Massage rất thư giãn, sẽ quay lại!', createdAt: '2025-01-20T18:00:00Z' },
 ];
 
-// ── Utils ──────────────────────────────────────────────────────────────────────
+
 
 export const DAY_NAMES: Record<DayOfWeek, string> = {
   0: 'Chủ nhật', 1: 'Thứ 2', 2: 'Thứ 3',

@@ -43,7 +43,7 @@ const SimpleBarChart: React.FC<Props> = ({ data }) => {
         })}
       </div>
 
-      {/* Legend */}
+      {}
       <div style={{ display: 'flex', gap: 16, marginTop: 10, paddingLeft: 4 }}>
         {([['#c4b5fd', 'Tổng'], ['#6c63ff', 'Hoàn thành']] as [string, string][]).map(([color, label]) => (
           <Space key={label} size={4}>

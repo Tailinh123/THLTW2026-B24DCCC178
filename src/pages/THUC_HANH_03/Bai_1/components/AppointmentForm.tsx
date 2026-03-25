@@ -28,13 +28,13 @@ const AppointmentForm: React.FC<Props> = ({
 
   const svc = MOCK_SERVICES.find(s => s.id === svcId);
 
-  // Nhân viên phù hợp: có dịch vụ + làm việc ngày đó
+  
   const eligibleEmps = MOCK_EMPLOYEES.filter(e =>
     (!svcId || e.serviceIds.includes(svcId)) &&
     (!date || e.schedule.some(s => s.day === date.day()))
   );
 
-  // Tạo time slots trống
+  
   useEffect(() => {
     if (!date || !empId || !svc) { setSlots([]); return; }
     const emp = MOCK_EMPLOYEES.find(e => e.id === empId);
@@ -51,7 +51,7 @@ const AppointmentForm: React.FC<Props> = ({
       const emp = MOCK_EMPLOYEES.find(e => e.id === values.employeeId)!;
       const ds = (values.date as Dayjs).format('YYYY-MM-DD');
 
-      // Kiểm tra giới hạn khách/ngày
+      
       const daily = appointments.filter(a =>
         a.employeeId === values.employeeId && a.date === ds &&
         a.status !== 'cancelled' && a.id !== initialValues?.id

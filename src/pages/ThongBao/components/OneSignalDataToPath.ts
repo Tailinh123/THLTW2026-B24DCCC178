@@ -7,7 +7,7 @@ const OneSignalDataToPath = (notifSource?: ThongBao.TNotificationSource): string
 	let path = mapUrlNotifSource?.[notifSource.entitySource] ?? '';
 	switch (notifSource.entitySource) {
 		case ENotificationSource.LOP_HANH_CHINH:
-			// TODO: Custom here: Tùy chỉnh link (id, query)...
+			
 			break;
 		default:
 			path = '';

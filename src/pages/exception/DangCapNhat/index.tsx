@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { history } from 'umi';
 
 const DangCapNhatPage = () => {
-	// Nếu Đang cập nhật thì bỏ cái này đi
+	
 	useEffect(() => {
 		history.replace('/dashboard');
 	}, []);

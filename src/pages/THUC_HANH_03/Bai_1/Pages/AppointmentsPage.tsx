@@ -28,7 +28,7 @@ const AppointmentsPage: React.FC<Props> = ({
 
   return (
     <div>
-      {/* Status cards */}
+      {}
       <Row gutter={[12, 12]} style={{ marginBottom: 16 }}>
         {(Object.keys(STATUS_LABELS) as AppointmentStatus[]).map(st => (
           <Col xs={12} sm={6} key={st}>
@@ -55,7 +55,7 @@ const AppointmentsPage: React.FC<Props> = ({
         ))}
       </Row>
 
-      {/* Filter */}
+      {}
       <Card style={{ borderRadius: 12, border: 'none', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', marginBottom: 16 }}>
         <Space wrap>
           <Select
@@ -72,7 +72,7 @@ const AppointmentsPage: React.FC<Props> = ({
         </Space>
       </Card>
 
-      {/* Table */}
+      {}
       <Card style={{ borderRadius: 12, border: 'none', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
         {filtered.length === 0
           ? <Empty description="Không có lịch hẹn phù hợp" />

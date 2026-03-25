@@ -43,7 +43,7 @@ const DashboardPage: React.FC<Props> = ({ appointments, onEmployeeClick }) => {
 
   return (
     <div>
-      {/* KPI */}
+      {}
       <Row gutter={[16, 16]} style={{ marginBottom: 20 }}>
         {kpiCards.map((item, i) => (
           <Col xs={24} sm={12} lg={6} key={i}>
@@ -59,7 +59,7 @@ const DashboardPage: React.FC<Props> = ({ appointments, onEmployeeClick }) => {
       </Row>
 
       <Row gutter={[16, 16]}>
-        {/* Biểu đồ */}
+        {}
         <Col xs={24} lg={15}>
           <Card
             title="Lịch hẹn 7 ngày gần nhất"
@@ -69,7 +69,7 @@ const DashboardPage: React.FC<Props> = ({ appointments, onEmployeeClick }) => {
           </Card>
         </Col>
 
-        {/* Top nhân viên */}
+        {}
         <Col xs={24} lg={9}>
           <Card
             title="Nhân viên"

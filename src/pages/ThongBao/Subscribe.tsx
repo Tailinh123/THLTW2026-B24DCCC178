@@ -11,13 +11,11 @@ const SubscribeOneSignal = () => {
 		document.title = `Đăng ký nhận thông báo | ${unitName.toUpperCase()}`;
 	}, []);
 
-	/**
-	 * Init OneSignal playerId with auth User
-	 */
+	
 	useEffect(() => {
 		if (auth.user?.access_token)
 			OneSignal.getUserId().then((playerId) => {
-				// Init playerId to Back-end and Close popup window
+				
 				if (playerId)
 					initOneSignal({ playerId }).then(() => {
 						window.opener = null;
@@ -27,7 +25,7 @@ const SubscribeOneSignal = () => {
 			});
 	}, [auth.user?.access_token]);
 
-	// TODO: Update UI
+	
 	return <div>SubscribeOneSignal</div>;
 };
 

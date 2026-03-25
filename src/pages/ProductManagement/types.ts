@@ -23,5 +23,5 @@ export interface Order {
   products: OrderProduct[];
   totalAmount: number;
   status: 'Chờ xử lý' | 'Đang giao' | 'Hoàn thành' | 'Đã hủy';
-  createdAt: string; // ISO date or yyyy-mm-dd
+  createdAt: string; 
 }

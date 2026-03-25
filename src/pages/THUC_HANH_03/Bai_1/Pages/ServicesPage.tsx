@@ -32,7 +32,7 @@ const ServicesPage: React.FC<Props> = ({ appointments }) => {
                 borderTop: `4px solid ${COLOR_HEX[svc.color] ?? '#6c63ff'}`,
               }}
             >
-              {/* Header */}
+              {}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
                 <div>
                   <Tag color={svc.color} style={{ marginBottom: 6 }}>{svc.category}</Tag>
@@ -44,7 +44,7 @@ const ServicesPage: React.FC<Props> = ({ appointments }) => {
                 </Tag>
               </div>
 
-              {/* Stats */}
+              {}
               <Row gutter={8}>
                 <Col span={8}>
                   <Text type="secondary" style={{ fontSize: 11 }}>Giá</Text>
@@ -62,7 +62,7 @@ const ServicesPage: React.FC<Props> = ({ appointments }) => {
                 </Col>
               </Row>
 
-              {/* Revenue */}
+              {}
               <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #f0f0f0' }}>
                 <Text type="secondary" style={{ fontSize: 11 }}>Doanh thu: </Text>
                 <Text style={{ fontWeight: 600, color: '#6c63ff' }}>{formatCurrency(revenue)}</Text>

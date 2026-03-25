@@ -26,9 +26,9 @@ const RandomUser = () => {
 		getData();
 	}, [pageSize, current]);
 
-	// Lấy URL hiện tại
+	
 	const urlParams = new URLSearchParams(window.location.search);
-	// Lấy giá trị tham số 'param1'
+	
 	const color1 = urlParams.get('color1');
 	console.log('Giá trị color1:', color1);
 	const color2 = urlParams.get('color2');

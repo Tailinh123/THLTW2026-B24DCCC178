@@ -120,7 +120,7 @@ const THUC_HANH_03_Bai1: React.FC = () => {
       </Sider>
 
       <Layout>
-        {/* Header */}
+        {}
         <Header style={{
           background: '#fff', padding: '0 24px',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',

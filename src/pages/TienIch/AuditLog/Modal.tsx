@@ -86,29 +86,29 @@ const ModalAuditLog = (props: {
 			render: (val) => val && moment(val).format('HH:mm:ss, DD/MM/YYYY'),
 			onCell,
 		},
-		// {
-		// 	title: 'Thao tác',
-		// 	align: 'center',
-		// 	width: 90,
-		// 	fixed: 'right',
-		// 	render: (val, rec) => (
-		// 		<>
-		// 			<ButtonExtend
-		// 				tooltip='Chi tiết'
-		// 				onClick={() => rec._id && getByIdModel(rec._id).then(handleView)}
-		// 				type='link'
-		// 				icon={<EyeOutlined />}
-		// 			/>
-		// 			<ButtonExtend
-		// 				tooltip='Cập nhật'
-		// 				onClick={() => onCapNhat(rec)}
-		// 				className='btn-warning'
-		// 				type='link'
-		// 				icon={<RetweetOutlined />}
-		// 			/>
-		// 		</>
-		// 	),
-		// },
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	];
 
 	return (

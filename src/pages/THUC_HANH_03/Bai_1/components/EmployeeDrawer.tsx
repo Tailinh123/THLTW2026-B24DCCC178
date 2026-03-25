@@ -56,14 +56,14 @@ const EmployeeDrawer: React.FC<Props> = ({
             label: 'Thông tin',
             children: (
               <Space direction="vertical" style={{ width: '100%' }} size={16}>
-                {/* Avatar + tên */}
+                {}
                 <div style={{ textAlign: 'center' }}>
                   <Avatar src={employee.avatar} size={76} />
                   <Title level={4} style={{ margin: '10px 0 4px' }}>{employee.name}</Title>
                   <Tag color="purple">{employee.specialization}</Tag>
                 </div>
 
-                {/* Stats */}
+                {}
                 <Row gutter={16}>
                   <Col span={8}>
                     <Statistic title="Tổng lịch" value={empAppts.length} />
@@ -81,14 +81,14 @@ const EmployeeDrawer: React.FC<Props> = ({
                   </Col>
                 </Row>
 
-                {/* Thông tin chi tiết */}
+                {}
                 <Descriptions bordered size="small" column={1}>
                   <Descriptions.Item label="Điện thoại">{employee.phone}</Descriptions.Item>
                   <Descriptions.Item label="Khách tối đa/ngày">{employee.maxClientsPerDay}</Descriptions.Item>
                   <Descriptions.Item label="Giới thiệu">{employee.bio}</Descriptions.Item>
                 </Descriptions>
 
-                {/* Progress hôm nay */}
+                {}
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
                     <Text style={{ fontSize: 13 }}>Khách hôm nay</Text>
@@ -102,7 +102,7 @@ const EmployeeDrawer: React.FC<Props> = ({
                   />
                 </div>
 
-                {/* Lịch làm việc */}
+                {}
                 <div>
                   <Text strong style={{ display: 'block', marginBottom: 8 }}>
                     📅 Lịch làm việc

@@ -17,7 +17,7 @@ import ViewThongBao from './ViewThongBao/CardView';
 import TableReceiverThongBao from './ViewThongBao/TableReceiver';
 
 const ThongBaoPage = (props: { notiType: NotificationType }) => {
-	const { notiType = NotificationType.ONESIGNAL } = props; //Nếu sử dụng luôn, không truyền vào mặc định là thông báo thường
+	const { notiType = NotificationType.ONESIGNAL } = props; 
 	const {
 		page,
 		limit,
@@ -63,7 +63,7 @@ const ThongBaoPage = (props: { notiType: NotificationType }) => {
 				  ];
 		setSortTime([{ field: 'createdAt', operator: 'between', values: value }]);
 
-		//@ts-ignore
+		
 		getModel(
 			{
 				notificationInternal: activeKey === 'tu_dong',

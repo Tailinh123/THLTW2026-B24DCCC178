@@ -13,7 +13,7 @@ const LoginWithKeycloak = () => {
 		sessionStorage.clear();
 		auth.removeUser();
 		window.location.href = '/';
-		// window.location.reload();
+		
 	};
 
 	if (isLoading) {
