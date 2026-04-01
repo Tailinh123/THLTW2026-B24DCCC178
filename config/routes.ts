@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 
 export default [
 
@@ -91,10 +91,24 @@ export default [
 
 
   {
+    path: '/thuc-hanh-04',
+    name: 'THUC_HANH_04',
+    icon: 'SafetyCertificateOutlined',
+    component: './THUC_HANH_04',
+  },
+
+  {
     path: '/product-management',
     name: 'Quản lý Sản phẩm & Đơn hàng',
     icon: 'ShoppingOutlined',
     component: './ProductManagement',
+  },
+
+  {
+    path: '/thuc-hanh-05',
+    name: 'THUC_HANH_05',
+    icon: 'TeamOutlined',
+    component: './THUC_HANH_05',
   },
 
   // ===== 404 =====
