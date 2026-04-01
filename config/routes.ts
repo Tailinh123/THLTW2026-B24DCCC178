@@ -36,6 +36,26 @@ export default [
   },
 
   // =========================
+  // ===== BUOI_1 =====
+  // =========================
+  {
+    path: '/buoi-1',
+    name: 'BUOI_1',
+    icon: 'ShoppingOutlined',
+    component: './BUOI_1',
+  },
+
+  // =========================
+  // ===== BUOI_2 =====
+  // =========================
+  {
+    path: '/buoi-2',
+    name: 'BUOI_2',
+    icon: 'GoldOutlined',
+    component: './BUOI_2',
+  },
+
+  // =========================
   // ===== THUC_HANH_01 =====
   // =========================
   {
@@ -91,10 +111,24 @@ export default [
 
 
   {
+    path: '/thuc-hanh-04',
+    name: 'THUC_HANH_04',
+    icon: 'SafetyCertificateOutlined',
+    component: './THUC_HANH_04',
+  },
+
+  {
     path: '/product-management',
     name: 'Quản lý Sản phẩm & Đơn hàng',
     icon: 'ShoppingOutlined',
     component: './ProductManagement',
+  },
+
+  {
+    path: '/thuc-hanh-05',
+    name: 'THUC_HANH_05',
+    icon: 'TeamOutlined',
+    component: './THUC_HANH_05',
   },
 
   // ===== 404 =====
