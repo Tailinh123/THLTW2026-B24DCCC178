@@ -111,6 +111,13 @@ export default [
     component: './THUC_HANH_05',
   },
 
+  {
+    path: '/thuc-hanh-06',
+    name: 'THUC_HANH_06',
+    icon: 'GlobalOutlined',
+    component: './THUC_HANH_06',
+  },
+
   // ===== 404 =====
   {
     component: './exception/404',
