@@ -99,7 +99,7 @@ export default [
 
   {
     path: '/product-management',
-    name: 'Quản lý Sản phẩm & Đơn hàng',
+    name: 'Buổi học số 1',
     icon: 'ShoppingOutlined',
     component: './ProductManagement',
   },
