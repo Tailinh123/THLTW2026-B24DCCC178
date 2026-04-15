@@ -1,0 +1,168 @@
+@import './variables.less';
+
+// ============================================================
+// Dashboard Styles — Stat Cards & Chart
+// ============================================================
+
+.gk-dashboard {
+  margin-bottom: @gk-space-lg;
+}
+
+// ─── Stat Cards ───────────────────────────────────────────
+.gk-stats-row {
+  margin-bottom: @gk-space-lg;
+}
+
+.gk-stat-card {
+  background: @gk-light-surface;
+  border-radius: @gk-radius-lg;
+  border: 1px solid @gk-light-border;
+  padding: @gk-space-lg;
+  display: flex;
+  align-items: flex-start;
+  gap: @gk-space-md;
+  transition: all @gk-transition-base;
+  box-shadow: @gk-shadow-xs;
+  height: 100%;
+
+  &:hover {
+    box-shadow: @gk-shadow-md;
+    transform: translateY(-2px);
+  }
+
+  &__icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: @gk-radius-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    &--primary {
+      background: @gk-primary-bg;
+      color: @gk-primary;
+    }
+
+    &--success {
+      background: @gk-success-bg;
+      color: @gk-success;
+    }
+
+    &--warning {
+      background: @gk-warning-bg;
+      color: @gk-warning;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__label {
+    font-size: @gk-font-size-sm;
+    color: @gk-light-text-secondary;
+    margin-bottom: @gk-space-xs;
+    font-weight: 500;
+  }
+
+  &__value {
+    font-size: @gk-font-size-2xl;
+    font-weight: 700;
+    color: @gk-light-text;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  &__extra {
+    margin-top: @gk-space-sm;
+    display: flex;
+    gap: @gk-space-xs;
+    flex-wrap: wrap;
+  }
+}
+
+// ─── Chart Card ───────────────────────────────────────────
+.gk-chart-card {
+  background: @gk-light-surface;
+  border-radius: @gk-radius-lg;
+  border: 1px solid @gk-light-border;
+  padding: @gk-space-lg;
+  box-shadow: @gk-shadow-xs;
+  margin-bottom: @gk-space-lg;
+  height: 100%;
+
+  &__title {
+    font-size: @gk-font-size-md;
+    font-weight: 600;
+    color: @gk-light-text;
+    margin-bottom: @gk-space-xs;
+  }
+
+  &__subtitle {
+    font-size: @gk-font-size-xs;
+    color: @gk-light-text-tertiary;
+    margin-bottom: @gk-space-md;
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 240px;
+  }
+}
+
+// ─── Clickable Type Tags ──────────────────────────────────
+.gk-room-tag--clickable {
+  cursor: pointer;
+  transition: all @gk-transition-fast;
+
+  &:hover {
+    transform: scale(1.08);
+    box-shadow: @gk-shadow-sm;
+  }
+}
+
+// ─── Quick Stat Items ─────────────────────────────────────
+.gk-quick-stat {
+  padding: @gk-space-sm @gk-space-md;
+  border-radius: @gk-radius;
+  background: @gk-light-bg;
+  text-align: center;
+  transition: background-color @gk-transition-fast;
+
+  &:hover {
+    background: @gk-primary-bg;
+  }
+
+  &__label {
+    font-size: @gk-font-size-xs;
+    color: @gk-light-text-secondary;
+    margin-bottom: @gk-space-xs;
+    font-weight: 500;
+  }
+
+  &__value {
+    font-size: @gk-font-size-xl;
+    font-weight: 700;
+    color: @gk-light-text;
+    line-height: 1.2;
+
+    &--success {
+      color: @gk-success;
+    }
+
+    &--warning {
+      color: @gk-warning;
+    }
+  }
+
+  &__hint {
+    font-size: 11px;
+    color: @gk-light-text-tertiary;
+    margin-top: 2px;
+  }
+}
+

@@ -1,27 +1,115 @@
-export type Difficulty = "Dễ" | "Trung bình" | "Khó" | "Rất khó";
 
-export interface KnowledgeBlock {
+
+
+
+export interface KhoiKienThuc {
   id: string;
-  name: string;
+  ten: string;
+  moTa: string;
 }
 
-export interface Subject {
+export interface MonHoc {
   id: string;
-  code: string;
-  name: string;
-  credits: number;
+  ten: string;
+  moTa: string;
+  khoiKienThucIds: string[];
 }
 
-export interface Question {
+
+
+export type MucDoKho = 'nhan_biet' | 'thong_hieu' | 'van_dung' | 'van_dung_cao';
+
+export const MUC_DO_LABEL: Record<MucDoKho, string> = {
+  nhan_biet: 'Nhận biết',
+  thong_hieu: 'Thông hiểu',
+  van_dung: 'Vận dụng',
+  van_dung_cao: 'Vận dụng cao',
+};
+
+export const MUC_DO_COLOR: Record<MucDoKho, string> = {
+  nhan_biet: '#52c41a',
+  thong_hieu: '#1890ff',
+  van_dung: '#fa8c16',
+  van_dung_cao: '#ff4d4f',
+};
+
+export const ALL_MUC_DO: MucDoKho[] = ['nhan_biet', 'thong_hieu', 'van_dung', 'van_dung_cao'];
+
+export interface CauHoi {
   id: string;
-  subjectId: string;
-  blockId: string;
-  content: string;
-  difficulty: Difficulty;
+  noiDung: string;
+  dapAn: string;
+  monHocId: string;
+  khoiKienThucId: string;
+  mucDoKho: MucDoKho;
+  diem: number;
+  thoiGianPhut: number;
+  chuong: string;
+  baiHoc: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface Exam {
+
+
+export interface MatranCell {
+  khoiKienThucId: string;
+  mucDoKho: MucDoKho;
+  soLuong: number;
+}
+
+export interface CauTrucDeThi {
   id: string;
-  subjectId: string;
-  questions: Question[];
+  ten: string;
+  monHocId: string;
+  matran: MatranCell[];
+  createdAt: string;
+}
+
+export interface ExamHeaderInfo {
+  truong: string;
+  khoa: string;
+  namHoc: string;
+  hocKy: string;
+}
+
+export interface DeThi {
+  id: string;
+  ten: string;
+  cauTrucId: string;
+  monHocId: string;
+  cauHoiIds: string[];
+  tongDiem: number;
+  tongThoiGian: number;
+  headerInfo: ExamHeaderInfo;
+  createdAt: string;
+}
+
+
+
+export interface CauHoiFilter {
+  monHocId?: string;
+  khoiKienThucId?: string;
+  mucDoKho?: MucDoKho;
+  keyword?: string;
+  diemMin?: number;
+  diemMax?: number;
+}
+
+
+
+export interface ExamGenError {
+  khoiKienThucId: string;
+  khoiKienThucTen: string;
+  mucDoKho: MucDoKho;
+  required: number;
+  available: number;
+}
+
+export interface ExamGenResult {
+  success: boolean;
+  cauHoiIds?: string[];
+  errors?: ExamGenError[];
+  tongDiem?: number;
+  tongThoiGian?: number;
 }

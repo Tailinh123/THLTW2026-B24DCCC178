@@ -1,0 +1,432 @@
+@import './variables.less';
+
+// ============================================================
+// Dark Mode Overrides — scoped under .giua-ki-dark
+// ============================================================
+
+.giua-ki-dark {
+  background-color: @gk-dark-bg;
+  color: @gk-dark-text;
+
+  // ─── Sidebar ────────────────────────────────────────────
+  .gk-sidebar {
+    background: @gk-dark-surface !important;
+    border-right-color: @gk-dark-border;
+  }
+
+  .gk-sidebar-logo {
+    border-bottom-color: @gk-dark-border;
+
+    &__text {
+      color: @gk-dark-text;
+    }
+  }
+
+  .gk-sidebar-menu {
+    background: transparent !important;
+
+    .ant-menu {
+      background: transparent !important;
+      color: @gk-dark-text-secondary;
+    }
+
+    .ant-menu-item {
+      color: @gk-dark-text-secondary !important;
+
+      &:hover {
+        background-color: fade(@gk-primary, 12%) !important;
+        color: @gk-dark-text !important;
+      }
+
+      &.ant-menu-item-selected {
+        background-color: fade(@gk-primary, 15%) !important;
+        color: @gk-primary-light !important;
+      }
+    }
+  }
+
+  .gk-sidebar-badge {
+    background: @gk-dark-border;
+    color: @gk-dark-text-tertiary;
+  }
+
+  .gk-sidebar-footer {
+    border-top-color: @gk-dark-border;
+
+    &__version {
+      color: @gk-dark-text-tertiary;
+    }
+  }
+
+  // ─── Header ─────────────────────────────────────────────
+  .gk-header {
+    background: @gk-dark-surface !important;
+    border-bottom-color: @gk-dark-border;
+
+    &__title {
+      color: @gk-dark-text;
+    }
+  }
+
+  .gk-header-btn {
+    background: @gk-dark-surface !important;
+    border-color: @gk-dark-border !important;
+    color: @gk-dark-text-secondary !important;
+
+    &:hover {
+      border-color: @gk-primary-light !important;
+      color: @gk-primary-light !important;
+      background: fade(@gk-primary, 10%) !important;
+    }
+  }
+
+  // ─── Stat Cards ─────────────────────────────────────────
+  .gk-stat-card {
+    background: @gk-dark-surface;
+    border-color: @gk-dark-border;
+
+    &:hover {
+      border-color: fade(@gk-primary, 30%);
+    }
+
+    &__label {
+      color: @gk-dark-text-secondary;
+    }
+
+    &__value {
+      color: @gk-dark-text;
+    }
+
+    &__icon-wrap {
+      &--primary {
+        background: fade(@gk-primary, 15%);
+      }
+      &--success {
+        background: fade(@gk-success, 15%);
+      }
+      &--warning {
+        background: fade(@gk-warning, 15%);
+      }
+    }
+  }
+
+  // ─── Chart Card ─────────────────────────────────────────
+  .gk-chart-card {
+    background: @gk-dark-surface;
+    border-color: @gk-dark-border;
+
+    &__title {
+      color: @gk-dark-text;
+    }
+  }
+
+  // ─── Table ──────────────────────────────────────────────
+  .gk-table-card {
+    background: @gk-dark-surface;
+    border-color: @gk-dark-border;
+  }
+
+  .gk-table-toolbar {
+    border-bottom-color: @gk-dark-border;
+  }
+
+  .gk-table {
+    .ant-table {
+      background: transparent;
+      color: @gk-dark-text;
+    }
+
+    .ant-table-thead > tr > th {
+      background: fade(@gk-dark-bg, 60%) !important;
+      border-bottom-color: @gk-dark-border;
+      color: @gk-dark-text-secondary;
+    }
+
+    .ant-table-tbody > tr > td {
+      border-bottom-color: fade(@gk-dark-border, 50%);
+      color: @gk-dark-text;
+      background: transparent;
+    }
+
+    .ant-table-tbody > tr:hover > td {
+      background: @gk-dark-surface-hover !important;
+    }
+
+    .ant-table-tbody > tr.gk-row-highlighted > td {
+      animation-name: gk-row-highlight-dark;
+    }
+
+    .ant-pagination-item {
+      background: @gk-dark-surface;
+      border-color: @gk-dark-border;
+
+      a {
+        color: @gk-dark-text;
+      }
+
+      &-active {
+        background: fade(@gk-primary, 15%);
+        border-color: @gk-primary;
+
+        a {
+          color: @gk-primary-light;
+        }
+      }
+    }
+
+    .ant-pagination-prev,
+    .ant-pagination-next {
+      .ant-pagination-item-link {
+        background: @gk-dark-surface;
+        border-color: @gk-dark-border;
+        color: @gk-dark-text-secondary;
+      }
+    }
+
+    .ant-select-selector {
+      background: @gk-dark-surface !important;
+      border-color: @gk-dark-border !important;
+      color: @gk-dark-text !important;
+    }
+
+    .ant-table-column-sorter {
+      color: @gk-dark-text-tertiary;
+    }
+  }
+
+  @keyframes gk-row-highlight-dark {
+    0% {
+      background-color: fade(@gk-warning, 15%);
+    }
+    100% {
+      background-color: transparent;
+    }
+  }
+
+  .gk-room-id {
+    background: fade(@gk-primary, 15%);
+    color: @gk-primary-light;
+  }
+
+  .gk-room-name {
+    color: @gk-dark-text;
+  }
+
+  .gk-manager-cell__avatar {
+    background: fade(@gk-primary, 15%);
+    color: @gk-primary-light;
+  }
+
+  .gk-manager-cell__name {
+    color: @gk-dark-text;
+  }
+
+  .gk-capacity-bar__track {
+    background: @gk-dark-border;
+  }
+
+  .gk-capacity-bar__value {
+    color: @gk-dark-text;
+  }
+
+  // ─── Drawer ─────────────────────────────────────────────
+  .ant-drawer-content {
+    background: @gk-dark-surface;
+  }
+
+  .ant-drawer-header {
+    background: @gk-dark-surface;
+    border-bottom-color: @gk-dark-border;
+
+    .ant-drawer-title {
+      color: @gk-dark-text;
+    }
+
+    .ant-drawer-close {
+      color: @gk-dark-text-secondary;
+    }
+  }
+
+  .ant-drawer-body {
+    background: @gk-dark-surface;
+  }
+
+  .ant-drawer-footer {
+    background: @gk-dark-surface;
+    border-top-color: @gk-dark-border;
+  }
+
+  .gk-form {
+    .ant-form-item-label > label {
+      color: @gk-dark-text;
+    }
+
+    .ant-input,
+    .ant-input-number-input {
+      background: @gk-dark-bg !important;
+      border-color: @gk-dark-border !important;
+      color: @gk-dark-text !important;
+
+      &:hover {
+        border-color: @gk-primary-light !important;
+      }
+    }
+
+    .ant-select-selector {
+      background: @gk-dark-bg !important;
+      border-color: @gk-dark-border !important;
+      color: @gk-dark-text !important;
+    }
+
+    .ant-input-number {
+      background: @gk-dark-bg !important;
+      border-color: @gk-dark-border !important;
+    }
+
+    .ant-slider-rail {
+      background: @gk-dark-border;
+    }
+  }
+
+  .gk-form-section {
+    border-bottom-color: @gk-dark-border;
+
+    &__title {
+      color: @gk-dark-text-secondary;
+    }
+  }
+
+  .gk-capacity-control__marks {
+    color: @gk-dark-text-tertiary;
+  }
+
+  // ─── Filter UI ──────────────────────────────────────────
+  .gk-search-input .ant-input-affix-wrapper {
+    background: @gk-dark-bg !important;
+    border-color: @gk-dark-border !important;
+
+    .ant-input {
+      background: transparent !important;
+      color: @gk-dark-text !important;
+    }
+
+    .ant-input-prefix {
+      color: @gk-dark-text-tertiary;
+    }
+  }
+
+  .gk-filter-select .ant-select-selector {
+    background: @gk-dark-bg !important;
+    border-color: @gk-dark-border !important;
+    color: @gk-dark-text !important;
+  }
+
+  .gk-filter-tag {
+    background: fade(@gk-primary, 12%);
+    border-color: fade(@gk-primary, 20%);
+    color: @gk-primary-light;
+
+    .ant-tag-close-icon {
+      color: @gk-primary-light;
+    }
+  }
+
+  // ─── Empty State ────────────────────────────────────────
+  .gk-empty-state {
+    &__icon {
+      background: fade(@gk-primary, 12%);
+    }
+
+    &__title {
+      color: @gk-dark-text;
+    }
+
+    &__desc {
+      color: @gk-dark-text-secondary;
+    }
+  }
+
+  // ─── Popover / Popconfirm / Tooltip ─────────────────────
+  .ant-popover-inner {
+    background: @gk-dark-surface;
+    border: 1px solid @gk-dark-border;
+  }
+
+  .ant-popover-message-title {
+    color: @gk-dark-text;
+  }
+
+  .ant-popover-arrow-content {
+    background: @gk-dark-surface;
+  }
+
+  // ─── Column Toggle ─────────────────────────────────────
+  .gk-column-toggle {
+    .ant-checkbox-wrapper {
+      color: @gk-dark-text;
+    }
+  }
+
+  // ─── Misc ───────────────────────────────────────────────
+  .ant-empty-description {
+    color: @gk-dark-text-secondary;
+  }
+
+  .ant-btn-default {
+    background: @gk-dark-surface;
+    border-color: @gk-dark-border;
+    color: @gk-dark-text;
+
+    &:hover {
+      border-color: @gk-primary-light;
+      color: @gk-primary-light;
+    }
+  }
+
+  .ant-skeleton-element .ant-skeleton-button,
+  .ant-skeleton-content .ant-skeleton-title,
+  .ant-skeleton-content .ant-skeleton-paragraph > li {
+    background: linear-gradient(90deg, @gk-dark-border 25%, @gk-dark-surface-hover 50%, @gk-dark-border 75%);
+    background-size: 400% 100%;
+  }
+
+  // ─── Quick Stats ──────────────────────────────────────────
+  .gk-quick-stat {
+    background: fade(@gk-dark-bg, 80%);
+
+    &:hover {
+      background: fade(@gk-primary, 10%);
+    }
+
+    &__label {
+      color: @gk-dark-text-secondary;
+    }
+
+    &__value {
+      color: @gk-dark-text;
+    }
+
+    &__hint {
+      color: @gk-dark-text-tertiary;
+    }
+  }
+
+  // ─── Chart Subtitle ───────────────────────────────────────
+  .gk-chart-card__subtitle {
+    color: @gk-dark-text-tertiary;
+  }
+
+  // ─── Notification ─────────────────────────────────────────
+  .ant-notification-notice {
+    background: @gk-dark-surface;
+    border: 1px solid @gk-dark-border;
+
+    .ant-notification-notice-message {
+      color: @gk-dark-text;
+    }
+
+    .ant-notification-notice-description {
+      color: @gk-dark-text-secondary;
+    }
+  }
+}

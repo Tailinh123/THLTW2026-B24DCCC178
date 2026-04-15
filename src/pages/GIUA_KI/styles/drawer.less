@@ -1,0 +1,154 @@
+@import './variables.less';
+
+// ============================================================
+// Drawer & Form Styles
+// ============================================================
+
+.gk-drawer {
+  .ant-drawer-header {
+    border-bottom: 1px solid @gk-light-border;
+    padding: @gk-space-md @gk-space-lg;
+  }
+
+  .ant-drawer-title {
+    font-size: @gk-font-size-md;
+    font-weight: 700;
+    color: @gk-light-text;
+  }
+
+  .ant-drawer-body {
+    padding: @gk-space-lg;
+  }
+
+  .ant-drawer-footer {
+    border-top: 1px solid @gk-light-border;
+    padding: @gk-space-md @gk-space-lg;
+    display: flex;
+    justify-content: flex-end;
+    gap: @gk-space-sm;
+  }
+
+  .ant-drawer-content {
+    border-radius: @gk-radius-lg 0 0 @gk-radius-lg;
+  }
+}
+
+// ─── Form Overrides ───────────────────────────────────────
+.gk-form {
+  .ant-form-item-label > label {
+    font-weight: 600;
+    font-size: @gk-font-size-sm;
+    color: @gk-light-text;
+  }
+
+  .ant-input,
+  .ant-select-selector,
+  .ant-input-number {
+    border-radius: @gk-radius !important;
+    border-color: @gk-light-border !important;
+    font-size: @gk-font-size-base;
+    transition: all @gk-transition-fast;
+
+    &:hover {
+      border-color: @gk-primary-light !important;
+    }
+
+    &:focus,
+    &.ant-input-focused {
+      border-color: @gk-primary !important;
+      box-shadow: 0 0 0 2px fade(@gk-primary, 15%) !important;
+    }
+  }
+
+  .ant-select-selector {
+    height: auto !important;
+    min-height: 36px;
+  }
+
+  .ant-input-number {
+    width: 100%;
+  }
+
+  .ant-form-item-explain-error {
+    font-size: @gk-font-size-xs;
+    margin-top: 4px;
+  }
+}
+
+// ─── Capacity Slider ──────────────────────────────────────
+.gk-capacity-control {
+  display: flex;
+  flex-direction: column;
+  gap: @gk-space-sm;
+
+  &__slider-row {
+    display: flex;
+    align-items: center;
+    gap: @gk-space-md;
+  }
+
+  &__slider {
+    flex: 1;
+
+    .ant-slider-rail {
+      background: @gk-light-border;
+      height: 6px;
+      border-radius: @gk-radius-full;
+    }
+
+    .ant-slider-track {
+      height: 6px;
+      border-radius: @gk-radius-full;
+      background: @gk-primary;
+    }
+
+    .ant-slider-handle {
+      width: 18px;
+      height: 18px;
+      margin-top: -6px;
+      border: 2px solid @gk-primary;
+      box-shadow: @gk-shadow-sm;
+
+      &:hover,
+      &:focus {
+        border-color: @gk-primary-hover;
+        box-shadow: 0 0 0 4px fade(@gk-primary, 15%);
+      }
+    }
+  }
+
+  &__number {
+    width: 90px;
+    flex-shrink: 0;
+  }
+
+  &__marks {
+    display: flex;
+    justify-content: space-between;
+    font-size: @gk-font-size-xs;
+    color: @gk-light-text-tertiary;
+    padding: 0 4px;
+  }
+}
+
+// ─── Form Section ─────────────────────────────────────────
+.gk-form-section {
+  margin-bottom: @gk-space-lg;
+  padding-bottom: @gk-space-lg;
+  border-bottom: 1px solid @gk-light-border-light;
+
+  &:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  &__title {
+    font-size: @gk-font-size-sm;
+    font-weight: 600;
+    color: @gk-light-text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: @gk-space-md;
+  }
+}

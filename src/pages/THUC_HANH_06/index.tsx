@@ -52,7 +52,7 @@ const AppContent: React.FC = () => {
           <div className="th06-logo-icon">
             <CompassOutlined style={{ fontSize: 22, color: '#fff' }} />
           </div>
-          {!collapsed && <span className="th06-logo-text">Travel Planner</span>}
+          {!collapsed && <span className="th06-logo-text">Travelola</span>}
         </div>
 
         {}
