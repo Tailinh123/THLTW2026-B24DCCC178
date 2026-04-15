@@ -1,95 +1,49 @@
-import { useState } from "react";
-import { Button, Card, Space, Table, Typography } from "antd";
+/* ============================================================
+ * THUC_HANH_01 — Bài 1: Entry Point
+ * Game Oẳn Tù Tì page with Redux Provider
+ * ============================================================ */
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Row, Col, Typography } from 'antd';
+import store from '../store';
+import { ModeSelector, ScoreBoard, GameBoard, GameStatsPanel, GameHistory } from './components';
+import './styles.less';
 
-const { Title } = Typography;
+const { Text } = Typography;
 
-type Choice = "Kéo" | "Búa" | "Bao";
-
-interface History {
-  player: Choice;
-  computer: Choice;
-  result: string;
-}
-
-const choices: Choice[] = ["Kéo", "Búa", "Bao"];
-
-const getComputerChoice = (): Choice => {
-  const index = Math.floor(Math.random() * 3);
-  return choices[index];
-};
-
-const getResult = (player: Choice, computer: Choice) => {
-  if (player === computer) return "Hòa";
-
-  if (
-    (player === "Kéo" && computer === "Bao") ||
-    (player === "Búa" && computer === "Kéo") ||
-    (player === "Bao" && computer === "Búa")
-  ) {
-    return "Thắng";
-  }
-
-  return "Thua";
-};
-
-const RockPaperScissors = () => {
-  const [history, setHistory] = useState<History[]>([]);
-
-  const handlePlay = (playerChoice: Choice) => {
-    const computerChoice = getComputerChoice();
-    const result = getResult(playerChoice, computerChoice);
-
-    const newRound = {
-      player: playerChoice,
-      computer: computerChoice,
-      result,
-    };
-
-    setHistory([newRound, ...history]);
-  };
-
-  const columns = [
-    {
-      title: "Người chơi",
-      dataIndex: "player",
-    },
-    {
-      title: "Máy",
-      dataIndex: "computer",
-    },
-    {
-      title: "Kết quả",
-      dataIndex: "result",
-    },
-  ];
-
+const Bai1Content: React.FC = () => {
   return (
-    <Card>
-      <Title level={2}>Trò chơi Oẳn Tù Tì</Title>
+    <div className="game-root">
+      <Row gutter={[20, 20]}>
+        {/* Cột trái: Game chính */}
+        <Col xs={24} lg={16}>
+          <ModeSelector />
+          <ScoreBoard />
+          <GameBoard />
+        </Col>
 
-      <Space size="large">
-        <Button type="primary" onClick={() => handlePlay("Kéo")}>
-          ✌ Kéo
-        </Button>
+        {/* Cột phải: Stats + History */}
+        <Col xs={24} lg={8}>
+          <GameStatsPanel />
+          <div style={{ marginTop: 16 }}>
+            <GameHistory />
+          </div>
+        </Col>
+      </Row>
 
-        <Button type="primary" onClick={() => handlePlay("Búa")}>
-          ✊ Búa
-        </Button>
-
-        <Button type="primary" onClick={() => handlePlay("Bao")}>
-          ✋ Bao
-        </Button>
-      </Space>
-
-      <Table
-        style={{ marginTop: 30 }}
-        dataSource={history}
-        columns={columns}
-        rowKey={(record, index) => index!.toString()}
-        pagination={false}
-      />
-    </Card>
+      <div style={{ textAlign: 'center', marginTop: 24 }}>
+        <Text style={{ color: 'rgba(255,255,255,0.2)', fontSize: 11 }}>
+          THUC_HANH_01 • Bài 1 — Game Oẳn Tù Tì
+        </Text>
+      </div>
+    </div>
   );
 };
 
-export default RockPaperScissors;
+const Bai1Page: React.FC = () => (
+  <Provider store={store}>
+    <Bai1Content />
+  </Provider>
+);
+
+export default Bai1Page;

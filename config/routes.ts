@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 
 export default [
 
@@ -36,24 +36,33 @@ export default [
   },
 
   // =========================
+  // ===== BUOI_1 =====
+  // =========================
+  {
+    path: '/buoi-1',
+    name: 'BUOI_1',
+    icon: 'ShoppingOutlined',
+    component: './BUOI_1',
+  },
+
+  // =========================
+  // ===== BUOI_2 =====
+  // =========================
+  {
+    path: '/buoi-2',
+    name: 'BUOI_2',
+    icon: 'GoldOutlined',
+    component: './BUOI_2',
+  },
+
+  // =========================
   // ===== THUC_HANH_01 =====
   // =========================
   {
     path: '/thuc-hanh-01',
     name: 'THUC_HANH_01',
     icon: 'BookOutlined',
-    routes: [
-      {
-        path: '/thuc-hanh-01/bai-1',
-        name: 'Bài 1',
-        component: './THUC_HANH_01/Bai_1',
-      },
-      {
-        path: '/thuc-hanh-01/bai-2',
-        name: 'Bài 2',
-        component: './THUC_HANH_01/Bai_2',
-      },
-    ],
+    component: './THUC_HANH_01',
   },
 
 
@@ -116,6 +125,15 @@ export default [
     name: 'THUC_HANH_06',
     icon: 'GlobalOutlined',
     component: './THUC_HANH_06',
+  },
+
+  // ===== GIUA_KI =====
+  {
+    path: '/giua-ki',
+    name: 'Giữa kì',
+    icon: 'BankOutlined',
+    layout: false,
+    component: './GIUA_KI',
   },
 
   // ===== 404 =====

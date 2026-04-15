@@ -1,63 +1,96 @@
-import { Tabs, Card } from "antd";
-import { useState } from "react";
-
-import KnowledgeBlockManager from "./components/KnowledgeBlockManager";
-import SubjectManager from "./components/SubjectManager";
-import QuestionManager from "./components/QuestionManager";
-import ExamManager from "./components/ExamManager";
-
-import { KnowledgeBlock, Subject, Question, Exam } from "./types";
+/* ============================================================
+ * THUC_HANH_01 — Bài 2: Entry Point
+ * Exam Management page with Redux Provider and Tabs navigation
+ * ============================================================ */
+import React, { useState } from 'react';
+import { Provider } from 'react-redux';
+import { Tabs, Typography } from 'antd';
+import {
+  AppstoreOutlined,
+  QuestionCircleOutlined,
+  FileTextOutlined,
+  DatabaseOutlined,
+} from '@ant-design/icons';
+import store from '../store';
+import { DanhMucTab, CauHoiTab, DeThiTab, ExamPreview, DataManager } from './components';
+import type { DeThi } from './types';
+import './styles.less';
 
 const { TabPane } = Tabs;
+const { Text } = Typography;
 
-const QuestionBankPage = () => {
+const Bai2Content: React.FC = () => {
+  const [previewExam, setPreviewExam] = useState<DeThi | null>(null);
+  const [previewVisible, setPreviewVisible] = useState(false);
 
-  const [blocks, setBlocks] = useState<KnowledgeBlock[]>([]);
-  const [subjects, setSubjects] = useState<Subject[]>([]);
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [exams, setExams] = useState<Exam[]>([]);
+  const handlePreview = (exam: DeThi) => {
+    setPreviewExam(exam);
+    setPreviewVisible(true);
+  };
 
   return (
-    <Card title="Hệ thống ngân hàng câu hỏi">
+    <div className="exam-root">
+      {/* Header */}
+      <div className="exam-header-bar">
+        <div>
+          <h2 className="exam-header-title">📝 Quản lý Ngân hàng Câu hỏi & Đề thi</h2>
+          <p className="exam-header-subtitle">
+            Hệ thống quản lý câu hỏi tự luận và tạo đề thi tự động
+          </p>
+        </div>
+      </div>
 
-      <Tabs defaultActiveKey="1">
-
-        <TabPane tab="Khối kiến thức" key="1">
-          <KnowledgeBlockManager
-            blocks={blocks}
-            setBlocks={setBlocks}
-          />
+      {/* Tabs */}
+      <Tabs defaultActiveKey="danhmuc" className="exam-tabs" type="card">
+        <TabPane
+          tab={<span><AppstoreOutlined /> Danh mục</span>}
+          key="danhmuc"
+        >
+          <DanhMucTab />
         </TabPane>
 
-        <TabPane tab="Môn học" key="2">
-          <SubjectManager
-            subjects={subjects}
-            setSubjects={setSubjects}
-          />
+        <TabPane
+          tab={<span><QuestionCircleOutlined /> Câu hỏi</span>}
+          key="cauhoi"
+        >
+          <CauHoiTab />
         </TabPane>
 
-        <TabPane tab="Câu hỏi" key="3">
-          <QuestionManager
-            questions={questions}
-            setQuestions={setQuestions}
-            subjects={subjects}
-            blocks={blocks}
-          />
+        <TabPane
+          tab={<span><FileTextOutlined /> Đề thi</span>}
+          key="dethi"
+        >
+          <DeThiTab onPreview={handlePreview} />
         </TabPane>
 
-        <TabPane tab="Đề thi" key="4">
-          <ExamManager
-            questions={questions}
-            subjects={subjects}
-            exams={exams}
-            setExams={setExams}
-          />
+        <TabPane
+          tab={<span><DatabaseOutlined /> Dữ liệu</span>}
+          key="data"
+        >
+          <DataManager />
         </TabPane>
-
       </Tabs>
 
-    </Card>
+      {/* Exam Preview Modal */}
+      <ExamPreview
+        exam={previewExam}
+        visible={previewVisible}
+        onClose={() => setPreviewVisible(false)}
+      />
+
+      <div style={{ textAlign: 'center', marginTop: 24 }}>
+        <Text type="secondary" style={{ fontSize: 11 }}>
+          THUC_HANH_01 • Bài 2 — Quản lý Ngân hàng Câu hỏi & Đề thi
+        </Text>
+      </div>
+    </div>
   );
 };
 
-export default QuestionBankPage;
+const Bai2Page: React.FC = () => (
+  <Provider store={store}>
+    <Bai2Content />
+  </Provider>
+);
+
+export default Bai2Page;
