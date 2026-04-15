@@ -1,0 +1,223 @@
+@import './variables.less';
+
+// ============================================================
+// Table Styles — Room Table, Row Hover, Highlight
+// ============================================================
+
+.gk-table-card {
+  background: @gk-light-surface;
+  border-radius: @gk-radius-lg;
+  border: 1px solid @gk-light-border;
+  box-shadow: @gk-shadow-xs;
+  overflow: hidden;
+}
+
+.gk-table-toolbar {
+  padding: @gk-space-md @gk-space-lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid @gk-light-border;
+  gap: @gk-space-md;
+  flex-wrap: wrap;
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: @gk-space-sm;
+    flex: 1;
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: @gk-space-sm;
+    flex-shrink: 0;
+  }
+}
+
+// ─── Table Overrides ──────────────────────────────────────
+.gk-table {
+  .ant-table {
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .ant-table-thead > tr > th {
+    background: @gk-light-bg !important;
+    border-bottom: 1px solid @gk-light-border;
+    font-weight: 600;
+    font-size: @gk-font-size-sm;
+    color: @gk-light-text-secondary;
+    padding: 12px @gk-space-md;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .ant-table-tbody > tr > td {
+    padding: 14px @gk-space-md;
+    border-bottom: 1px solid @gk-light-border-light;
+    font-size: @gk-font-size-base;
+    transition: background-color @gk-transition-fast;
+  }
+
+  .ant-table-tbody > tr:hover > td {
+    background: fade(@gk-primary, 4%) !important;
+  }
+
+  .ant-table-tbody > tr:last-child > td {
+    border-bottom: none;
+  }
+
+  // Pagination
+  .ant-table-pagination {
+    padding: @gk-space-md @gk-space-lg;
+    margin: 0 !important;
+  }
+
+  .ant-pagination-item {
+    border-radius: @gk-radius !important;
+    border-color: @gk-light-border;
+
+    &-active {
+      border-color: @gk-primary;
+      background: @gk-primary-bg;
+
+      a {
+        color: @gk-primary;
+      }
+    }
+  }
+}
+
+// ─── Row ID (monospace) ───────────────────────────────────
+.gk-room-id {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: @gk-font-size-sm;
+  font-weight: 600;
+  color: @gk-primary;
+  background: @gk-primary-bg;
+  padding: 2px 8px;
+  border-radius: @gk-radius-sm;
+}
+
+// ─── Room Name ────────────────────────────────────────────
+.gk-room-name {
+  font-weight: 600;
+  color: @gk-light-text;
+}
+
+// ─── Manager Cell ─────────────────────────────────────────
+.gk-manager-cell {
+  display: flex;
+  align-items: center;
+  gap: @gk-space-sm;
+
+  &__avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: @gk-radius-full;
+    background: linear-gradient(135deg, @gk-primary-bg, fade(@gk-primary, 15%));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: @gk-primary;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    font-size: @gk-font-size-base;
+    color: @gk-light-text;
+  }
+}
+
+// ─── Action Buttons ───────────────────────────────────────
+.gk-action-btn {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 4px 8px !important;
+  height: auto !important;
+  border-radius: @gk-radius-sm !important;
+  transition: all @gk-transition-fast;
+
+  &--edit {
+    color: @gk-primary !important;
+
+    &:hover {
+      background: @gk-primary-bg !important;
+    }
+  }
+
+  &--delete {
+    color: @gk-danger !important;
+
+    &:hover {
+      background: @gk-danger-bg !important;
+    }
+  }
+
+  &--disabled {
+    color: @gk-light-text-tertiary !important;
+    cursor: not-allowed !important;
+    opacity: 0.45;
+
+    &:hover {
+      background: transparent !important;
+    }
+  }
+}
+
+// ─── Row Highlight Animation ──────────────────────────────
+@keyframes gk-row-highlight {
+  0% {
+    background-color: fade(@gk-warning, 20%);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.gk-table .ant-table-tbody > tr.gk-row-highlighted > td {
+  animation: gk-row-highlight 2.5s ease-out;
+}
+
+// ─── Capacity Progress ───────────────────────────────────
+.gk-capacity-bar {
+  display: flex;
+  align-items: center;
+  gap: @gk-space-sm;
+
+  &__track {
+    flex: 1;
+    height: 6px;
+    background: @gk-light-border-light;
+    border-radius: @gk-radius-full;
+    overflow: hidden;
+    min-width: 60px;
+  }
+
+  &__fill {
+    height: 100%;
+    border-radius: @gk-radius-full;
+    transition: width @gk-transition-slow;
+  }
+
+  &__value {
+    font-size: @gk-font-size-sm;
+    font-weight: 600;
+    color: @gk-light-text;
+    min-width: 32px;
+    text-align: right;
+  }
+}
+
+// ─── Search Highlight ─────────────────────────────────────
+.gk-search-highlight {
+  background-color: fade(@gk-warning, 30%);
+  padding: 1px 2px;
+  border-radius: 2px;
+}

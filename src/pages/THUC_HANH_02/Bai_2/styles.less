@@ -1,0 +1,153 @@
+/* ============================================================
+ * THUC_HANH_01 — Bài 2: Admin Styles
+ * Professional blue theme for exam management
+ * ============================================================ */
+
+.exam-root {
+  --admin-primary: #1890ff;
+  --admin-bg: #f0f2f5;
+  --admin-surface: #ffffff;
+  --admin-border: #e8e8e8;
+  --admin-text: rgba(0, 0, 0, 0.85);
+  --admin-text-secondary: rgba(0, 0, 0, 0.45);
+
+  min-height: calc(100vh - 120px);
+  background: var(--admin-bg);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* ===== Header ===== */
+.exam-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  border-radius: 10px;
+  color: #fff;
+}
+
+.exam-header-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.exam-header-subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+/* ===== Tab Customization ===== */
+.exam-tabs {
+  .ant-tabs-nav {
+    margin-bottom: 16px;
+
+    &::before {
+      border-color: var(--admin-border);
+    }
+  }
+
+  .ant-tabs-tab {
+    padding: 10px 16px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s;
+
+    &:hover {
+      color: var(--admin-primary);
+    }
+
+    &.ant-tabs-tab-active .ant-tabs-tab-btn {
+      color: var(--admin-primary);
+      font-weight: 600;
+    }
+  }
+
+  .ant-tabs-ink-bar {
+    background: var(--admin-primary);
+    height: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* ===== Cards ===== */
+.exam-root .ant-card {
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--admin-border);
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .ant-card-head {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 0 16px;
+    min-height: 44px;
+  }
+
+  .ant-card-head-title {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 0;
+  }
+}
+
+/* ===== Tables ===== */
+.exam-root .ant-table-thead > tr > th {
+  background: #fafafa;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--admin-text-secondary);
+}
+
+.exam-root .ant-table-tbody > tr {
+  transition: background 0.2s;
+
+  &:hover > td {
+    background: #e6f7ff !important;
+  }
+}
+
+/* ===== Form Improvements ===== */
+.exam-root .ant-form-item-label > label {
+  font-weight: 500;
+  color: var(--admin-text);
+}
+
+.exam-root .ant-select-selector,
+.exam-root .ant-input,
+.exam-root .ant-input-number {
+  border-radius: 6px !important;
+}
+
+/* ===== Matrix Table ===== */
+.exam-root .ant-table-bordered {
+  .ant-table-thead > tr > th {
+    text-align: center;
+  }
+
+  .ant-table-tbody > tr > td {
+    text-align: center;
+    vertical-align: middle;
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .exam-root {
+    padding: 12px;
+  }
+
+  .exam-header-bar {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+}

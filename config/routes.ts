@@ -42,18 +42,7 @@ export default [
     path: '/thuc-hanh-01',
     name: 'THUC_HANH_01',
     icon: 'BookOutlined',
-    routes: [
-      {
-        path: '/thuc-hanh-01/bai-1',
-        name: 'Bài 1',
-        component: './THUC_HANH_01/Bai_1',
-      },
-      {
-        path: '/thuc-hanh-01/bai-2',
-        name: 'Bài 2',
-        component: './THUC_HANH_01/Bai_2',
-      },
-    ],
+    component: './THUC_HANH_01',
   },
 
 
@@ -116,6 +105,15 @@ export default [
     name: 'THUC_HANH_06',
     icon: 'GlobalOutlined',
     component: './THUC_HANH_06',
+  },
+
+  // ===== GIUA_KI =====
+  {
+    path: '/giua-ki',
+    name: 'Giữa kì',
+    icon: 'BankOutlined',
+    layout: false,
+    component: './GIUA_KI',
   },
 
   // ===== 404 =====

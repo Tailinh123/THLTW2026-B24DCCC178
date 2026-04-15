@@ -1,0 +1,27 @@
+// ============================================================
+// GIUA_KI — Master Style Import
+// ============================================================
+
+@import './variables.less';
+@import './layout.less';
+@import './dashboard.less';
+@import './table.less';
+@import './drawer.less';
+@import './components.less';
+@import './dark.less';
+
+// ─── Note: Inter font loaded via <link> in index.tsx ──────
+
+// ─── Global Resets for GIUA_KI scope ──────────────────────
+.giua-ki-root {
+  * {
+    box-sizing: border-box;
+  }
+
+  // Smooth scrolling
+  scroll-behavior: smooth;
+
+  // Better font rendering
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
