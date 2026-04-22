@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -50,7 +53,10 @@ export function useRooms() {
     dispatch(clearHighlightAction());
   }, [dispatch]);
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
   const isIdUnique = useCallback(
     (id: string, excludeId?: string): boolean => {
       return !rooms.some(
@@ -61,7 +67,10 @@ export function useRooms() {
     [rooms],
   );
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
   const isNameUnique = useCallback(
     (name: string, excludeId?: string): boolean => {
       const trimmed = name.trim().toLowerCase();
@@ -73,12 +82,18 @@ export function useRooms() {
     [rooms],
   );
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
   const canDelete = useCallback((room: Room): boolean => {
     return room.capacity < CAPACITY_DELETE_THRESHOLD;
   }, []);
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
   const getRoomById = useCallback(
     (id: string): Room | undefined => {
       return rooms.find((room) => room.id === id);

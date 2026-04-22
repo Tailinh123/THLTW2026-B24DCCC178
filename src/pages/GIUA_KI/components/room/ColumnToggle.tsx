@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Button, Popover, Checkbox } from 'antd';
 import { Columns3 } from 'lucide-react';
@@ -13,7 +11,10 @@ interface ColumnToggleProps {
 const ColumnToggle: React.FC<ColumnToggleProps> = ({ visibleColumns, onChange }) => {
   const handleChange = (checkedValues: Array<string | number | boolean>) => {
     const stringValues = checkedValues.map(String);
+<<<<<<< HEAD
     
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
     if (!stringValues.includes('actions')) {
       stringValues.push('actions');
     }

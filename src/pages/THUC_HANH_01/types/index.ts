@@ -1,33 +1,41 @@
-export interface GuessEntry {
-  value: number;
-  result: 'too_low' | 'too_high' | 'correct';
-  attempt: number;
+export interface GameHistoryEntry {
+  guess: number;
+  status: 'high' | 'low' | 'correct';
+}
+
+export interface GameRecord {
+  bestAttempts: number | null;
+  gamesPlayed: number;
+  gamesWon: number;
 }
 
 export interface GameState {
-  target: number | null;
-  guesses: GuessEntry[];
+  targetNumber: number;
   attemptsLeft: number;
-  status: 'idle' | 'playing' | 'won' | 'lost';
+  history: GameHistoryEntry[];
+  status: 'playing' | 'won' | 'lost';
+  lastFeedback: string;
+  records: GameRecord;
 }
 
-export interface Category {
+export interface SubjectCategory {
   id: string;
   name: string;
   color: string;
   icon: string;
+  goalHours?: number;
 }
 
-export interface StudyLog {
+export interface StudySession {
   id: string;
   categoryId: string;
-  startTime: string;
-  duration: number;
+  date: string;
+  durationHours: number;
   content: string;
-  note: string;
-  createdAt: string;
+  notes?: string;
 }
 
+<<<<<<< HEAD
 export interface MonthlyGoal {
   id: string; 
   targetHours: number;
@@ -38,4 +46,10 @@ export interface StudyState {
   categories: Category[];
   logs: StudyLog[];
   goals: MonthlyGoal[];
+=======
+export interface TrackerState {
+  categories: SubjectCategory[];
+  sessions: StudySession[];
+  monthlyGoalHours: number;
+>>>>>>> c7699e0 (THUC_HANH_07)
 }

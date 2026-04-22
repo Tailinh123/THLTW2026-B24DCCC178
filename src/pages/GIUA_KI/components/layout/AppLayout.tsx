@@ -1,5 +1,3 @@
-
-
 import React, { useState, useCallback } from 'react';
 import { Layout, notification, Row, Col } from 'antd';
 import { useTheme } from '../../hooks/useTheme';
@@ -51,12 +49,18 @@ const AppLayout: React.FC = () => {
     clearAllFilters,
   } = useFilters(rooms);
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [drawerMode, setDrawerMode] = useState<DrawerMode>('add');
   const [editingRoom, setEditingRoom] = useState<Room | null>(null);
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
   const [collapsed, setCollapsed] = useState(false);
 
   const handleOpenAddDrawer = useCallback(() => {
@@ -114,10 +118,15 @@ const AppLayout: React.FC = () => {
     [rooms, deleteRoom],
   );
 
+<<<<<<< HEAD
   
   const handleFilterByType = useCallback(
     (type: RoomType) => {
       
+=======
+  const handleFilterByType = useCallback(
+    (type: RoomType) => {
+>>>>>>> c7699e0 (THUC_HANH_07)
       if (typeFilter === type) {
         setTypeFilter(null);
         notification.info({

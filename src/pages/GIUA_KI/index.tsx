@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -11,7 +14,10 @@ import AppLayout from './components/layout/AppLayout';
 
 import './styles/index.less';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
 const FONT_URL = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
 
 function useFontLoader() {

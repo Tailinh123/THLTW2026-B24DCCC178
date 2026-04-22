@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useCallback, useState } from 'react';
 import { Drawer, Form, Input, Select, Slider, InputNumber, Button, Space } from 'antd';
 import { RoomType, Room, RoomFormValues, ROOM_TYPE_LABELS, DrawerMode } from '../../types/room';
@@ -35,10 +33,15 @@ const RoomDrawer: React.FC<RoomDrawerProps> = ({
   const { isIdUnique, isNameUnique } = useRooms();
   const isEdit = mode === 'edit';
 
+<<<<<<< HEAD
   
   const [capacityValue, setCapacityValue] = useState<number>(30);
 
   
+=======
+  const [capacityValue, setCapacityValue] = useState<number>(30);
+
+>>>>>>> c7699e0 (THUC_HANH_07)
   useEffect(() => {
     if (visible) {
       if (isEdit && editingRoom) {
@@ -73,7 +76,10 @@ const RoomDrawer: React.FC<RoomDrawerProps> = ({
     [onSubmit, form, capacityValue],
   );
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
   const handleCapacityChange = useCallback(
     (value: number | null | undefined) => {
       const numVal = typeof value === 'number' ? value : CAPACITY_MIN;

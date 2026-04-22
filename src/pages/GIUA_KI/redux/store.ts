@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import {
   persistStore,

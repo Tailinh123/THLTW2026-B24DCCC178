@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Room } from '../../types/room';
 import { DEFAULT_ROOMS } from '../../constants';

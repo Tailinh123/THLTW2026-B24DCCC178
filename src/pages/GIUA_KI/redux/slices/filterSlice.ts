@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> c7699e0 (THUC_HANH_07)
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RoomType, PaginationConfig } from '../../types/room';
 import { ALL_COLUMN_KEYS, DEFAULT_PAGE_SIZE } from '../../constants';

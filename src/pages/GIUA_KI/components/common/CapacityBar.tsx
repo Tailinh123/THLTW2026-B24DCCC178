@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Tooltip } from 'antd';
 import { getCapacityColor, getCapacityPercent, getCapacityLabel } from '../../utils/helpers';

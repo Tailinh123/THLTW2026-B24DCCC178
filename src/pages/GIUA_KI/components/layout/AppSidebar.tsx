@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import { Building2, DoorOpen, CalendarDays, BarChart3, Settings } from 'lucide-react';

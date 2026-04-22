@@ -1,14 +1,9 @@
 @import './variables.less';
 
-// ============================================================
-// Dark Mode Overrides — scoped under .giua-ki-dark
-// ============================================================
-
 .giua-ki-dark {
   background-color: @gk-dark-bg;
   color: @gk-dark-text;
 
-  // ─── Sidebar ────────────────────────────────────────────
   .gk-sidebar {
     background: @gk-dark-surface !important;
     border-right-color: @gk-dark-border;
@@ -58,7 +53,6 @@
     }
   }
 
-  // ─── Header ─────────────────────────────────────────────
   .gk-header {
     background: @gk-dark-surface !important;
     border-bottom-color: @gk-dark-border;
@@ -80,7 +74,6 @@
     }
   }
 
-  // ─── Stat Cards ─────────────────────────────────────────
   .gk-stat-card {
     background: @gk-dark-surface;
     border-color: @gk-dark-border;
@@ -110,7 +103,6 @@
     }
   }
 
-  // ─── Chart Card ─────────────────────────────────────────
   .gk-chart-card {
     background: @gk-dark-surface;
     border-color: @gk-dark-border;
@@ -120,7 +112,6 @@
     }
   }
 
-  // ─── Table ──────────────────────────────────────────────
   .gk-table-card {
     background: @gk-dark-surface;
     border-color: @gk-dark-border;
@@ -229,7 +220,6 @@
     color: @gk-dark-text;
   }
 
-  // ─── Drawer ─────────────────────────────────────────────
   .ant-drawer-content {
     background: @gk-dark-surface;
   }
@@ -300,7 +290,6 @@
     color: @gk-dark-text-tertiary;
   }
 
-  // ─── Filter UI ──────────────────────────────────────────
   .gk-search-input .ant-input-affix-wrapper {
     background: @gk-dark-bg !important;
     border-color: @gk-dark-border !important;
@@ -331,7 +320,6 @@
     }
   }
 
-  // ─── Empty State ────────────────────────────────────────
   .gk-empty-state {
     &__icon {
       background: fade(@gk-primary, 12%);
@@ -346,7 +334,6 @@
     }
   }
 
-  // ─── Popover / Popconfirm / Tooltip ─────────────────────
   .ant-popover-inner {
     background: @gk-dark-surface;
     border: 1px solid @gk-dark-border;
@@ -360,14 +347,12 @@
     background: @gk-dark-surface;
   }
 
-  // ─── Column Toggle ─────────────────────────────────────
   .gk-column-toggle {
     .ant-checkbox-wrapper {
       color: @gk-dark-text;
     }
   }
 
-  // ─── Misc ───────────────────────────────────────────────
   .ant-empty-description {
     color: @gk-dark-text-secondary;
   }
@@ -390,7 +375,6 @@
     background-size: 400% 100%;
   }
 
-  // ─── Quick Stats ──────────────────────────────────────────
   .gk-quick-stat {
     background: fade(@gk-dark-bg, 80%);
 
@@ -411,12 +395,10 @@
     }
   }
 
-  // ─── Chart Subtitle ───────────────────────────────────────
   .gk-chart-card__subtitle {
     color: @gk-dark-text-tertiary;
   }
 
-  // ─── Notification ─────────────────────────────────────────
   .ant-notification-notice {
     background: @gk-dark-surface;
     border: 1px solid @gk-dark-border;
