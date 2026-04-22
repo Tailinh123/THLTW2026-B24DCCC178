@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 
 export default [
 
@@ -36,13 +36,44 @@ export default [
   },
 
   // =========================
+  // ===== BUOI_1 =====
+  // =========================
+  {
+    path: '/buoi-1',
+    name: 'BUOI_1',
+    icon: 'ShoppingOutlined',
+    component: './BUOI_1',
+  },
+
+  // =========================
+  // ===== BUOI_2 =====
+  // =========================
+  {
+    path: '/buoi-2',
+    name: 'BUOI_2',
+    icon: 'GoldOutlined',
+    component: './BUOI_2',
+  },
+
+  // =========================
   // ===== THUC_HANH_01 =====
   // =========================
   {
     path: '/thuc-hanh-01',
     name: 'THUC_HANH_01',
     icon: 'BookOutlined',
-    component: './THUC_HANH_01',
+    routes: [
+      {
+        path: '/thuc-hanh-01/bai-1',
+        name: 'Bài 1 - Trò chơi đoán số',
+        component: './THUC_HANH_01/Bai1_GuessGame',
+      },
+      {
+        path: '/thuc-hanh-01/bai-2',
+        name: 'Bài 2 - Quản lý học tập',
+        component: './THUC_HANH_01/Bai2_StudyTracker',
+      },
+    ],
   },
 
 
@@ -86,12 +117,6 @@ export default [
     component: './THUC_HANH_04',
   },
 
-  {
-    path: '/product-management',
-    name: 'Buổi học số 1',
-    icon: 'ShoppingOutlined',
-    component: './ProductManagement',
-  },
 
   {
     path: '/thuc-hanh-05',
@@ -105,6 +130,17 @@ export default [
     name: 'THUC_HANH_06',
     icon: 'GlobalOutlined',
     component: './THUC_HANH_06',
+  },
+
+  // =========================
+  // ===== THUC_HANH_07 =====
+  // =========================
+  {
+    path: '/thuc-hanh-07',
+    name: 'THUC_HANH_07',
+    icon: 'EditOutlined',
+    layout: false,
+    component: './THUC_HANH_07',
   },
 
   // ===== GIUA_KI =====

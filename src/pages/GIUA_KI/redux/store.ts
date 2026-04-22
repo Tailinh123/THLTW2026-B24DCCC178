@@ -1,7 +1,3 @@
-// ============================================================
-// GIUA_KI — Redux Store with Persist
-// ============================================================
-
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import {
   persistStore,

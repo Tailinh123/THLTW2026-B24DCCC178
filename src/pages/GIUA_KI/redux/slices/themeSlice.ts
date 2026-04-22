@@ -1,7 +1,3 @@
-// ============================================================
-// GIUA_KI — Theme Slice (Redux Toolkit)
-// ============================================================
-
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface ThemeState {

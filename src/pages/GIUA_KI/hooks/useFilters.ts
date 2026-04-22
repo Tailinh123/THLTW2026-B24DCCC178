@@ -1,7 +1,3 @@
-// ============================================================
-// GIUA_KI — useFilters Hook
-// ============================================================
-
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -22,11 +18,9 @@ export function useFilters(rooms: Room[]) {
   const filters = useSelector((state: RootState) => state.filters);
   const debouncedSearch = useDebounce(filters.search, 300);
 
-  // ─── Derived: filtered + sorted rooms ───────────────────────
   const filteredRooms = useMemo(() => {
     let result = [...rooms];
 
-    // Search filter (debounced)
     if (debouncedSearch) {
       const keyword = debouncedSearch.toLowerCase();
       result = result.filter(
@@ -37,17 +31,14 @@ export function useFilters(rooms: Room[]) {
       );
     }
 
-    // Type filter
     if (filters.typeFilter) {
       result = result.filter((room) => room.type === filters.typeFilter);
     }
 
-    // Manager filter
     if (filters.managerFilter) {
       result = result.filter((room) => room.manager === filters.managerFilter);
     }
 
-    // Sort
     if (filters.sortField === 'capacity' && filters.sortOrder) {
       result.sort((a, b) =>
         filters.sortOrder === 'ascend'
@@ -59,7 +50,6 @@ export function useFilters(rooms: Room[]) {
     return result;
   }, [rooms, debouncedSearch, filters.typeFilter, filters.managerFilter, filters.sortField, filters.sortOrder]);
 
-  // ─── Active filter count ────────────────────────────────────
   const activeFilterCount = useMemo(() => {
     let count = 0;
     if (filters.search) count += 1;
@@ -70,7 +60,6 @@ export function useFilters(rooms: Room[]) {
 
   const hasActiveFilters = activeFilterCount > 0;
 
-  // ─── Dispatchers ────────────────────────────────────────────
   const setSearch = useCallback(
     (value: string) => dispatch(setSearchAction(value)),
     [dispatch],
@@ -108,7 +97,6 @@ export function useFilters(rooms: Room[]) {
   );
 
   return {
-    // State
     search: filters.search,
     debouncedSearch,
     typeFilter: filters.typeFilter,
@@ -118,12 +106,10 @@ export function useFilters(rooms: Room[]) {
     pagination: filters.pagination,
     visibleColumns: filters.visibleColumns,
 
-    // Derived
     filteredRooms,
     activeFilterCount,
     hasActiveFilters,
 
-    // Actions
     setSearch,
     setTypeFilter,
     setManagerFilter,

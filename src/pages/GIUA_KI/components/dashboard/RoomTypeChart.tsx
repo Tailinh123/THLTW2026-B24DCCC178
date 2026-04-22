@@ -1,5 +1,3 @@
-
-
 import React, { useCallback } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { Room, RoomType, ROOM_TYPE_LABELS } from '../../types/room';

@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import { Building2, DoorOpen, CalendarDays, BarChart3, Settings } from 'lucide-react';
@@ -77,7 +75,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ collapsed, onCollapse }) => {
       theme="light"
       trigger={null}
     >
-      {/* Logo */}
+      {}
       <div className="gk-sidebar-logo">
         <div className="gk-sidebar-logo__icon">
           <Building2 size={20} />
@@ -87,7 +85,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ collapsed, onCollapse }) => {
         )}
       </div>
 
-      {/* Menu */}
+      {}
       <Menu
         className="gk-sidebar-menu"
         mode="inline"
@@ -96,7 +94,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ collapsed, onCollapse }) => {
         style={{ borderRight: 'none' }}
       />
 
-      {/* Footer */}
+      {}
       {!collapsed && (
         <div className="gk-sidebar-footer">
           <div className="gk-sidebar-footer__version">v1.0.0 — Giữa kỳ</div>

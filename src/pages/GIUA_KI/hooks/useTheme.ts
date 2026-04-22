@@ -1,7 +1,3 @@
-// ============================================================
-// GIUA_KI — useTheme Hook
-// ============================================================
-
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
