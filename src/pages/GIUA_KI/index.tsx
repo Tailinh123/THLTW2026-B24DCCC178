@@ -1,7 +1,3 @@
-// ============================================================
-// GIUA_KI — Entry Point
-// ============================================================
-
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -11,7 +7,6 @@ import AppLayout from './components/layout/AppLayout';
 
 import './styles/index.less';
 
-// Inject Inter font dynamically
 const FONT_URL = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
 
 function useFontLoader() {

@@ -1,7 +1,3 @@
-// ============================================================
-// GIUA_KI — Filter Slice (Redux Toolkit)
-// ============================================================
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RoomType, PaginationConfig } from '../../types/room';
 import { ALL_COLUMN_KEYS, DEFAULT_PAGE_SIZE } from '../../constants';

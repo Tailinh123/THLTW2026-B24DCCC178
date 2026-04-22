@@ -1,5 +1,3 @@
-
-
 import React, { useCallback } from 'react';
 import { Row, Col, Tag } from 'antd';
 import { DoorOpen, Users, Layers } from 'lucide-react';
@@ -34,7 +32,7 @@ const StatCards: React.FC<StatCardsProps> = ({ rooms, onFilterByType }) => {
 
   return (
     <Row gutter={[16, 16]} className="gk-stats-row">
-      {/* Total Rooms */}
+      {}
       <Col xs={24} sm={8}>
         <div className="gk-stat-card">
           <div className="gk-stat-card__icon-wrap gk-stat-card__icon-wrap--primary">
@@ -49,7 +47,7 @@ const StatCards: React.FC<StatCardsProps> = ({ rooms, onFilterByType }) => {
         </div>
       </Col>
 
-      {/* Total Capacity */}
+      {}
       <Col xs={24} sm={8}>
         <div className="gk-stat-card">
           <div className="gk-stat-card__icon-wrap gk-stat-card__icon-wrap--success">
@@ -64,7 +62,7 @@ const StatCards: React.FC<StatCardsProps> = ({ rooms, onFilterByType }) => {
         </div>
       </Col>
 
-      {/* Rooms by Type — each tag is clickable to filter */}
+      {}
       <Col xs={24} sm={8}>
         <div className="gk-stat-card">
           <div className="gk-stat-card__icon-wrap gk-stat-card__icon-wrap--warning">

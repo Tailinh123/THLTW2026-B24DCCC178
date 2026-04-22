@@ -1,0 +1,862 @@
+@dash-bg: #0f1117;
+@dash-sidebar: #161923;
+@dash-surface: rgba(26, 29, 46, 0.7);
+@dash-surface-solid: #1a1d2e;
+@dash-surface-hover: #22263a;
+@dash-border: rgba(255, 255, 255, 0.08);
+@dash-accent: #6366f1;
+@dash-accent-light: #818cf8;
+@dash-success: #22c55e;
+@dash-warning: #f59e0b;
+@dash-danger: #ef4444;
+@dash-text: #e2e8f0;
+@dash-text-muted: #94a3b8;
+
+.glassMixin() {
+  background: @dash-surface;
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dashboardWrapper {
+  margin: -24px;
+  min-height: calc(100vh - 48px);
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.dashboardLayout {
+  display: flex;
+  min-height: calc(100vh - 48px);
+  background: @dash-bg;
+}
+
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  background: @dash-sidebar;
+  border-right: 1px solid @dash-border;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.sidebarHeader {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid @dash-border;
+}
+
+.sidebarLogo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebarLogoIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, @dash-accent, @dash-accent-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: white;
+}
+
+.sidebarLogoText {
+  font-size: 16px;
+  font-weight: 700;
+  color: @dash-text;
+  letter-spacing: -0.3px;
+}
+
+.sidebarLogoSub {
+  font-size: 11px;
+  color: @dash-text-muted;
+  display: block;
+  margin-top: 1px;
+}
+
+.sidebarMenu {
+  padding: 16px 12px;
+  flex: 1;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  color: @dash-text-muted;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  position: relative;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: @dash-text;
+  }
+}
+
+.menuItemActive {
+  background: rgba(99, 102, 241, 0.12);
+  color: @dash-accent-light;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 20px;
+    border-radius: 0 3px 3px 0;
+    background: @dash-accent;
+  }
+
+  &:hover {
+    background: rgba(99, 102, 241, 0.15);
+    color: @dash-accent-light;
+  }
+}
+
+.menuItemIcon {
+  font-size: 18px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebarFooter {
+  padding: 16px 20px;
+  border-top: 1px solid @dash-border;
+}
+
+.sidebarFooterBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: @dash-text-muted;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s;
+  border: none;
+  background: none;
+  width: 100%;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: @dash-text;
+  }
+}
+
+.mainContent {
+  flex: 1;
+  padding: 28px 32px;
+  overflow-y: auto;
+  background: @dash-bg;
+}
+
+.pageHeader {
+  margin-bottom: 28px;
+}
+
+.pageTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: @dash-text;
+  margin: 0 0 4px 0 !important;
+}
+
+.pageSubtitle {
+  color: @dash-text-muted;
+  font-size: 14px;
+  margin: 0;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.statCard {
+  .glassMixin();
+  border-radius: 14px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.statCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.statCardIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.statCardValue {
+  font-size: 28px;
+  font-weight: 700;
+  color: @dash-text;
+  line-height: 1;
+}
+
+.statCardLabel {
+  font-size: 13px;
+  color: @dash-text-muted;
+  margin-top: 6px;
+}
+
+.statCardAction {
+  background: none !important;
+  border: none !important;
+  padding: 4px !important;
+  color: @dash-text-muted !important;
+  font-size: 14px;
+
+  &:hover {
+    color: @dash-accent-light !important;
+  }
+}
+
+.chartSection {
+  .glassMixin();
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+.chartHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.chartTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: @dash-text;
+}
+
+.chartBadge {
+  font-size: 12px;
+  color: @dash-text-muted;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.subjectGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.subjectCard {
+  .glassMixin();
+  border-radius: 14px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: default;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+}
+
+.subjectColorStrip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.subjectCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.subjectCardInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.subjectCardIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.subjectCardName {
+  font-size: 15px;
+  font-weight: 600;
+  color: @dash-text;
+}
+
+.subjectCardHours {
+  font-size: 12px;
+  color: @dash-text-muted;
+  margin-top: 2px;
+}
+
+.subjectCardActions {
+  display: flex;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.2s;
+
+  .subjectCard:hover & {
+    opacity: 1;
+  }
+}
+
+.subjectCardActionBtn {
+  background: none !important;
+  border: none !important;
+  padding: 6px !important;
+  color: @dash-text-muted !important;
+  font-size: 14px;
+  border-radius: 6px !important;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: @dash-text !important;
+  }
+}
+
+.subjectCardProgress {
+  margin-top: 4px;
+}
+
+.progressBarContainer {
+  position: relative;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.progressBarFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.progressBarLabel {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.progressBarLabelText {
+  font-size: 11px;
+  color: @dash-text-muted;
+}
+
+.sessionList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sessionNote {
+  background: @dash-surface;
+  border: 1px solid @dash-border;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: @dash-surface-hover;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.sessionNoteIcon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.sessionNoteBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.sessionNoteHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.sessionNoteSubject {
+  font-size: 14px;
+  font-weight: 600;
+  color: @dash-text;
+}
+
+.sessionNoteDate {
+  font-size: 12px;
+  color: @dash-text-muted;
+}
+
+.sessionNoteDuration {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(99, 102, 241, 0.12);
+  color: @dash-accent-light;
+}
+
+.sessionNoteContent {
+  font-size: 13px;
+  color: @dash-text-muted;
+  margin-top: 2px;
+  line-height: 1.5;
+}
+
+.sessionNoteNotes {
+  font-size: 12px;
+  color: @dash-text-muted;
+  font-style: italic;
+  margin-top: 4px;
+  opacity: 0.7;
+}
+
+.sessionNoteActions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+
+  .sessionNote:hover & {
+    opacity: 1;
+  }
+}
+
+.sessionNoteActionBtn {
+  background: none !important;
+  border: none !important;
+  padding: 6px !important;
+  color: @dash-text-muted !important;
+  border-radius: 6px !important;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: @dash-text !important;
+  }
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: @dash-text;
+}
+
+.addButton {
+  border-radius: 10px !important;
+  font-weight: 500 !important;
+  background: @dash-accent !important;
+  border-color: @dash-accent !important;
+
+  &:hover {
+    background: @dash-accent-light !important;
+    border-color: @dash-accent-light !important;
+  }
+}
+
+.emptyActionBtn {
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  height: 44px !important;
+  padding: 0 28px !important;
+  background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4) !important;
+  transition: all 0.3s ease !important;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(99, 102, 241, 0.55) !important;
+    background: linear-gradient(135deg, #818cf8 0%, #a5b4fc 100%) !important;
+  }
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.emptyIllustration {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 24px;
+  border-radius: 20px;
+  background: rgba(99, 102, 241, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: @dash-accent;
+}
+
+.emptyTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: @dash-text;
+  margin-bottom: 8px;
+}
+
+.emptySubtitle {
+  font-size: 14px;
+  color: @dash-text-muted;
+  margin-bottom: 24px;
+}
+
+.goalSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.goalCard {
+  background: @dash-surface;
+  border: 1px solid @dash-border;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.goalCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.goalCardTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: @dash-text;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.goalCardBadge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.goalBadgeSuccess {
+  background: rgba(34, 197, 94, 0.12);
+  color: @dash-success;
+}
+
+.goalBadgePending {
+  background: rgba(245, 158, 11, 0.12);
+  color: @dash-warning;
+}
+
+.goalBadgeNone {
+  background: rgba(255, 255, 255, 0.04);
+  color: @dash-text-muted;
+}
+
+.dualProgressContainer {
+  position: relative;
+  height: 10px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.04);
+  overflow: visible;
+  margin-bottom: 8px;
+}
+
+.dualProgressTarget {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 5px;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px dashed rgba(99, 102, 241, 0.3);
+}
+
+.dualProgressActual {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.6s ease;
+}
+
+.dualProgressLabels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.dualProgressLabel {
+  font-size: 12px;
+  color: @dash-text-muted;
+}
+
+.drawerDark {
+  :global(.ant-drawer-content) {
+    background: @dash-sidebar !important;
+  }
+
+  :global(.ant-drawer-header) {
+    background: @dash-sidebar !important;
+    border-bottom: 1px solid @dash-border !important;
+  }
+
+  :global(.ant-drawer-title) {
+    color: @dash-text !important;
+    font-weight: 600;
+  }
+
+  :global(.ant-drawer-close) {
+    color: @dash-text-muted !important;
+  }
+
+  :global(.ant-drawer-body) {
+    background: @dash-sidebar !important;
+  }
+
+  :global(.ant-form-item-label > label) {
+    color: #e2e8f0 !important;
+    font-weight: 500;
+  }
+
+  :global(.ant-form-item-label > label .ant-form-item-required::before),
+  :global(.ant-form-item-required::before) {
+    color: #f87171 !important;
+  }
+
+  :global(.ant-input),
+  :global(.ant-input-number),
+  :global(.ant-input-number-input),
+  :global(.ant-select-selector),
+  :global(.ant-picker) {
+    background: rgba(255, 255, 255, 0.07) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: @dash-text !important;
+    border-radius: 8px !important;
+  }
+
+  :global(.ant-input-number-group-addon) {
+    background: rgba(99, 102, 241, 0.1) !important;
+    border-color: @dash-border !important;
+    color: @dash-text-muted !important;
+    font-size: 12px;
+  }
+
+  :global(.ant-input:focus),
+  :global(.ant-input-focused),
+  :global(.ant-input-number-focused),
+  :global(.ant-select-focused .ant-select-selector),
+  :global(.ant-picker-focused) {
+    border-color: @dash-accent !important;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15) !important;
+  }
+
+  :global(.ant-input::placeholder),
+  :global(.ant-input-number-input::placeholder) {
+    color: @dash-text-muted !important;
+    opacity: 0.5;
+  }
+
+  :global(.ant-select-arrow),
+  :global(.ant-picker-suffix) {
+    color: @dash-text-muted !important;
+  }
+
+  :global(.ant-select-dropdown) {
+    background: @dash-surface-solid !important;
+  }
+
+  :global(.ant-select-item) {
+    color: @dash-text !important;
+  }
+
+  :global(.ant-select-item-option-active) {
+    background: @dash-surface-hover !important;
+  }
+
+  :global(.ant-select-item-option-selected) {
+    background: rgba(99, 102, 241, 0.12) !important;
+  }
+
+  :global(.ant-input-number-handler-wrap) {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border-color: @dash-border !important;
+  }
+
+  :global(.ant-input-number-handler) {
+    border-color: @dash-border !important;
+    color: @dash-text-muted !important;
+  }
+
+  :global(.ant-drawer-footer) {
+    background: @dash-sidebar !important;
+    border-top: 1px solid @dash-border !important;
+  }
+}
+
+.drawerFooter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.drawerCancelBtn {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: @dash-text-muted !important;
+  height: 36px !important;
+  transition: all 0.2s !important;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    color: @dash-text !important;
+  }
+}
+
+.drawerSaveBtn {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%) !important;
+  border: none !important;
+  height: 36px !important;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4) !important;
+  transition: all 0.25s ease !important;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.55) !important;
+    background: linear-gradient(135deg, #818cf8 0%, #a5b4fc 100%) !important;
+  }
+}
+
+
+
+.modalDark {
+  :global(.ant-modal-content) {
+    background: @dash-surface !important;
+    border: 1px solid @dash-border;
+  }
+
+  :global(.ant-modal-header) {
+    background: @dash-surface !important;
+    border-bottom: 1px solid @dash-border !important;
+  }
+
+  :global(.ant-modal-title) {
+    color: @dash-text !important;
+  }
+
+  :global(.ant-modal-close-x) {
+    color: @dash-text-muted !important;
+  }
+
+  :global(.ant-modal-body) {
+    background: @dash-surface !important;
+  }
+
+  :global(.ant-modal-footer) {
+    border-top: 1px solid @dash-border !important;
+  }
+
+  :global(.ant-input-number) {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border-color: @dash-border !important;
+    color: @dash-text !important;
+  }
+
+  :global(.ant-input-number-focused) {
+    border-color: @dash-accent !important;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15) !important;
+  }
+}
+
+.deleteBtn {
+  color: @dash-danger !important;
+
+  &:hover {
+    color: lighten(@dash-danger, 10%) !important;
+    background: rgba(239, 68, 68, 0.08) !important;
+  }
+}

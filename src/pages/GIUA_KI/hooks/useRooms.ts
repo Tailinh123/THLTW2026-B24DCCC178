@@ -1,7 +1,3 @@
-// ============================================================
-// GIUA_KI — useRooms Hook
-// ============================================================
-
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -50,7 +46,6 @@ export function useRooms() {
     dispatch(clearHighlightAction());
   }, [dispatch]);
 
-  /** Check if an ID is unique (optionally exclude a specific room by id) */
   const isIdUnique = useCallback(
     (id: string, excludeId?: string): boolean => {
       return !rooms.some(
@@ -61,7 +56,6 @@ export function useRooms() {
     [rooms],
   );
 
-  /** Check if a name is unique (case-insensitive, optionally exclude by id) */
   const isNameUnique = useCallback(
     (name: string, excludeId?: string): boolean => {
       const trimmed = name.trim().toLowerCase();
@@ -73,12 +67,10 @@ export function useRooms() {
     [rooms],
   );
 
-  /** Check if a room can be deleted */
   const canDelete = useCallback((room: Room): boolean => {
     return room.capacity < CAPACITY_DELETE_THRESHOLD;
   }, []);
 
-  /** Find a room by ID */
   const getRoomById = useCallback(
     (id: string): Room | undefined => {
       return rooms.find((room) => room.id === id);

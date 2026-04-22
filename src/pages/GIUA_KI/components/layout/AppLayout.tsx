@@ -1,5 +1,3 @@
-
-
 import React, { useState, useCallback } from 'react';
 import { Layout, notification, Row, Col } from 'antd';
 import { useTheme } from '../../hooks/useTheme';
@@ -51,12 +49,10 @@ const AppLayout: React.FC = () => {
     clearAllFilters,
   } = useFilters(rooms);
 
-  // Drawer state
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [drawerMode, setDrawerMode] = useState<DrawerMode>('add');
   const [editingRoom, setEditingRoom] = useState<Room | null>(null);
 
-  // Sidebar state
   const [collapsed, setCollapsed] = useState(false);
 
   const handleOpenAddDrawer = useCallback(() => {
@@ -114,10 +110,8 @@ const AppLayout: React.FC = () => {
     [rooms, deleteRoom],
   );
 
-  // Dashboard interactivity: click chart/stat to filter table
   const handleFilterByType = useCallback(
     (type: RoomType) => {
-      // If same type is already active, toggle it off
       if (typeFilter === type) {
         setTypeFilter(null);
         notification.info({
@@ -153,7 +147,7 @@ const AppLayout: React.FC = () => {
           />
 
           <Content className="gk-content">
-            {/* Dashboard Stats — always visible */}
+            {}
             <div className="gk-dashboard">
               <StatCards rooms={rooms} onFilterByType={handleFilterByType} />
 
@@ -211,7 +205,7 @@ const AppLayout: React.FC = () => {
               </Row>
             </div>
 
-            {/* Table Section */}
+            {}
             <div className="gk-table-card">
               {isEmpty ? (
                 <EmptyState
@@ -220,7 +214,7 @@ const AppLayout: React.FC = () => {
                 />
               ) : (
                 <>
-                  {/* Filters + Add button — directly above the table */}
+                  {}
                   <RoomFilters
                     search={search}
                     typeFilter={typeFilter}
@@ -233,7 +227,7 @@ const AppLayout: React.FC = () => {
                     onAddRoom={handleOpenAddDrawer}
                   />
 
-                  {/* Column toggle — right-aligned between filters and table */}
+                  {}
                   <div style={{
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -272,7 +266,7 @@ const AppLayout: React.FC = () => {
         </Layout>
       </Layout>
 
-      {/* Room Drawer */}
+      {}
       <RoomDrawer
         visible={drawerVisible}
         mode={drawerMode}

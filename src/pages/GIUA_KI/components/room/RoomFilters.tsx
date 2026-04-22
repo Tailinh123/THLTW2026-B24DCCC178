@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Input, Select, Button, Tag } from 'antd';
 import { Search, Plus, X } from 'lucide-react';
@@ -35,7 +33,7 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({
     <>
       <div className="gk-table-toolbar">
         <div className="gk-table-toolbar__left">
-          {/* Search */}
+          {}
           <div className="gk-search-input">
             <Input
               prefix={<Search size={15} style={{ color: '#94A3B8' }} />}
@@ -48,7 +46,7 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({
             />
           </div>
 
-          {/* Type Filter */}
+          {}
           <Select
             className="gk-filter-select"
             placeholder="Loại phòng"
@@ -65,7 +63,7 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({
             ))}
           </Select>
 
-          {/* Manager Filter */}
+          {}
           <Select
             className="gk-filter-select"
             placeholder="Người quản lý"
@@ -98,7 +96,7 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({
         </div>
       </div>
 
-      {/* Active Filter Tags */}
+      {}
       {hasActiveFilters && (
         <div className="gk-filter-tags">
           {search && (

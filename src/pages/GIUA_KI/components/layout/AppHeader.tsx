@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Layout, Button, Popconfirm, Tooltip, Space } from 'antd';
 import { Sun, Moon, RotateCcw, Menu } from 'lucide-react';
@@ -33,7 +31,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ collapsed, onToggleCollapse }) =>
       </div>
 
       <div className="gk-header__right">
-        {/* Reset to Default */}
+        {}
         <Popconfirm
           title="Đặt lại dữ liệu mẫu?"
           description="Thao tác này sẽ thay thế toàn bộ dữ liệu phòng hiện tại bằng 10 phòng mẫu."
@@ -50,7 +48,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ collapsed, onToggleCollapse }) =>
           </Tooltip>
         </Popconfirm>
 
-        {/* Dark Mode Toggle */}
+        {}
         <Tooltip title={darkMode ? 'Chế độ sáng' : 'Chế độ tối'} placement="bottom">
           <Button
             className="gk-header-btn"
@@ -61,7 +59,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ collapsed, onToggleCollapse }) =>
           </Button>
         </Tooltip>
 
-        {/* User Avatar */}
+        {}
         <Tooltip title="Admin" placement="bottomRight">
           <div className="gk-header-avatar" aria-label="User avatar">
             A

@@ -1,9 +1,5 @@
 @import './variables.less';
 
-// ============================================================
-// Table Styles — Room Table, Row Hover, Highlight
-// ============================================================
-
 .gk-table-card {
   background: @gk-light-surface;
   border-radius: @gk-radius-lg;
@@ -38,7 +34,6 @@
   }
 }
 
-// ─── Table Overrides ──────────────────────────────────────
 .gk-table {
   .ant-table {
     border-radius: 0;
@@ -71,7 +66,6 @@
     border-bottom: none;
   }
 
-  // Pagination
   .ant-table-pagination {
     padding: @gk-space-md @gk-space-lg;
     margin: 0 !important;
@@ -92,7 +86,6 @@
   }
 }
 
-// ─── Row ID (monospace) ───────────────────────────────────
 .gk-room-id {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
   font-size: @gk-font-size-sm;
@@ -103,13 +96,11 @@
   border-radius: @gk-radius-sm;
 }
 
-// ─── Room Name ────────────────────────────────────────────
 .gk-room-name {
   font-weight: 600;
   color: @gk-light-text;
 }
 
-// ─── Manager Cell ─────────────────────────────────────────
 .gk-manager-cell {
   display: flex;
   align-items: center;
@@ -135,7 +126,6 @@
   }
 }
 
-// ─── Action Buttons ───────────────────────────────────────
 .gk-action-btn {
   border: none !important;
   box-shadow: none !important;
@@ -171,7 +161,6 @@
   }
 }
 
-// ─── Row Highlight Animation ──────────────────────────────
 @keyframes gk-row-highlight {
   0% {
     background-color: fade(@gk-warning, 20%);
@@ -185,7 +174,6 @@
   animation: gk-row-highlight 2.5s ease-out;
 }
 
-// ─── Capacity Progress ───────────────────────────────────
 .gk-capacity-bar {
   display: flex;
   align-items: center;
@@ -215,7 +203,6 @@
   }
 }
 
-// ─── Search Highlight ─────────────────────────────────────
 .gk-search-highlight {
   background-color: fade(@gk-warning, 30%);
   padding: 1px 2px;

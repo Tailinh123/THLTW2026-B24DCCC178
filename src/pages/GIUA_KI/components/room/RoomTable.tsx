@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useRef, useCallback } from 'react';
 import { Table, Tag, Button, Popconfirm, Tooltip, Skeleton } from 'antd';
 import { Pencil, Trash2 } from 'lucide-react';
@@ -44,7 +42,6 @@ const RoomTable: React.FC<RoomTableProps> = ({
 }) => {
   const tableRef = useRef<HTMLDivElement>(null);
 
-  // Clear highlight after animation
   useEffect(() => {
     if (highlightedId) {
       const timer = setTimeout(() => {
@@ -55,7 +52,6 @@ const RoomTable: React.FC<RoomTableProps> = ({
     return undefined;
   }, [highlightedId, onClearHighlight]);
 
-  // Auto-scroll to highlighted row
   useEffect(() => {
     if (highlightedId && tableRef.current) {
       setTimeout(() => {
@@ -203,7 +199,6 @@ const RoomTable: React.FC<RoomTableProps> = ({
     },
   ];
 
-  // Filter visible columns
   const columns = allColumns.filter((col) =>
     visibleColumns.includes(col.key as string),
   );
@@ -213,12 +208,10 @@ const RoomTable: React.FC<RoomTableProps> = ({
     _filters: Record<string, (string | number | boolean)[] | null>,
     sorter: SorterResult<Room> | SorterResult<Room>[],
   ) => {
-    // Pagination
     if (pag.current && pag.pageSize) {
       onPaginationChange({ current: pag.current, pageSize: pag.pageSize });
     }
 
-    // Sort (for controlled capacity sort)
     const singleSorter = Array.isArray(sorter) ? sorter[0] : sorter;
     if (singleSorter?.field === 'capacity') {
       onSortChange(

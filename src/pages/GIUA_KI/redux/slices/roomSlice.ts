@@ -1,7 +1,3 @@
-// ============================================================
-// GIUA_KI — Room Slice (Redux Toolkit)
-// ============================================================
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Room } from '../../types/room';
 import { DEFAULT_ROOMS } from '../../constants';

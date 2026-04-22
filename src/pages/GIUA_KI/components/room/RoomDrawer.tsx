@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useCallback, useState } from 'react';
 import { Drawer, Form, Input, Select, Slider, InputNumber, Button, Space } from 'antd';
 import { RoomType, Room, RoomFormValues, ROOM_TYPE_LABELS, DrawerMode } from '../../types/room';
@@ -35,10 +33,8 @@ const RoomDrawer: React.FC<RoomDrawerProps> = ({
   const { isIdUnique, isNameUnique } = useRooms();
   const isEdit = mode === 'edit';
 
-  // Local capacity state for two-way sync between Slider and InputNumber
   const [capacityValue, setCapacityValue] = useState<number>(30);
 
-  // Reset form when drawer opens
   useEffect(() => {
     if (visible) {
       if (isEdit && editingRoom) {
@@ -73,7 +69,6 @@ const RoomDrawer: React.FC<RoomDrawerProps> = ({
     [onSubmit, form, capacityValue],
   );
 
-  // Two-way sync: Slider → InputNumber → Form
   const handleCapacityChange = useCallback(
     (value: number | null | undefined) => {
       const numVal = typeof value === 'number' ? value : CAPACITY_MIN;
@@ -113,11 +108,11 @@ const RoomDrawer: React.FC<RoomDrawerProps> = ({
         onFinish={handleFinish}
         autoComplete="off"
       >
-        {/* ─── Section: Thông tin cơ bản ─── */}
+        {}
         <div className="gk-form-section">
           <div className="gk-form-section__title">Thông tin cơ bản</div>
 
-          {/* Room ID */}
+          {}
           <Form.Item
             name="id"
             label="Mã phòng"
@@ -149,7 +144,7 @@ const RoomDrawer: React.FC<RoomDrawerProps> = ({
             />
           </Form.Item>
 
-          {/* Room Name */}
+          {}
           <Form.Item
             name="name"
             label="Tên phòng"
@@ -178,11 +173,11 @@ const RoomDrawer: React.FC<RoomDrawerProps> = ({
           </Form.Item>
         </div>
 
-        {/* ─── Section: Phân loại ─── */}
+        {}
         <div className="gk-form-section">
           <div className="gk-form-section__title">Phân loại</div>
 
-          {/* Room Type */}
+          {}
           <Form.Item
             name="type"
             label="Loại phòng"
@@ -197,7 +192,7 @@ const RoomDrawer: React.FC<RoomDrawerProps> = ({
             </Select>
           </Form.Item>
 
-          {/* Manager */}
+          {}
           <Form.Item
             name="manager"
             label="Người quản lý"
@@ -218,11 +213,11 @@ const RoomDrawer: React.FC<RoomDrawerProps> = ({
           </Form.Item>
         </div>
 
-        {/* ─── Section: Sức chứa (FIXED LAYOUT) ─── */}
+        {}
         <div className="gk-form-section">
           <div className="gk-form-section__title">Sức chứa</div>
 
-          {/* Hidden form item to hold the actual value for validation */}
+          {}
           <Form.Item
             name="capacity"
             label="Số chỗ ngồi"
@@ -236,11 +231,11 @@ const RoomDrawer: React.FC<RoomDrawerProps> = ({
               },
             ]}
           >
-            {/* Invisible input — value controlled by capacityValue state */}
+            {}
             <InputNumber style={{ display: 'none' }} />
           </Form.Item>
 
-          {/* Level 2: Visible InputNumber + Slider row */}
+          {}
           <div style={{
             display: 'flex',
             alignItems: 'center',
@@ -267,7 +262,7 @@ const RoomDrawer: React.FC<RoomDrawerProps> = ({
             />
           </div>
 
-          {/* Level 3: Helper text */}
+          {}
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
