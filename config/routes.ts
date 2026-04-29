@@ -132,6 +132,16 @@ export default [
     component: './GIUA_KI',
   },
 
+  // =========================
+  // ===== THUC_HANH_08 =====
+  // =========================
+  {
+    path: '/thuc-hanh-08',
+    name: 'THUC_HANH_08',
+    icon: 'HeartOutlined',
+    component: './THUC_HANH_08',
+  },
+
   // ===== 404 =====
   {
     component: './exception/404',
