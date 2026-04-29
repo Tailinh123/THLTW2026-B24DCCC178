@@ -1,0 +1,387 @@
+/* ================================================
+   THUC_HANH_08 — Fitness & Health Tracker Styles
+   ================================================ */
+
+/* ===== Layout ===== */
+.th08-layout {
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+.th08-sider {
+  background: linear-gradient(180deg, #1a1d2e 0%, #141622 100%) !important;
+  position: sticky !important;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.12);
+
+  .ant-layout-sider-children {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+  }
+}
+
+.th08-logo {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.th08-logo-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #36cfc9, #1890ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 3px 10px rgba(54, 207, 201, 0.25);
+}
+
+.th08-logo-text {
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.3px;
+  background: linear-gradient(135deg, #5cdbd3, #91d5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Sidebar Menu Customization */
+.th08-sider .ant-menu {
+  background: transparent !important;
+  border-right: none !important;
+  padding: 0 10px;
+
+  .ant-menu-item {
+    border-radius: 8px !important;
+    margin: 2px 0 !important;
+    height: 42px !important;
+    line-height: 42px !important;
+    color: rgba(255, 255, 255, 0.45) !important;
+    transition: all 0.2s ease;
+    font-size: 13px;
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.85) !important;
+      background: rgba(255, 255, 255, 0.04) !important;
+    }
+
+    &.ant-menu-item-selected {
+      background: rgba(54, 207, 201, 0.1) !important;
+      color: #5cdbd3 !important;
+      font-weight: 600;
+
+      .anticon {
+        color: #36cfc9 !important;
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .anticon {
+      font-size: 15px !important;
+    }
+  }
+}
+
+/* ===== Header ===== */
+.th08-header {
+  background: #fff !important;
+  padding: 0 28px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.th08-header-title {
+  font-weight: 700;
+  font-size: 18px;
+  background: linear-gradient(135deg, #36cfc9, #1890ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== Content ===== */
+.th08-content {
+  margin: 24px;
+  min-height: 360px;
+}
+
+/* ===== Stat Cards ===== */
+.th08-stat-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* ===== Chart Cards ===== */
+.th08-chart-card {
+  border-radius: 16px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .ant-card-head {
+    border-bottom: 1px solid #f5f5f5;
+    min-height: 48px;
+  }
+}
+
+/* ===== Goal Cards ===== */
+.th08-goal-card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 18px 20px 14px;
+  height: 100%;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+  &:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .ant-progress-inner {
+    border-radius: 3px !important;
+  }
+
+  .ant-progress-bg {
+    border-radius: 3px !important;
+  }
+}
+
+/* Inline value input */
+.th08-goal-value-input {
+  display: inline-block;
+  border-bottom: 1.5px dashed #d9d9d9;
+  line-height: 1;
+
+  .ant-input-number {
+    font-size: 28px;
+    font-weight: 700;
+    width: auto;
+    min-width: 50px;
+    max-width: 100px;
+  }
+
+  .ant-input-number-input {
+    font-size: 28px;
+    font-weight: 700;
+    padding: 0;
+    height: auto;
+    line-height: 1;
+    color: #262626;
+  }
+
+  .ant-input-number-handler-wrap {
+    display: none;
+  }
+}
+
+/* Done/Failed cards */
+.th08-goal-done {
+  background: #fafafa !important;
+  border-color: #e8e8e8;
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 0.8;
+    transform: none;
+  }
+}
+
+/* ===== Exercise Cards ===== */
+.th08-exercise-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .ant-card-actions {
+    border-top: 1px solid #f5f5f5;
+    background: #fafafa;
+    border-radius: 0 0 16px 16px;
+
+    > li {
+      margin: 8px 0;
+    }
+  }
+}
+
+/* ===== Filter Card ===== */
+.th08-filter-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* ===== Table Overrides ===== */
+.th08-content {
+  .ant-table {
+    .ant-table-thead > tr > th {
+      background: #fafafa;
+      font-weight: 600;
+      color: #434343;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .ant-table-tbody > tr {
+      transition: all 0.2s;
+
+      &:hover > td {
+        background: #f6ffed !important;
+      }
+    }
+  }
+
+  .ant-table-pagination {
+    padding: 12px 16px;
+  }
+}
+
+/* ===== Zebra Stripes ===== */
+.th08-row-even td {
+  background: #fff !important;
+}
+
+.th08-row-odd td {
+  background: #fafbfc !important;
+}
+
+.th08-row-even:hover td,
+.th08-row-odd:hover td {
+  background: #e6f7ff !important;
+}
+
+/* ===== Timeline ===== */
+.th08-content .ant-timeline {
+  .ant-timeline-item-label {
+    width: 180px !important;
+  }
+
+  .ant-timeline-item-content {
+    padding: 4px 0 20px 12px;
+  }
+
+  .ant-timeline-item-tail {
+    border-left: 2px solid #f0f0f0;
+  }
+}
+
+/* ===== Segmented ===== */
+.th08-content .ant-segmented {
+  background: #f0f2f5;
+  border-radius: 8px;
+  padding: 3px;
+
+  .ant-segmented-item {
+    border-radius: 6px;
+    transition: all 0.3s;
+
+    &-selected {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+/* ===== Modals ===== */
+.ant-modal-content {
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
+.ant-modal-header {
+  border-bottom: 1px solid #f5f5f5;
+  padding: 18px 24px;
+}
+
+.ant-modal-body {
+  padding: 24px;
+}
+
+/* ===== Drawer ===== */
+.ant-drawer-content-wrapper {
+  border-radius: 16px 0 0 16px;
+}
+
+.ant-drawer-header {
+  border-bottom: 1px solid #f5f5f5;
+  padding: 18px 24px;
+}
+
+/* ===== Bottom Sider Decoration ===== */
+.th08-sider-bottom {
+  position: absolute;
+  bottom: 24px;
+  left: 16px;
+  right: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(54, 207, 201, 0.08), rgba(24, 144, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* ===== Animations ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.th08-dashboard,
+.th08-content > div {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+/* ===== Form Inputs ===== */
+.th08-content {
+  .ant-input,
+  .ant-input-number,
+  .ant-picker,
+  .ant-select-selector {
+    border-radius: 8px !important;
+  }
+
+  .ant-btn {
+    border-radius: 8px;
+  }
+}
