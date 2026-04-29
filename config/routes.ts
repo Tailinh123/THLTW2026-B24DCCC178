@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 
 export default [
 
@@ -33,6 +33,26 @@ export default [
     name: 'Todo List',
     icon: 'OrderedListOutlined',
     component: './TodoList',
+  },
+
+  // =========================
+  // ===== BUOI_1 =====
+  // =========================
+  {
+    path: '/buoi-1',
+    name: 'BUOI_1',
+    icon: 'ShoppingOutlined',
+    component: './BUOI_1',
+  },
+
+  // =========================
+  // ===== BUOI_2 =====
+  // =========================
+  {
+    path: '/buoi-2',
+    name: 'BUOI_2',
+    icon: 'GoldOutlined',
+    component: './BUOI_2',
   },
 
   // =========================
