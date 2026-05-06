@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 
 export default [
 
@@ -33,6 +33,26 @@ export default [
     name: 'Todo List',
     icon: 'OrderedListOutlined',
     component: './TodoList',
+  },
+
+  // =========================
+  // ===== BUOI_1 =====
+  // =========================
+  {
+    path: '/buoi-1',
+    name: 'BUOI_1',
+    icon: 'ShoppingOutlined',
+    component: './BUOI_1',
+  },
+
+  // =========================
+  // ===== BUOI_2 =====
+  // =========================
+  {
+    path: '/buoi-2',
+    name: 'BUOI_2',
+    icon: 'GoldOutlined',
+    component: './BUOI_2',
   },
 
   // =========================
@@ -140,6 +160,16 @@ export default [
     name: 'THUC_HANH_08',
     icon: 'HeartOutlined',
     component: './THUC_HANH_08',
+  },
+
+  // =========================
+  // ===== THUC_HANH_09 =====
+  // =========================
+  {
+    path: '/thuc-hanh-09',
+    name: 'THUC_HANH_09',
+    icon: 'ProjectOutlined',
+    component: './THUC_HANH_09',
   },
 
   // ===== 404 =====
